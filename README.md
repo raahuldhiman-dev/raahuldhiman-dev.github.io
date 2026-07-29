@@ -11,7 +11,7 @@
 
 ### Full-Stack Developer · AI Engineer · FinTech Builder
 
-[![Portfolio](https://img.shields.io/badge/Portfolio-rahuldhiman509.github.io-C8FF00?style=for-the-badge&logoColor=black)](https://rahuldhiman509.github.io)
+[![Portfolio](https://img.shields.io/badge/Portfolio-raahuldhiman-dev.github.io-C8FF00?style=for-the-badge&logoColor=black)](https://raahuldhiman-dev.github.io)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-rahuldhimanofficial-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/rahuldhimanofficial)
 [![Email](https://img.shields.io/badge/Email-torahul12091@gmail.com-FF2D9E?style=for-the-badge&logo=gmail&logoColor=white)](mailto:torahul12091@gmail.com)
 [![DhimanSoft](https://img.shields.io/badge/Company-DhimanSoft-00E5FF?style=for-the-badge&logoColor=black)](https://www.dhimansoft.com)
@@ -78,10 +78,10 @@ rahul = {
 
 | Project | Description | Stack | Status |
 |---|---|---|---|
-| 🤖 **[DTradeX](https://github.com/rahuldhiman509)** | SEBI-compliant algo trading bot — Zerodha Kite API, real-time signals, risk management | Python · FastAPI · Redis · React | 🟡 In Progress |
-| ✍️ **[AI Content Generator](https://github.com/rahuldhiman509)** | Laravel microservice for GPT-4 powered SEO & marketing content with queue processing | Laravel · GPT-4 · MySQL · Redis | 🟢 Live |
-| 📅 **[Appointment Booking System](https://github.com/rahuldhiman509)** | Full-stack booking platform with Zoom integration, payments & calendar sync | Laravel · Zoom API · Vue.js · Stripe | 🟢 Live |
-| 🎙️ **[Personal AI Assistant](https://github.com/rahuldhiman509)** | Voice-enabled Python assistant with GPT-4, speech recognition & conversational memory | Python · GPT-4 · SpeechRecognition | 🟡 In Progress |
+| 🤖 **[DTradeX](https://github.com/raahuldhiman-dev)** | SEBI-compliant algo trading bot — Zerodha Kite API, real-time signals, risk management | Python · FastAPI · Redis · React | 🟡 In Progress |
+| ✍️ **[AI Content Generator](https://github.com/raahuldhiman-dev)** | Laravel microservice for GPT-4 powered SEO & marketing content with queue processing | Laravel · GPT-4 · MySQL · Redis | 🟢 Live |
+| 📅 **[Appointment Booking System](https://github.com/raahuldhiman-dev)** | Full-stack booking platform with Zoom integration, payments & calendar sync | Laravel · Zoom API · Vue.js · Stripe | 🟢 Live |
+| 🎙️ **[Personal AI Assistant](https://github.com/raahuldhiman-dev)** | Voice-enabled Python assistant with GPT-4, speech recognition & conversational memory | Python · GPT-4 · SpeechRecognition | 🟡 In Progress |
 
 ---
 
@@ -89,13 +89,13 @@ rahul = {
 
 <div align="center">
 
-![GitHub Stats](https://github-readme-stats.vercel.app/api?username=rahuldhiman509&show_icons=true&theme=radical&count_private=true&hide_border=true&bg_color=0A0A0F&title_color=C8FF00&icon_color=00E5FF&text_color=ffffff)
+![GitHub Stats](https://github-readme-stats.vercel.app/api?username=raahuldhiman-dev&show_icons=true&theme=radical&count_private=true&hide_border=true&bg_color=0A0A0F&title_color=C8FF00&icon_color=00E5FF&text_color=ffffff)
 
-![Streak](https://nirzak-streak-stats.vercel.app/?user=rahuldhiman509&theme=radical&hide_border=true&background=0A0A0F&ring=C8FF00&fire=FF2D9E&currStreakLabel=00E5FF)
+![Streak](https://nirzak-streak-stats.vercel.app/?user=raahuldhiman-dev&theme=radical&hide_border=true&background=0A0A0F&ring=C8FF00&fire=FF2D9E&currStreakLabel=00E5FF)
 
-![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=rahuldhiman509&layout=compact&theme=radical&hide_border=true&bg_color=0A0A0F&title_color=C8FF00&text_color=ffffff)
+![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=raahuldhiman-dev&layout=compact&theme=radical&hide_border=true&bg_color=0A0A0F&title_color=C8FF00&text_color=ffffff)
 
-![Trophies](https://github-profile-trophy.vercel.app/?username=rahuldhiman509&theme=radical&margin-w=6&no-bg=true&no-frame=true)
+![Trophies](https://github-profile-trophy.vercel.app/?username=raahuldhiman-dev&theme=radical&margin-w=6&no-bg=true&no-frame=true)
 
 </div>
 
@@ -109,12 +109,12 @@ rahul = {
 
 <div align="center">
 
-**[→ View Full Portfolio](https://rahuldhiman509.github.io)** &nbsp;·&nbsp; **[→ Email Me](mailto:torahul12091@gmail.com)** &nbsp;·&nbsp; **[→ DhimanSoft](https://www.dhimansoft.com)**
+**[→ View Full Portfolio](https://raahuldhiman-dev.github.io)** &nbsp;·&nbsp; **[→ Email Me](mailto:torahul12091@gmail.com)** &nbsp;·&nbsp; **[→ DhimanSoft](https://www.dhimansoft.com)**
 
 ---
 
 *If you find my work useful, drop a ⭐ — it means a lot!*
 
-[![Visit Count](https://visitcount.itsvg.in/api?id=rahuldhiman509&icon=5&color=9)](https://visitcount.itsvg.in)
+[![Visit Count](https://visitcount.itsvg.in/api?id=raahuldhiman-dev&icon=5&color=9)](https://visitcount.itsvg.in)
 
 </div>
