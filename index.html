@@ -705,20 +705,20 @@
 <button class="ai-chat-toggle" id="aiChatToggle">⚡</button>
 <div class="ai-chat-panel" id="aiChatPanel">
   <div class="ai-chat-header">
-    <div class="ai-chat-avatar">AI</div>
+    <div class="ai-chat-avatar">N</div>
     <div class="ai-chat-info">
-      <div class="ai-chat-name">AI Assistant</div>
+      <div class="ai-chat-name">Nova · Rahul's AI Guide</div>
       <div class="ai-chat-status">● Online</div>
     </div>
     <button class="ai-chat-close" id="aiChatClose">✕</button>
   </div>
   <div class="ai-chat-messages" id="aiChatMessages">
     <div class="ai-msg bot">
-      <div class="ai-msg-bubble">Hi! I'm Rahul's AI assistant. Ask me about his skills, experience, projects, or anything else!</div>
+      <div class="ai-msg-bubble">Hi! I'm Nova, Rahul's AI guide. Ask me about his experience at Softweaver, Kwan, Canvas Craft or WorksDelight, his skills, projects, education, or how to reach him.</div>
     </div>
   </div>
   <div class="ai-chat-input-area">
-    <input class="ai-chat-input" id="aiChatInput" placeholder="Ask me anything..." />
+    <input class="ai-chat-input" id="aiChatInput" placeholder="Ask Nova about Rahul..." />
     <button class="ai-chat-send" id="aiChatSend">➤</button>
   </div>
 </div>
@@ -1343,32 +1343,56 @@
   chatToggle.addEventListener('click', () => chatPanel.classList.toggle('open'));
   chatClose.addEventListener('click', () => chatPanel.classList.remove('open'));
 
+  const GREETING = "Hi! I'm Nova, Rahul's AI guide. Ask me about his experience at Softweaver, Kwan, Canvas Craft or WorksDelight, his skills, projects, education, or how to reach him.";
   const knowledge = {
     skills: 'Rahul specializes in PHP/Laravel (95%), JavaScript/TypeScript (90%), Python (88%), React/Next.js (85%), FastAPI/Node.js (82%), GPT-4 integrations (85%), MySQL/PostgreSQL (90%), and Docker/Cloud (78%).',
-    experience: 'Rahul has 5+ years of experience. He is currently a Software Engineer (Full Stack, AI Integration) at Softweaver Technologies (since Mar 2025). Before that: Full Stack Engineer at Kwan Network Solutions (2023-2025), Full Stack Engineer at Canvas Craft Media (2022-2023), and PHP Developer at WorksDelight (2022).',
+    experience: 'Rahul has 5+ years of experience. Currently: Software Engineer (Full Stack, AI Integration) at Softweaver Technologies (Mar 2025 - Present). Before that: Full Stack Engineer at Kwan Network Solutions (Aug 2023 - Mar 2025), Full Stack Engineer at Canvas Craft Media (Aug 2022 - Aug 2023), and PHP Developer at WorksDelight (Feb - Aug 2022). Ask me about any of them!',
+    softweaver: 'At Softweaver Technologies (Mar 2025 - Present, Mohali) Rahul is a Software Engineer (Full Stack, AI Integration). He designs and builds software infrastructure for web platforms with PHP, Laravel and JavaScript frameworks, integrates AI/ML APIs and third-party services into existing product pipelines, contributes to architecture decisions, design reviews and code quality standards, and collaborates with cross-functional teams in an agile environment. Tech: Laravel, PHP, JavaScript, React, MySQL, REST APIs.',
+    kwan: 'At Kwan Network Solutions (Aug 2023 - Mar 2025) Rahul was a Full Stack Engineer. He built and maintained PHP/Laravel backends for business-critical apps, created responsive front-ends with JavaScript, jQuery and Bootstrap, designed and optimised MySQL schemas for high-traffic apps, integrated REST APIs, payment gateways and communication tools, and took part in the full SDLC from requirements to production.',
+    canvas: 'At Canvas Craft Media (Aug 2022 - Aug 2023) Rahul was a Full Stack Engineer at a digital agency. He built client websites and landing pages with HTML5, CSS3, JavaScript and jQuery, turned Figma/Canva mockups into responsive pages, supported PHP/Laravel back-end integrations, and delivered several client projects in parallel.',
+    worksdelight: 'At WorksDelight (Feb - Aug 2022) Rahul was a PHP Developer. He built Laravel/MVC applications, added dynamic front-end behaviour with JavaScript, jQuery and AJAX, prototyped with Bubble.io, and delivered features under tight deadlines with code review and version control.',
+    current: 'Rahul is currently a Software Engineer (Full Stack, AI Integration) at Softweaver Technologies in Mohali, working on scalable web applications and AI integrations. Just ask "what does he do at Softweaver?" for details.',
     projects: 'His featured projects include: DTradeX (algo trading bot), AI Content Generator, Appointment Booking System, Personal AI Assistant, and eCommerce Platform.',
-    education: 'Rahul holds an MCA in AI & Machine Learning from Amity University Online (Mar 2024 - Apr 2026) and a BCA from Himachal Pradesh University (2018-2021). Certifications include Generative AI Foundations and Google Ads Search.',
+    education: 'Rahul holds an MCA in AI & Machine Learning from Amity University Online (Mar 2024 - Apr 2026) and a BCA from Himachal Pradesh University (2018-2021).',
+    certs: 'Certifications: Generative AI Foundations, Google Ads Search Certification, Advanced Excel, Professional and Life Skills, and Principles of Retailing.',
+    languages: 'Rahul speaks English (limited working), Hindi (full professional) and Punjabi (native).',
     contact: 'You can reach Rahul via email at torahul12091@gmail.com, LinkedIn (rahuldhimanofficial), or through the contact form on this page.',
-    location: 'Rahul is based in Mohali, India and works globally.',
-    company: 'Rahul is currently a Software Engineer (Full Stack, AI Integration) at Softweaver Technologies.',
-    hire: 'Rahul is open to full-time and remote opportunities in AI/ML and full-stack engineering. Contact him via email or LinkedIn.',
-    ai: 'Rahul works with GPT-4, LangChain, TensorFlow, and builds AI-powered SaaS tools, chatbots, and automation systems.',
+    location: 'Rahul is based in Mohali, Punjab, India and is open to remote work worldwide.',
+    hire: 'Rahul is open to full-time and remote opportunities as an AI Engineer, ML Engineer, Full Stack Developer or Backend Developer. Contact him via email or LinkedIn.',
+    ai: 'Rahul works with GPT-4, the OpenAI API, LangChain, NLP and voice recognition, and builds AI assistants, AI-powered tools and automation systems.',
+    years: 'Rahul has 5+ years of development experience.',
+    thanks: "You're welcome! Have more questions? Just ask.",
+    hello: GREETING,
+    fallback: 'I can tell you about Rahul\'s experience (Softweaver, Kwan, Canvas Craft, WorksDelight), skills, projects, education, certifications, or how to contact him. Try "What did he do at Softweaver?" or "What are his skills?"'
   };
+
+  // Ordered intents: most specific first. Patterns match whole words/prefixes.
+  const intents = [
+    [/\b(softweaver|swt|current(ly)?|present|now)\b/, 'softweaver'],
+    [/\bkwan\b/, 'kwan'],
+    [/\bcanvas\b|\bcraft\b|\bagency\b/, 'canvas'],
+    [/\bworks ?delight\b|\bworksdelight\b/, 'worksdelight'],
+    [/\b(certif\w*|course\w*|google ads|excel)\b/, 'certs'],
+    [/\b(language\w*|speak|english|hindi|punjabi)\b/, 'languages'],
+    [/\b(educat\w*|stud(y|ied|ies)|degree|mca|bca|universit\w*|amity|college|qualif\w*)\b/, 'education'],
+    [/\b(contact|email|mail|reach|linkedin|phone|connect)\b/, 'contact'],
+    [/\b(locat\w*|based|mohali|punjab|india|where|remote)\b/, 'location'],
+    [/\b(hire|hiring|job|jobs|available|availability|opportunit\w*|open to|role|roles)\b/, 'hire'],
+    [/\b(project\w*|portfolio|built|build|shipped|dtradex|trading)\b/, 'projects'],
+    [/\b(skill\w*|tech|stack|technolog\w*|laravel|react|php|python|javascript|mysql|know)\b/, 'skills'],
+    [/\b(ai|ml|gpt\w*|llm|langchain|machine learning|nlp|openai)\b/, 'ai'],
+    [/\b(experience|exp|work\w*|career|background|companies|company|employer\w*|history|did|do|does)\b/, 'experience'],
+    [/\b(years?|long)\b/, 'years'],
+    [/\b(thanks?|thank you|thx)\b/, 'thanks'],
+    [/\b(hello|hi|hey|hola|yo)\b/, 'hello']
+  ];
 
   function getAIResponse(input) {
     const q = input.toLowerCase();
-    if (q.includes('skill') || q.includes('tech') || q.includes('stack')) return knowledge.skills;
-    if (q.includes('experience') || q.includes('work') || q.includes('background')) return knowledge.experience;
-    if (q.includes('project') || q.includes('portfolio')) return knowledge.projects;
-    if (q.includes('education') || q.includes('study') || q.includes('degree')) return knowledge.education;
-    if (q.includes('contact') || q.includes('email') || q.includes('reach')) return knowledge.contact;
-    if (q.includes('location') || q.includes('based') || q.includes('mohali')) return knowledge.location;
-    if (q.includes('company') || q.includes('dhimansoft')) return knowledge.company;
-    if (q.includes('hire') || q.includes('job') || q.includes('freelance') || q.includes('available')) return knowledge.hire;
-    if (q.includes('ai') || q.includes('ml') || q.includes('gpt') || q.includes('machine learning')) return knowledge.ai;
-    if (q.includes('hello') || q.includes('hi') || q.includes('hey')) return 'Hello! I\'m Rahul\'s AI assistant. Ask me about his skills, experience, projects, or anything else!';
-    if (q.includes('thank')) return 'You\'re welcome! Have more questions? Just ask.';
-    return 'I can tell you about Rahul\'s skills, experience, projects, education, and more. Try asking something like "What are his skills?" or "Tell me about his experience."';
+    for (const [re, key] of intents) {
+      if (re.test(q)) return knowledge[key];
+    }
+    return knowledge.fallback;
   }
 
   function addMessage(text, isUser) {
