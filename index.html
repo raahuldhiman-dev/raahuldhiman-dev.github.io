@@ -524,6 +524,26 @@
       box-shadow: 0 0 0 3px rgba(255,92,58,0.08);
     }
     .form-group textarea { resize: vertical; min-height: 100px; }
+    .form-tabs {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 4px; padding: 4px; margin-bottom: 20px;
+      background: var(--bg3); border: 1px solid var(--border); border-radius: 14px;
+    }
+    .form-tab {
+      background: none; border: none; color: var(--muted); font-family: var(--font-body);
+      font-size: 13px; font-weight: 600; padding: 10px 8px; border-radius: 10px;
+      transition: background 0.25s, color 0.25s;
+    }
+    .form-tab:hover { color: var(--text); }
+    .form-tab.active { background: var(--g1); color: #fff; box-shadow: 0 6px 20px rgba(255,92,58,0.25); }
+    .form-intro { color: var(--muted); font-size: 13px; line-height: 1.6; margin-bottom: 16px; }
+    .form-pane { border: none; min-width: 0; }
+    .form-pane[hidden] { display: none; }
+    .form-group select {
+      width: 100%; background: var(--bg3); border: 1px solid var(--border); border-radius: 12px;
+      padding: 12px 14px; color: var(--text); font-family: var(--font-body); font-size: 14px; outline: none;
+    }
+    .form-group select:focus { border-color: rgba(132,94,247,0.4); }
+    .form-group label .opt { color: var(--muted2); font-weight: 400; text-transform: none; letter-spacing: 0; }
     .form-submit {
       width: 100%; padding: 13px; background: var(--g1); color: #fff;
       font-weight: 600; font-size: 14px; border: none; border-radius: 10px;
@@ -638,6 +658,16 @@
       background: rgba(132,94,247,0.2); border: 1px solid rgba(132,94,247,0.2);
       border-bottom-right-radius: 4px;
     }
+    .resume-menu { position: relative; display: inline-block; }
+    .resume-pop {
+      position: absolute; top: calc(100% + 8px); left: 0; min-width: 270px; z-index: 60;
+      background: rgba(10,10,20,0.97); border: 1px solid var(--border2); border-radius: 14px;
+      padding: 8px; display: none; box-shadow: 0 16px 48px rgba(0,0,0,0.5);
+    }
+    .resume-pop.open { display: block; }
+    .resume-pop small { display: block; padding: 4px 12px 6px; color: var(--muted); font-size: 11px; }
+    .resume-pop a { display: block; padding: 9px 12px; border-radius: 8px; font-size: 13px; color: var(--text); }
+    .resume-pop a:hover { background: rgba(132,94,247,0.14); }
     .ai-msg-bubble { user-select: text; -webkit-user-select: text; word-break: break-word; }
     .ai-msg-bubble p { margin: 0 0 8px; }
     .ai-msg-bubble > :last-child { margin-bottom: 0; }
@@ -658,11 +688,12 @@
     .ai-copy:hover { border-color: rgba(132,94,247,0.5); }
     .ai-copy.copied { color: var(--acc3); border-color: var(--acc3); }
     .ai-chips {
-      display: flex; gap: 6px; padding: 10px 16px 0; overflow-x: auto; flex-shrink: 0;
-      scrollbar-width: none;
+      display: flex; flex-wrap: wrap; gap: 6px; padding: 10px 16px 0; flex-shrink: 0;
     }
-    .ai-chips::-webkit-scrollbar { display: none; }
-    .ai-chip { white-space: nowrap; flex-shrink: 0; }
+    .ai-chip { white-space: nowrap; }
+    .ai-followups { align-self: flex-start; display: flex; flex-wrap: wrap; align-items: center; gap: 6px; max-width: 94%; }
+    .ai-followups .ai-fu-label { font-size: 11px; color: var(--muted); font-family: var(--font-mono); width: 100%; }
+    .ai-followups .ai-chip { white-space: normal; text-align: left; line-height: 1.35; border-style: dashed; }
     .ai-chip {
       background: var(--bg3); border: 1px solid var(--border2); color: var(--text);
       font-family: var(--font-body); font-size: 12px; padding: 6px 12px;
@@ -857,6 +888,16 @@
       <div class="hero-btns">
         <a href="#projects" class="btn-primary">See My Work →</a>
         <a href="#contact" class="btn-secondary">Let's Talk</a>
+        <div class="resume-menu">
+          <button type="button" class="btn-secondary" id="resumeBtn" aria-haspopup="true" aria-expanded="false">📄 Download CV ▾</button>
+          <div class="resume-pop" id="resumePop" role="menu">
+            <small>ATS-friendly PDF, pick the role</small>
+            <a role="menuitem" href="resume/Rahul-Dhiman-Resume-AI-Engineer.pdf" download>AI Engineer</a>
+            <a role="menuitem" href="resume/Rahul-Dhiman-Resume-ML-Engineer.pdf" download>Machine Learning Engineer</a>
+            <a role="menuitem" href="resume/Rahul-Dhiman-Resume-Full-Stack-Developer.pdf" download>Full Stack Developer</a>
+            <a role="menuitem" href="resume/Rahul-Dhiman-Resume-Backend-Developer.pdf" download>Backend Developer</a>
+          </div>
+        </div>
       </div>
       <div class="hero-stats" id="stats">
         <div class="stat-item">
@@ -980,7 +1021,7 @@
       <div class="skill-bubble"><div class="skill-bubble-icon">🤖</div><div class="skill-bubble-name">GPT-4/AI</div><div class="skill-bubble-pct">85%</div></div>
       <div class="skill-bubble"><div class="skill-bubble-icon">🗄️</div><div class="skill-bubble-name">SQL</div><div class="skill-bubble-pct">90%</div></div>
       <div class="skill-bubble"><div class="skill-bubble-icon">🐳</div><div class="skill-bubble-name">Docker</div><div class="skill-bubble-pct">78%</div></div>
-      <div class="skill-bubble"><div class="skill-bubble-icon">☁️</div><div class="skill-bubble-name">Cloud</div><div class="skill-bubble-pct">78%</div></div>
+      <div class="skill-bubble"><div class="skill-bubble-icon">☁️</div><div class="skill-bubble-name">AWS/GCP/OCI</div><div class="skill-bubble-pct">78%</div></div>
       <div class="skill-bubble"><div class="skill-bubble-icon">🔷</div><div class="skill-bubble-name">Next.js</div><div class="skill-bubble-pct">82%</div></div>
       <div class="skill-bubble"><div class="skill-bubble-icon">🎨</div><div class="skill-bubble-name">Tailwind</div><div class="skill-bubble-pct">85%</div></div>
       <div class="skill-bubble"><div class="skill-bubble-icon">📡</div><div class="skill-bubble-name">Redis</div><div class="skill-bubble-pct">80%</div></div>
@@ -993,14 +1034,14 @@
       <div class="skill-bar-item"><div class="skill-bar-header"><span class="skill-bar-name">React / Next.js</span><span class="skill-bar-pct">85%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-width="85" style="background:var(--g1);"></div></div></div>
       <div class="skill-bar-item"><div class="skill-bar-header"><span class="skill-bar-name">GPT-4 / AI Integration</span><span class="skill-bar-pct">85%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-width="85" style="background:var(--g2);"></div></div></div>
       <div class="skill-bar-item"><div class="skill-bar-header"><span class="skill-bar-name">FastAPI / Node.js</span><span class="skill-bar-pct">82%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-width="82" style="background:var(--g3);"></div></div></div>
-      <div class="skill-bar-item"><div class="skill-bar-header"><span class="skill-bar-name">Docker / Cloud</span><span class="skill-bar-pct">78%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-width="78" style="background:var(--g4);"></div></div></div>
+      <div class="skill-bar-item"><div class="skill-bar-header"><span class="skill-bar-name">Docker / Cloud (AWS · GCP · OCI)</span><span class="skill-bar-pct">78%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-width="78" style="background:var(--g4);"></div></div></div>
     </div>
     <div class="skill-badges fade-up d3">
       <span class="skill-badge">Laravel</span><span class="skill-badge">React</span><span class="skill-badge">Python</span>
       <span class="skill-badge">GPT-4 API</span><span class="skill-badge">FastAPI</span><span class="skill-badge">Node.js</span>
       <span class="skill-badge">Next.js</span><span class="skill-badge">Tailwind</span><span class="skill-badge">Docker</span>
       <span class="skill-badge">MySQL</span><span class="skill-badge">Redis</span><span class="skill-badge">Cloudflare</span>
-      <span class="skill-badge">Zerodha API</span><span class="skill-badge">LangChain</span><span class="skill-badge">AWS</span>
+      <span class="skill-badge">Zerodha API</span><span class="skill-badge">LangChain</span><span class="skill-badge">AWS</span><span class="skill-badge">Google Cloud (GCP)</span><span class="skill-badge">Oracle Cloud (OCI)</span><span class="skill-badge">Azure</span><span class="skill-badge">GitHub Actions</span>
     </div>
   </div>
 </section>
@@ -1015,38 +1056,59 @@
       <button class="filter-btn active" onclick="filterProjects(this,'all')">All</button>
       <button class="filter-btn" onclick="filterProjects(this,'ai')">AI / ML</button>
       <button class="filter-btn" onclick="filterProjects(this,'fullstack')">Full-Stack</button>
+      <button class="filter-btn" onclick="filterProjects(this,'cloud')">Cloud</button>
       <button class="filter-btn" onclick="filterProjects(this,'fintech')">FinTech</button>
       <button class="filter-btn" onclick="filterProjects(this,'backend')">Backend</button>
     </div>
     <div class="projects-grid fade-up d2" id="projectsGrid">
+      <div class="project-card" data-category="ai backend">
+        <div class="project-thumb">🧠</div>
+        <div class="project-body">
+          <div class="project-meta"><span class="project-category">AI · Backend</span><span class="project-status ps-live">Open Source</span></div>
+          <h3 class="project-title">RAG Chatbot</h3>
+          <p class="project-desc">Multi-tenant document Q&A with retrieval-augmented generation. Token-aware chunking, per-user ChromaDB search, cited answers, multi-provider LLM failover, OAuth login, and encrypted API keys.</p>
+          <div class="project-tags"><span class="project-tag">Python</span><span class="project-tag">FastAPI</span><span class="project-tag">ChromaDB</span><span class="project-tag">OpenAI / Gemini / Claude</span><span class="project-tag">Docker</span></div>
+          <div class="project-links"><a href="https://github.com/raahuldhiman-dev/rag-chatbot" target="_blank" rel="noopener" class="project-link">GitHub →</a></div>
+        </div>
+      </div>
+      <div class="project-card" data-category="ai cloud">
+        <div class="project-thumb">☁️</div>
+        <div class="project-body">
+          <div class="project-meta"><span class="project-category">AI · Cloud</span><span class="project-status ps-live">Open Source</span></div>
+          <h3 class="project-title">AWS Face Recognition System</h3>
+          <p class="project-desc">Real-time face detection and person registration on Amazon Rekognition, DynamoDB and S3 with a Flask UI, plus a used-car price analysis pipeline.</p>
+          <div class="project-tags"><span class="project-tag">Python</span><span class="project-tag">Flask</span><span class="project-tag">AWS Rekognition</span><span class="project-tag">S3</span><span class="project-tag">DynamoDB</span></div>
+          <div class="project-links"><a href="https://github.com/raahuldhiman-dev/aws-face-detection-with-aws-s3" target="_blank" rel="noopener" class="project-link">GitHub →</a></div>
+        </div>
+      </div>
+      <div class="project-card" data-category="ai fullstack backend">
+        <div class="project-thumb">🤖</div>
+        <div class="project-body">
+          <div class="project-meta"><span class="project-category">AI · Full-Stack</span><span class="project-status ps-live">Shipped</span></div>
+          <h3 class="project-title">AI Content Generator</h3>
+          <p class="project-desc">Laravel microservice powered by GPT-4 for SEO & marketing content. Queue-based processing, REST API, multi-language support, React dashboard.</p>
+          <div class="project-tags"><span class="project-tag">Laravel</span><span class="project-tag">GPT-4</span><span class="project-tag">React</span><span class="project-tag">MySQL</span><span class="project-tag">Redis</span></div>
+          <div class="project-links"><a href="#contact" class="project-link">Code on request →</a></div>
+        </div>
+      </div>
+      <div class="project-card" data-category="ai fintech">
+        <div class="project-thumb">📉</div>
+        <div class="project-body">
+          <div class="project-meta"><span class="project-category">ML · FinTech</span><span class="project-status ps-live">Open Source</span></div>
+          <h3 class="project-title">Stock Price Predictor (LSTM)</h3>
+          <p class="project-desc">Deep learning time-series forecasting with an LSTM model: Yahoo Finance data, training, next-day prediction and actual-vs-predicted charts, in a Streamlit app.</p>
+          <div class="project-tags"><span class="project-tag">Python</span><span class="project-tag">TensorFlow / Keras</span><span class="project-tag">pandas</span><span class="project-tag">Streamlit</span></div>
+          <div class="project-links"><a href="https://github.com/raahuldhiman-dev/stock-price-predictor" target="_blank" rel="noopener" class="project-link">GitHub →</a></div>
+        </div>
+      </div>
       <div class="project-card" data-category="fintech backend">
         <div class="project-thumb">📈</div>
         <div class="project-body">
           <div class="project-meta"><span class="project-category">FinTech · Backend</span><span class="project-status ps-wip">In Progress</span></div>
-          <h3 class="project-title">DTradeX — Algo Trading</h3>
-          <p class="project-desc">SEBI-compliant automated trading bot with Zerodha Kite API, real-time stock & crypto signals, risk management engine, and live P&L dashboard.</p>
+          <h3 class="project-title">DTradeX · Algo Trading</h3>
+          <p class="project-desc">Automated trading bot with Zerodha Kite API, real-time stock & crypto signals, a risk management engine, and a P&L dashboard.</p>
           <div class="project-tags"><span class="project-tag">Python</span><span class="project-tag">Zerodha API</span><span class="project-tag">FastAPI</span><span class="project-tag">Redis</span><span class="project-tag">React</span></div>
-          <div class="project-links"><a href="https://github.com/raahuldhiman-dev" target="_blank" class="project-link">GitHub →</a></div>
-        </div>
-      </div>
-      <div class="project-card" data-category="ai fullstack">
-        <div class="project-thumb">🤖</div>
-        <div class="project-body">
-          <div class="project-meta"><span class="project-category">AI · Full-Stack</span><span class="project-status ps-live">Live</span></div>
-          <h3 class="project-title">AI Content Generator</h3>
-          <p class="project-desc">Laravel microservice powered by GPT-4 for SEO & marketing content. Queue-based processing, REST API, multi-language support, React dashboard.</p>
-          <div class="project-tags"><span class="project-tag">Laravel</span><span class="project-tag">GPT-4</span><span class="project-tag">React</span><span class="project-tag">MySQL</span><span class="project-tag">Redis</span></div>
-          <div class="project-links"><a href="https://github.com/raahuldhiman-dev" target="_blank" class="project-link">GitHub →</a></div>
-        </div>
-      </div>
-      <div class="project-card" data-category="fullstack">
-        <div class="project-thumb">📅</div>
-        <div class="project-body">
-          <div class="project-meta"><span class="project-category">Full-Stack</span><span class="project-status ps-live">Live</span></div>
-          <h3 class="project-title">Booking System</h3>
-          <p class="project-desc">Full-featured booking platform with Zoom integration, role-based access, real-time notifications, calendar sync, and Stripe payments.</p>
-          <div class="project-tags"><span class="project-tag">Laravel</span><span class="project-tag">Zoom API</span><span class="project-tag">Vue.js</span><span class="project-tag">MySQL</span><span class="project-tag">Stripe</span></div>
-          <div class="project-links"><a href="https://github.com/raahuldhiman-dev" target="_blank" class="project-link">GitHub →</a></div>
+          <div class="project-links"><a href="#contact" class="project-link">Code on request →</a></div>
         </div>
       </div>
       <div class="project-card" data-category="ai">
@@ -1054,19 +1116,39 @@
         <div class="project-body">
           <div class="project-meta"><span class="project-category">AI · Automation</span><span class="project-status ps-wip">In Progress</span></div>
           <h3 class="project-title">Personal AI Assistant</h3>
-          <p class="project-desc">Voice-enabled Python AI assistant with GPT-4, speech recognition, task automation pipelines, and persistent conversational memory.</p>
+          <p class="project-desc">Voice-enabled Python assistant combining speech recognition, GPT-4 responses and text-to-speech, with task automation and conversational memory.</p>
           <div class="project-tags"><span class="project-tag">Python</span><span class="project-tag">GPT-4</span><span class="project-tag">SpeechRecognition</span><span class="project-tag">FastAPI</span></div>
-          <div class="project-links"><a href="https://github.com/raahuldhiman-dev" target="_blank" class="project-link">GitHub →</a></div>
+          <div class="project-links"><a href="https://github.com/raahuldhiman-dev/voice-ai-assistant" target="_blank" rel="noopener" class="project-link">GitHub →</a></div>
         </div>
       </div>
-      <div class="project-card" data-category="fullstack">
+      <div class="project-card" data-category="fullstack backend">
+        <div class="project-thumb">📅</div>
+        <div class="project-body">
+          <div class="project-meta"><span class="project-category">Full-Stack</span><span class="project-status ps-live">Shipped</span></div>
+          <h3 class="project-title">Booking System</h3>
+          <p class="project-desc">Booking platform with Zoom integration, role-based access, real-time notifications, calendar sync, and Stripe payments.</p>
+          <div class="project-tags"><span class="project-tag">Laravel</span><span class="project-tag">Zoom API</span><span class="project-tag">Vue.js</span><span class="project-tag">MySQL</span><span class="project-tag">Stripe</span></div>
+          <div class="project-links"><a href="#contact" class="project-link">Code on request →</a></div>
+        </div>
+      </div>
+      <div class="project-card" data-category="fullstack backend">
         <div class="project-thumb">🛒</div>
         <div class="project-body">
-          <div class="project-meta"><span class="project-category">eCommerce</span><span class="project-status ps-live">Live</span></div>
+          <div class="project-meta"><span class="project-category">eCommerce</span><span class="project-status ps-live">Shipped</span></div>
           <h3 class="project-title">eCommerce Platform</h3>
           <p class="project-desc">Laravel 11 multi-role eCommerce with Admin, Merchant & Customer portals. Spatie role-based permissions, product management, order tracking.</p>
           <div class="project-tags"><span class="project-tag">Laravel 11</span><span class="project-tag">Spatie</span><span class="project-tag">React</span><span class="project-tag">MySQL</span></div>
-          <div class="project-links"><a href="https://github.com/raahuldhiman-dev" target="_blank" class="project-link">GitHub →</a></div>
+          <div class="project-links"><a href="#contact" class="project-link">Code on request →</a></div>
+        </div>
+      </div>
+      <div class="project-card" data-category="fullstack backend">
+        <div class="project-thumb">💬</div>
+        <div class="project-body">
+          <div class="project-meta"><span class="project-category">Full-Stack · Real-time</span><span class="project-status ps-live">Open Source</span></div>
+          <h3 class="project-title">Laravel Chat App</h3>
+          <p class="project-desc">Multi-user real-time chat: Sanctum auth, direct and group conversations, attachments, unread tracking, typing indicators and self-hosted WebSockets.</p>
+          <div class="project-tags"><span class="project-tag">Laravel</span><span class="project-tag">Vue 3</span><span class="project-tag">Pinia</span><span class="project-tag">Sanctum</span><span class="project-tag">WebSockets</span></div>
+          <div class="project-links"><a href="https://github.com/raahuldhiman-dev/Laravel-Chat-App" target="_blank" rel="noopener" class="project-link">GitHub →</a></div>
         </div>
       </div>
     </div>
@@ -1204,12 +1286,16 @@
   <div class="wrap">
     <span class="badge">Get In Touch</span>
     <h2 class="sec-title fade-up">Let's Build Something<br><span style="background:var(--g1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Amazing Together</span></h2>
-    <p class="sec-desc">Open to full-time and remote roles in AI/ML and full-stack engineering. Based in India — work globally. Response within 24h.</p>
+    <p class="sec-desc">Hiring for a role or have a project to build? Pick the right form below. Based in India, working globally. Response within 24h.</p>
     <div class="contact-grid">
       <div class="fade-left d1">
         <a href="mailto:torahul12091@gmail.com" class="contact-item">
           <div class="contact-icon" style="background:rgba(255,92,58,0.1);">📧</div>
           <div><div class="contact-label">Email</div><div class="contact-value">torahul12091@gmail.com</div></div>
+        </a>
+        <a href="tel:+918894084509" class="contact-item">
+          <div class="contact-icon" style="background:rgba(255,184,0,0.08);">📞</div>
+          <div><div class="contact-label">Phone</div><div class="contact-value">+91 88940 84509</div></div>
         </a>
         <a href="https://www.linkedin.com/in/rahuldhimanofficial" target="_blank" class="contact-item">
           <div class="contact-icon" style="background:rgba(132,94,247,0.1);">💼</div>
@@ -1219,19 +1305,90 @@
           <div class="contact-icon" style="background:rgba(0,217,192,0.1);">💻</div>
           <div><div class="contact-label">GitHub</div><div class="contact-value">raahuldhiman-dev</div></div>
         </a>
+        <div class="contact-label" style="margin-top:20px;">Resume (ATS-friendly PDF)</div>
+        <div class="social-row" style="margin-top:8px;">
+          <a href="resume/Rahul-Dhiman-Resume-AI-Engineer.pdf" download class="social-btn">AI Engineer</a>
+          <a href="resume/Rahul-Dhiman-Resume-ML-Engineer.pdf" download class="social-btn">ML Engineer</a>
+          <a href="resume/Rahul-Dhiman-Resume-Full-Stack-Developer.pdf" download class="social-btn">Full Stack</a>
+          <a href="resume/Rahul-Dhiman-Resume-Backend-Developer.pdf" download class="social-btn">Backend</a>
+        </div>
+        <div class="contact-label" style="margin-top:20px;">More from me</div>
+        <div class="social-row" style="margin-top:8px;">
+          <a href="https://www.dhimanhub.com" target="_blank" rel="noopener" class="social-btn">dhimanhub.com</a>
+          <a href="https://www.themodernachiever.com" target="_blank" rel="noopener" class="social-btn">themodernachiever.com</a>
+          <a href="https://greenthrivehub.com" target="_blank" rel="noopener" class="social-btn">greenthrivehub.com</a>
+        </div>
         <div class="social-row">
           <a href="https://linkedin.com/in/rahuldhimanofficial" target="_blank" class="social-btn">LinkedIn</a>
           <a href="https://github.com/raahuldhiman-dev" target="_blank" class="social-btn">GitHub</a>
         </div>
       </div>
       <form id="contactForm" class="form-card fade-right d2">
-        <div class="form-row">
-          <div class="form-group"><label>Name</label><input type="text" name="name" placeholder="Your Name" required /></div>
-          <div class="form-group"><label>Email</label><input type="email" name="email" placeholder="your@email.com" required /></div>
+        <div class="form-tabs" role="tablist" aria-label="Type of enquiry">
+          <button type="button" class="form-tab active" role="tab" id="tabJob" aria-selected="true" aria-controls="paneJob" data-type="job">💼 Offer a Job</button>
+          <button type="button" class="form-tab" role="tab" id="tabProject" aria-selected="false" aria-controls="paneProject" data-type="project">🚀 Hire for a Project</button>
         </div>
-        <div class="form-group"><label>Subject</label><input type="text" name="subject" placeholder="Project Inquiry" required /></div>
-        <div class="form-group"><label>Message</label><textarea name="message" placeholder="Tell me about your project..." required></textarea></div>
-        <button class="form-submit" type="submit">Send Message →</button>
+
+        <fieldset class="form-pane" id="paneJob" role="tabpanel" aria-labelledby="tabJob">
+          <p class="form-intro">Recruiters and hiring managers: tell me about the role and I will reply within 24 hours.</p>
+          <div class="form-row">
+            <div class="form-group"><label for="jobName">Your Name</label><input id="jobName" type="text" name="name" placeholder="Your Name" required /></div>
+            <div class="form-group"><label for="jobEmail">Work Email</label><input id="jobEmail" type="email" name="email" placeholder="you@company.com" required /></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label for="jobCompany">Company</label><input id="jobCompany" type="text" name="company" placeholder="Company name" required /></div>
+            <div class="form-group"><label for="jobTitle">Job Title</label><input id="jobTitle" type="text" name="job_title" placeholder="e.g. AI Engineer" required /></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label for="jobType">Employment Type</label>
+              <select id="jobType" name="employment_type" required>
+                <option value="">Select...</option><option>Full-time</option><option>Contract</option><option>Part-time</option><option>Internship</option>
+              </select></div>
+            <div class="form-group"><label for="jobMode">Work Mode</label>
+              <select id="jobMode" name="work_mode" required>
+                <option value="">Select...</option><option>Remote</option><option>Hybrid</option><option>On-site</option>
+              </select></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label for="jobLoc">Location <span class="opt">(optional)</span></label><input id="jobLoc" type="text" name="job_location" placeholder="City / Country" /></div>
+            <div class="form-group"><label for="jobSalary">Salary Range <span class="opt">(optional)</span></label><input id="jobSalary" type="text" name="salary_range" placeholder="e.g. 20-30 LPA / $60-80k" /></div>
+          </div>
+          <div class="form-group"><label for="jobLink">Job Posting Link <span class="opt">(optional)</span></label><input id="jobLink" type="url" name="job_link" placeholder="https://..." /></div>
+          <div class="form-group"><label for="jobMsg">Message</label><textarea id="jobMsg" name="message" placeholder="About the role, team and next steps..." required></textarea></div>
+        </fieldset>
+
+        <fieldset class="form-pane" id="paneProject" role="tabpanel" aria-labelledby="tabProject" hidden disabled>
+          <p class="form-intro">Have something to build? Share the details and I will get back to you within 24 hours.</p>
+          <div class="form-row">
+            <div class="form-group"><label for="prjName">Your Name</label><input id="prjName" type="text" name="name" placeholder="Your Name" required /></div>
+            <div class="form-group"><label for="prjEmail">Email</label><input id="prjEmail" type="email" name="email" placeholder="your@email.com" required /></div>
+          </div>
+          <div class="form-group"><label for="prjCompany">Company / Business <span class="opt">(optional)</span></label><input id="prjCompany" type="text" name="company" placeholder="Company or business name" /></div>
+          <div class="form-group"><label for="prjType">Project Type</label>
+            <select id="prjType" name="project_type" required>
+              <option value="">Select...</option>
+              <option>Web application (Laravel / React)</option>
+              <option>AI / LLM / chatbot integration</option>
+              <option>Automation or trading bot</option>
+              <option>API / backend development</option>
+              <option>Cloud / DevOps setup</option>
+              <option>Other</option>
+            </select></div>
+          <div class="form-row">
+            <div class="form-group"><label for="prjBudget">Budget</label>
+              <select id="prjBudget" name="budget" required>
+                <option value="">Select...</option><option>Under $1,000</option><option>$1,000 - $5,000</option><option>$5,000 - $15,000</option><option>$15,000+</option><option>Not sure yet</option>
+              </select></div>
+            <div class="form-group"><label for="prjTime">Timeline</label>
+              <select id="prjTime" name="timeline" required>
+                <option value="">Select...</option><option>ASAP</option><option>Within 1 month</option><option>1 - 3 months</option><option>Flexible</option>
+              </select></div>
+          </div>
+          <div class="form-group"><label for="prjMsg">Project Details</label><textarea id="prjMsg" name="message" placeholder="What do you want to build? Goals, features, existing systems..." required></textarea></div>
+        </fieldset>
+
+        <input type="hidden" name="inquiry_type" id="inquiryType" value="Job offer" />
+        <button class="form-submit" type="submit" id="formSubmitBtn">Send Job Offer →</button>
       </form>
     </div>
   </div>
@@ -1395,30 +1552,76 @@
     setTimeout(remove, 4200);
   }
 
-  // Contact form
+  // Contact form (two modes: job offer / project hire)
   const form = document.getElementById('contactForm');
   if (form) {
     const submitBtn = form.querySelector('.form-submit');
+    const tabs = [...form.querySelectorAll('.form-tab')];
+    const panes = { job: document.getElementById('paneJob'), project: document.getElementById('paneProject') };
+    const labels = { job: 'Send Job Offer →', project: 'Send Project Request →' };
+    const names = { job: 'Job offer', project: 'Project inquiry' };
+    let mode = 'job';
+
+    function setMode(next, focusTab) {
+      mode = next;
+      tabs.forEach(t => {
+        const on = t.dataset.type === next;
+        t.classList.toggle('active', on);
+        t.setAttribute('aria-selected', on ? 'true' : 'false');
+        t.tabIndex = on ? 0 : -1;
+        if (on && focusTab) t.focus();
+      });
+      Object.entries(panes).forEach(([k, el]) => { el.hidden = k !== next; el.disabled = k !== next; });
+      document.getElementById('inquiryType').value = names[next];
+      submitBtn.textContent = labels[next];
+    }
+    tabs.forEach(t => t.addEventListener('click', () => setMode(t.dataset.type)));
+    form.querySelector('.form-tabs').addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') setMode(mode === 'job' ? 'project' : 'job', true);
+    });
+    // Optional deep link: /#hire-project opens the project form
+    if (location.hash === '#hire-project') setMode('project');
+
     form.addEventListener('submit', async e => {
       e.preventDefault();
-      const formData = new FormData(form);
+      const formData = new FormData(form);   // disabled (inactive) fields are excluded automatically
       formData.append('access_key', '84f57367-0394-41bc-9b9b-68a197616932');
+      const g = k => (formData.get(k) || '').toString().trim();
+      const subject = mode === 'job'
+        ? 'Job offer: ' + g('job_title') + ' at ' + g('company')
+        : 'Project inquiry: ' + g('project_type') + (g('company') ? ' (' + g('company') + ')' : '');
+      formData.append('subject', subject);
+      formData.append('from_name', 'Portfolio - ' + names[mode]);
       const originalText = submitBtn.textContent;
       submitBtn.textContent = 'Sending...';
       submitBtn.disabled = true;
       try {
         const response = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: formData });
         const data = await response.json();
-        if (response.ok) { showToast('success', 'Message sent! I will reply within 24 hours.'); form.reset(); }
-        else { showToast('error', data.message || 'Unable to send message.'); }
+        if (response.ok) {
+          showToast('success', mode === 'job' ? 'Thanks! I will review the role and reply within 24 hours.' : 'Thanks! I will review your project and reply within 24 hours.');
+          form.reset();
+          setMode(mode);
+        } else { showToast('error', data.message || 'Unable to send message.'); }
       } catch (err) {
         showToast('error', 'Something went wrong. Please try again.');
       } finally {
-        submitBtn.textContent = originalText;
+        submitBtn.textContent = labels[mode];
         submitBtn.disabled = false;
       }
     });
   }
+
+  // Resume menu
+  (function () {
+    const btn = document.getElementById('resumeBtn');
+    const pop = document.getElementById('resumePop');
+    if (!btn || !pop) return;
+    const setOpen = o => { pop.classList.toggle('open', o); btn.setAttribute('aria-expanded', o ? 'true' : 'false'); };
+    btn.addEventListener('click', e => { e.stopPropagation(); setOpen(!pop.classList.contains('open')); });
+    document.addEventListener('click', e => { if (!pop.contains(e.target)) setOpen(false); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') setOpen(false); });
+  })();
 
   // AI Chat Assistant
   const chatToggle = document.getElementById('aiChatToggle');
@@ -1467,6 +1670,17 @@
       'PHP / Laravel: 95%', 'MySQL / PostgreSQL: 90%', 'JavaScript / TypeScript: 90%',
       'Python: 88%', 'React / Next.js: 85%', 'GPT-4 integrations: 85%',
       'FastAPI / Node.js: 82%', 'Docker / Cloud: 78%'
+    ]) + P(B('Cloud:') + ' AWS, Google Cloud (GCP), Oracle Cloud (OCI), Azure, Cloudflare'),
+    cloud: P(B('Cloud and DevOps')) + UL([
+      'AWS (S3, DynamoDB, Rekognition): built a face recognition system on these',
+      'Google Cloud Platform (GCP)', 'Oracle Cloud Infrastructure (OCI)', 'Microsoft Azure',
+      'Docker, GitHub Actions CI/CD, Cloudflare'
+    ]),
+    resume: P(B('Download Rahul\'s resume') + ' (ATS-friendly PDF, pick the role):') + UL([
+      '<a href="resume/Rahul-Dhiman-Resume-AI-Engineer.pdf" download>AI Engineer</a>',
+      '<a href="resume/Rahul-Dhiman-Resume-ML-Engineer.pdf" download>Machine Learning Engineer</a>',
+      '<a href="resume/Rahul-Dhiman-Resume-Full-Stack-Developer.pdf" download>Full Stack Developer</a>',
+      '<a href="resume/Rahul-Dhiman-Resume-Backend-Developer.pdf" download>Backend Developer</a>'
     ]),
     experience: P(B('5+ years') + ' of development experience:') + UL([
       B('Softweaver Technologies') + ' · Software Engineer (Full Stack, AI Integration) · Mar 2025 - Present',
@@ -1500,11 +1714,12 @@
       'Delivered features under tight deadlines with code review and version control'
     ]) + P(B('Tech:') + ' PHP, Laravel, JavaScript, jQuery, AJAX, Bubble.io, MySQL, Git'),
     projects: P(B('Featured projects')) + UL([
-      B('DTradeX') + ': algorithmic trading bot',
-      B('AI Content Generator'),
-      B('Appointment Booking System') + ' with Zoom API',
-      B('Personal AI Assistant') + ': voice recognition + GPT-4',
-      B('eCommerce Platform') + ' with role-based auth'
+      B('RAG Chatbot') + ': multi-tenant document Q&A (<a href="' + GITHUB + '/rag-chatbot" target="_blank" rel="noopener">code</a>)',
+      B('AWS Face Recognition System') + ': Rekognition, S3, DynamoDB (<a href="' + GITHUB + '/aws-face-detection-with-aws-s3" target="_blank" rel="noopener">code</a>)',
+      B('Stock Price Predictor') + ': LSTM forecasting (<a href="' + GITHUB + '/stock-price-predictor" target="_blank" rel="noopener">code</a>)',
+      B('Laravel Chat App') + ': real-time chat (<a href="' + GITHUB + '/Laravel-Chat-App" target="_blank" rel="noopener">code</a>)',
+      B('Personal AI Assistant') + ': voice + GPT-4 (in progress)',
+      B('AI Content Generator, Booking System, eCommerce Platform, DTradeX') + ': client/private work, code on request'
     ]) + P('See the <a href="#projects">Projects section</a> or <a href="' + GITHUB + '" target="_blank" rel="noopener">GitHub</a> for more.'),
     education: P(B('Education')) + UL([
       B('MCA, AI & Machine Learning') + '<br>Amity University Online · Mar 2024 - Apr 2026',
@@ -1517,6 +1732,7 @@
     languages: P(B('Languages')) + UL(['English: limited working', 'Hindi: full professional', 'Punjabi: native']),
     contact: P(B('Get in touch')) +
       ROW('Email', '<a href="mailto:' + EMAIL + '">' + EMAIL + '</a>', EMAIL) +
+      ROW('Phone', '<a href="tel:+918894084509">+91 88940 84509</a>', '+918894084509') +
       ROW('LinkedIn', '<a href="' + LINKEDIN + '" target="_blank" rel="noopener">rahuldhimanofficial</a>', LINKEDIN) +
       ROW('GitHub', '<a href="' + GITHUB + '" target="_blank" rel="noopener">raahuldhiman-dev</a>', GITHUB) +
       P('Or use the <a href="#contact">contact form</a> on this page.'),
@@ -1540,6 +1756,8 @@
 
   // Ordered intents: most specific first. Patterns match whole words/prefixes.
   const intents = [
+    [/\b(resume|cv|curriculum)\b/, 'resume'],
+    [/\b(cloud|aws|gcp|google cloud|oracle|oci|azure|devops|docker|s3|ec2)\b/, 'cloud'],
     [/\b(softweaver|swt|current(ly)?|present|now)\b/, 'softweaver'],
     [/\bkwan\b/, 'kwan'],
     [/\bcanvas\b|\bcraft\b|\bagency\b/, 'canvas'],
@@ -1547,7 +1765,7 @@
     [/\b(certif\w*|course\w*|google ads|excel)\b/, 'certs'],
     [/\b(language\w*|speak|english|hindi|punjabi)\b/, 'languages'],
     [/\b(educat\w*|stud(y|ied|ies)|degree|mca|bca|universit\w*|amity|college|qualif\w*)\b/, 'education'],
-    [/\b(contact|email|mail|reach|linkedin|phone|connect)\b/, 'contact'],
+    [/\b(contact|email|mail|reach|linkedin|phone|number|call|connect)\b/, 'contact'],
     [/\b(locat\w*|based|mohali|punjab|india|where|remote)\b/, 'location'],
     [/\b(hire|hiring|job|jobs|available|availability|opportunit\w*|open to|role|roles)\b/, 'hire'],
     [/\b(project\w*|portfolio|built|build|shipped|dtradex|trading)\b/, 'projects'],
@@ -1559,12 +1777,73 @@
     [/\b(hello|hi|hey|hola|yo)\b/, 'hello']
   ];
 
-  function getAIResponse(input) {
+  function getIntent(input) {
     const q = input.toLowerCase();
     for (const [re, key] of intents) {
-      if (re.test(q)) return knowledge[key];
+      if (re.test(q)) return key;
     }
-    return knowledge.fallback;
+    return 'fallback';
+  }
+  function getAIResponse(input) { return knowledge[getIntent(input)]; }
+
+  // Follow-up suggestions: each question maps to the intent it triggers
+  const followPool = {
+    softweaver: 'What does he do at Softweaver?',
+    kwan: 'What did he do at Kwan Network Solutions?',
+    canvas: 'What did he do at Canvas Craft Media?',
+    worksdelight: 'What did he do at WorksDelight?',
+    skills: 'What are his skills?',
+    cloud: 'Does he know AWS, GCP or Oracle Cloud?',
+    ai: 'What AI/ML work has he done?',
+    projects: 'Show me his projects',
+    education: 'What is his education?',
+    certs: 'Any certifications?',
+    hire: 'Is he open to work?',
+    resume: 'Can I download his resume?',
+    contact: 'How can I contact him?',
+    location: 'Where is he based?',
+    languages: 'Which languages does he speak?'
+  };
+  const followRelated = {
+    experience: ['softweaver', 'skills', 'ai'], softweaver: ['kwan', 'ai', 'skills'], kwan: ['canvas', 'softweaver', 'skills'],
+    canvas: ['worksdelight', 'kwan', 'skills'], worksdelight: ['canvas', 'experience', 'skills'],
+    skills: ['cloud', 'projects', 'ai'], cloud: ['projects', 'skills', 'softweaver'], ai: ['projects', 'skills', 'softweaver'],
+    projects: ['skills', 'hire', 'resume'], education: ['certs', 'ai', 'skills'], certs: ['education', 'skills'],
+    hire: ['resume', 'contact', 'skills'], contact: ['resume', 'hire', 'projects'], resume: ['contact', 'hire', 'projects'],
+    location: ['hire', 'contact'], languages: ['education', 'hire'], years: ['softweaver', 'skills'], thanks: [], hello: [], fallback: []
+  };
+  const asked = new Set();
+  const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+
+  function pickFollowups(key, n) {
+    const avail = k => followPool[k] && k !== key && !asked.has(k);
+    let pool = Object.keys(followPool);
+    if (!pool.some(avail)) asked.clear();           // everything asked: start over
+    const related = shuffle((followRelated[key] || []).filter(avail)).slice(0, 2);
+    const rest = shuffle(pool.filter(k => avail(k) && !related.includes(k)));
+    return related.concat(rest).slice(0, n);
+  }
+
+  function showFollowups(key) {
+    document.querySelectorAll('.ai-followups').forEach(e => e.remove());
+    const keys = pickFollowups(key, 3);
+    if (!keys.length) return;
+    const row = document.createElement('div');
+    row.className = 'ai-followups';
+    const label = document.createElement('span');
+    label.className = 'ai-fu-label';
+    label.textContent = 'Ask next:';
+    row.appendChild(label);
+    keys.forEach(k => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'ai-chip';
+      b.dataset.q = followPool[k];
+      b.textContent = followPool[k];
+      row.appendChild(b);
+    });
+    chatMessages.appendChild(row);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
   }
 
   function addMessage(text, isUser) {
@@ -1581,6 +1860,7 @@
   function handleChat(preset) {
     const text = (typeof preset === 'string' ? preset : chatInput.value).trim();
     if (!text) return;
+    document.querySelectorAll('.ai-followups').forEach(e => e.remove());
     addMessage(text, true);
     chatInput.value = '';
     const typing = document.createElement('div');
@@ -1592,7 +1872,10 @@
     setTimeout(() => {
       const indicator = document.getElementById('typingIndicator');
       if (indicator) indicator.remove();
-      addMessage(getAIResponse(text), false);
+      const key = getIntent(text);
+      asked.add(key);
+      addMessage(knowledge[key], false);
+      showFollowups(key);
     }, 800 + Math.random() * 600);
   }
 
@@ -1619,8 +1902,14 @@
   });
 
   chatSend.addEventListener('click', () => handleChat());
-  document.querySelectorAll('.ai-chip').forEach(btn => {
-    btn.addEventListener('click', () => handleChat(btn.dataset.q));
+  // Pinned chips and the follow-up chips Nova adds after each answer
+  document.getElementById('aiChips').addEventListener('click', e => {
+    const btn = e.target.closest('.ai-chip');
+    if (btn) handleChat(btn.dataset.q);
+  });
+  chatMessages.addEventListener('click', e => {
+    const btn = e.target.closest('.ai-followups .ai-chip');
+    if (btn) handleChat(btn.dataset.q);
   });
   chatInput.addEventListener('keydown', e => { if (e.key === 'Enter') handleChat(); });
 
