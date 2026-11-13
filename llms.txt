@@ -1,0 +1,25 @@
+# Rahul Dhiman
+
+> Full-Stack & AI Engineer based in Mohali, Punjab, India, open to remote roles worldwide. 5+ years of development experience across Laravel/PHP, React, Python, REST APIs and AI/LLM integration. Currently a Software Engineer (Full Stack, AI Integration) at Softweaver Technologies. MCA in Artificial Intelligence & Machine Learning (Amity University Online).
+
+Target roles: AI Engineer, ML Engineer, Full Stack Developer, Backend Developer.
+
+## Key pages
+- [Portfolio home](https://raahuldhiman-dev.github.io/): overview, skills, projects, experience, FAQ and contact
+- [Projects](https://raahuldhiman-dev.github.io/#projects): RAG chatbot, AWS face recognition, LSTM stock predictor, Laravel apps
+- [Experience](https://raahuldhiman-dev.github.io/#experience): Softweaver Technologies, Kwan Network Solutions, Canvas Craft Media, WorksDelight
+- [FAQ](https://raahuldhiman-dev.github.io/#faq): short answers about experience, skills, availability and contact
+- [Contact](https://raahuldhiman-dev.github.io/#contact): job offers and project enquiries
+
+## Resumes (ATS-friendly PDF)
+- [AI Engineer](https://raahuldhiman-dev.github.io/resume/Rahul-Dhiman-Resume-AI-Engineer.pdf)
+- [Machine Learning Engineer](https://raahuldhiman-dev.github.io/resume/Rahul-Dhiman-Resume-ML-Engineer.pdf)
+- [Full Stack Developer](https://raahuldhiman-dev.github.io/resume/Rahul-Dhiman-Resume-Full-Stack-Developer.pdf)
+- [Backend Developer](https://raahuldhiman-dev.github.io/resume/Rahul-Dhiman-Resume-Backend-Developer.pdf)
+
+## Profiles
+- [LinkedIn](https://www.linkedin.com/in/raahuldhimanofficial)
+- [GitHub](https://github.com/raahuldhiman-dev)
+
+## Core skills
+Laravel, PHP, JavaScript/TypeScript, Python, React, Next.js, FastAPI, Node.js, MySQL, PostgreSQL, Redis, Docker, GPT-4/OpenAI API, LangChain, RAG, AWS, Google Cloud, Oracle Cloud, Azure.
