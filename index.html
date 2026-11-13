@@ -660,7 +660,7 @@
     }
     .resume-menu { position: relative; display: inline-block; }
     .resume-pop {
-      position: absolute; top: calc(100% + 8px); left: 0; min-width: 270px; z-index: 60;
+      position: fixed; top: 0; left: 0; min-width: 270px; z-index: 1001;
       background: rgba(10,10,20,0.97); border: 1px solid var(--border2); border-radius: 14px;
       padding: 8px; display: none; box-shadow: 0 16px 48px rgba(0,0,0,0.5);
     }
@@ -1617,7 +1617,27 @@
     const btn = document.getElementById('resumeBtn');
     const pop = document.getElementById('resumePop');
     if (!btn || !pop) return;
-    const setOpen = o => { pop.classList.toggle('open', o); btn.setAttribute('aria-expanded', o ? 'true' : 'false'); };
+    // The menu lives on <body> and is positioned against the window, so no section can clip or cover it.
+    document.body.appendChild(pop);
+    const place = () => {
+      const b = btn.getBoundingClientRect();
+      const w = pop.offsetWidth, h = pop.offsetHeight;
+      const below = innerHeight - b.bottom - 8;
+      const above = b.top - 84;                       // keep clear of the fixed nav
+      const up = h > below && above > below;
+      let top = up ? b.top - h - 8 : b.bottom + 8;
+      top = Math.max(80, Math.min(top, innerHeight - h - 8));
+      const left = Math.max(8, Math.min(b.left, innerWidth - w - 8));
+      pop.style.top = top + 'px';
+      pop.style.left = left + 'px';
+    };
+    const setOpen = o => {
+      pop.classList.toggle('open', o);
+      btn.setAttribute('aria-expanded', o ? 'true' : 'false');
+      if (o) place();
+    };
+    window.addEventListener('resize', () => { if (pop.classList.contains('open')) place(); });
+    window.addEventListener('scroll', () => { if (pop.classList.contains('open')) place(); }, { passive: true });
     btn.addEventListener('click', e => { e.stopPropagation(); setOpen(!pop.classList.contains('open')); });
     document.addEventListener('click', e => { if (!pop.contains(e.target)) setOpen(false); });
     document.addEventListener('keydown', e => { if (e.key === 'Escape') setOpen(false); });
