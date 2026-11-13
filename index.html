@@ -5,6 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <title>Rahul Dhiman — Full-Stack & AI Engineer</title>
+  <meta name="description" content="Rahul Dhiman: Full-Stack & AI Engineer (Laravel, React, Python, GPT-4) based in Mohali, India. 5+ years of experience, currently at Softweaver Technologies. Open to remote roles.">
+  <meta name="theme-color" content="#050508">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Rahul Dhiman — Full-Stack & AI Engineer">
+  <meta property="og:description" content="Laravel, React, Python and GPT-4 integrations. 5+ years building web apps and AI-powered products. Open to remote roles.">
+  <meta name="twitter:card" content="summary">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
@@ -35,7 +41,7 @@
       --shadow: 0 8px 32px rgba(0,0,0,0.4);
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; overflow-x: hidden; }
     body {
       background: var(--bg);
       color: var(--text);
@@ -158,7 +164,7 @@
     #home { min-height: 100vh; display: flex; align-items: center; padding: 100px 0 60px; position: relative; overflow: hidden; }
     .hero-inner {
       display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
-      max-width: 1280px; margin: 0 auto; width: 100%;
+      max-width: 1280px; margin: 0 auto; width: 100%; padding: 0 5%;
     }
     .hero-tag {
       display: inline-flex; align-items: center; gap: 8px;
@@ -540,13 +546,49 @@
     /* AI Chat */
     .ai-chat-toggle {
       position: fixed; bottom: 24px; right: 24px; z-index: 1000;
-      width: 56px; height: 56px; border-radius: 50%;
-      background: var(--g1); border: none; cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 22px; box-shadow: 0 8px 32px rgba(255,92,58,0.3);
+      height: 56px; padding: 0 22px 0 8px; border-radius: 999px;
+      background: var(--g1); border: none; cursor: pointer; color: #fff;
+      display: flex; align-items: center; gap: 10px;
+      font-family: var(--font-body); font-size: 14px; font-weight: 600; letter-spacing: 0.2px;
+      box-shadow: 0 8px 32px rgba(255,92,58,0.35);
       transition: transform 0.3s, box-shadow 0.3s;
     }
-    .ai-chat-toggle:hover { transform: scale(1.1) rotate(10deg); box-shadow: 0 12px 40px rgba(255,92,58,0.4); }
+    .ai-chat-toggle::before, .ai-chat-toggle::after {
+      content: ''; position: absolute; inset: 0; border-radius: inherit;
+      border: 2px solid rgba(255,92,58,0.55); pointer-events: none;
+      animation: novaRing 2.6s ease-out infinite;
+    }
+    .ai-chat-toggle::after { animation-delay: 1.3s; }
+    @keyframes novaRing { 0% { transform: scale(1); opacity: 0.9; } 100% { transform: scale(1.35, 1.6); opacity: 0; } }
+    .ai-chat-toggle:hover { transform: translateY(-3px) scale(1.04); box-shadow: 0 12px 40px rgba(255,92,58,0.5); }
+    .ai-chat-toggle .nova-ico {
+      width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0;
+      background: rgba(0,0,0,0.25); display: flex; align-items: center; justify-content: center;
+      font-size: 20px; animation: novaWiggle 5s ease-in-out infinite;
+    }
+    @keyframes novaWiggle { 0%, 88%, 100% { transform: rotate(0); } 91% { transform: rotate(-14deg); } 94% { transform: rotate(12deg); } 97% { transform: rotate(-8deg); } }
+    .ai-chat-toggle .nova-dot {
+      position: absolute; top: 4px; left: 36px; width: 12px; height: 12px; border-radius: 50%;
+      background: #2ee6a6; border: 2px solid #0a0a14; box-shadow: 0 0 8px #2ee6a6;
+    }
+    .ai-chat-toggle.is-open::before, .ai-chat-toggle.is-open::after { animation: none; opacity: 0; }
+    .ai-teaser {
+      position: fixed; bottom: 92px; right: 24px; z-index: 1000; max-width: 250px;
+      background: rgba(10,10,20,0.96); border: 1px solid var(--border2); border-radius: 14px 14px 4px 14px;
+      padding: 12px 34px 12px 14px; font-size: 13px; line-height: 1.5; color: var(--text);
+      box-shadow: 0 16px 48px rgba(0,0,0,0.5); cursor: pointer;
+      opacity: 0; transform: translateY(8px); pointer-events: none;
+      transition: opacity 0.35s, transform 0.35s;
+    }
+    .ai-teaser.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
+    .ai-teaser strong { color: var(--acc1); }
+    .ai-teaser-x {
+      position: absolute; top: 4px; right: 6px; background: none; border: none;
+      color: var(--muted); font-size: 14px; cursor: pointer; padding: 4px;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .ai-chat-toggle::before, .ai-chat-toggle::after, .ai-chat-toggle .nova-ico { animation: none; }
+    }
     .ai-chat-panel {
       position: fixed; bottom: 96px; right: 24px; z-index: 999;
       width: 380px; max-height: 520px; border-radius: 20px;
@@ -596,7 +638,31 @@
       background: rgba(132,94,247,0.2); border: 1px solid rgba(132,94,247,0.2);
       border-bottom-right-radius: 4px;
     }
-    .ai-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+    .ai-msg-bubble { user-select: text; -webkit-user-select: text; word-break: break-word; }
+    .ai-msg-bubble p { margin: 0 0 8px; }
+    .ai-msg-bubble > :last-child { margin-bottom: 0; }
+    .ai-msg-bubble strong { color: var(--text); font-weight: 600; }
+    .ai-msg-bubble a { color: var(--acc1); text-decoration: underline; text-underline-offset: 2px; }
+    .ai-list { list-style: none; margin: 0 0 8px; padding: 0; }
+    .ai-list li { position: relative; padding: 2px 0 2px 14px; }
+    .ai-list li::before { content: '▸'; position: absolute; left: 0; color: var(--acc2); font-size: 10px; top: 5px; }
+    .ai-msg.bot { max-width: 92%; }
+    .ai-row { display: flex; align-items: center; gap: 6px; margin-bottom: 6px; }
+    .ai-row .ai-label { color: var(--muted); font-size: 10px; font-family: var(--font-mono); width: 54px; flex-shrink: 0; }
+    .ai-row a { font-size: 12px; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .ai-row .ai-copy { margin-left: auto; flex-shrink: 0; }
+    .ai-copy {
+      background: var(--bg3); border: 1px solid var(--border2); color: var(--text);
+      font-family: var(--font-mono); font-size: 10px; padding: 2px 8px; border-radius: 6px; cursor: pointer;
+    }
+    .ai-copy:hover { border-color: rgba(132,94,247,0.5); }
+    .ai-copy.copied { color: var(--acc3); border-color: var(--acc3); }
+    .ai-chips {
+      display: flex; gap: 6px; padding: 10px 16px 0; overflow-x: auto; flex-shrink: 0;
+      scrollbar-width: none;
+    }
+    .ai-chips::-webkit-scrollbar { display: none; }
+    .ai-chip { white-space: nowrap; flex-shrink: 0; }
     .ai-chip {
       background: var(--bg3); border: 1px solid var(--border2); color: var(--text);
       font-family: var(--font-body); font-size: 12px; padding: 6px 12px;
@@ -687,6 +753,7 @@
       .skills-showcase { grid-template-columns: repeat(3, 1fr); }
       .ai-chat-panel { width: calc(100vw - 32px); right: 16px; bottom: 88px; }
       .ai-chat-toggle { bottom: 16px; right: 16px; }
+      .ai-teaser { bottom: 84px; right: 16px; max-width: calc(100vw - 32px); }
       .hud-corner { display: none; }
     }
     @media (max-width: 480px) {
@@ -709,7 +776,13 @@
 <div class="toast-stack" id="toastStack"></div>
 
 <!-- AI Chat -->
-<button class="ai-chat-toggle" id="aiChatToggle">⚡</button>
+<div class="ai-teaser" id="aiTeaser" role="status">
+  <button type="button" class="ai-teaser-x" id="aiTeaserX" aria-label="Dismiss">✕</button>
+  <span>👋 Hi, I'm <strong>Nova</strong>. Ask me anything about Rahul's experience, skills or availability.</span>
+</div>
+<button class="ai-chat-toggle" id="aiChatToggle" aria-label="Chat with Nova, Rahul's AI guide">
+  <span class="nova-ico">⚡</span><span class="nova-label">Ask Nova</span><span class="nova-dot"></span>
+</button>
 <div class="ai-chat-panel" id="aiChatPanel">
   <div class="ai-chat-header">
     <div class="ai-chat-avatar">N</div>
@@ -723,13 +796,13 @@
     <div class="ai-msg bot">
       <div class="ai-msg-bubble">Hi! I'm Nova, Rahul's AI guide. Ask me about his experience, skills, projects, or how to get in touch.</div>
     </div>
-    <div class="ai-chips" id="aiChips">
-      <button type="button" class="ai-chip" data-q="Tell me about his experience">Experience</button>
-      <button type="button" class="ai-chip" data-q="What are his skills?">Skills</button>
-      <button type="button" class="ai-chip" data-q="What projects has he built?">Projects</button>
-      <button type="button" class="ai-chip" data-q="Is he open to work?">Open to work</button>
-      <button type="button" class="ai-chip" data-q="How can I contact him?">Contact</button>
-    </div>
+  </div>
+  <div class="ai-chips" id="aiChips">
+    <button type="button" class="ai-chip" data-q="Tell me about his experience">Experience</button>
+    <button type="button" class="ai-chip" data-q="What are his skills?">Skills</button>
+    <button type="button" class="ai-chip" data-q="What projects has he built?">Projects</button>
+    <button type="button" class="ai-chip" data-q="Is he open to work?">Open to work</button>
+    <button type="button" class="ai-chip" data-q="How can I contact him?">Contact</button>
   </div>
   <div class="ai-chat-input-area">
     <input class="ai-chat-input" id="aiChatInput" placeholder="Ask Nova about Rahul..." />
@@ -796,8 +869,8 @@
         <div class="stat-item">
           <div class="stat-icon" style="background:rgba(132,94,247,0.1);">🚀</div>
           <div>
-            <div class="stat-num" data-target="50">0</div>
-            <div class="stat-label">Projects</div>
+            <div class="stat-num" data-target="4">0</div>
+            <div class="stat-label">Companies</div>
           </div>
         </div>
         <div class="stat-item">
@@ -826,7 +899,8 @@
             </div>
             <div class="pc-bio">Building AI-powered products & scalable web solutions.</div>
             <div class="pc-links">
-              <a href="https://github.com/raahuldhiman-dev" target="_blank" class="pc-link">💻 GitHub</a>
+              <a href="https://www.linkedin.com/in/raahuldhimanofficial" target="_blank" rel="noopener" class="pc-link">💼 LinkedIn</a>
+              <a href="https://github.com/raahuldhiman-dev" target="_blank" rel="noopener" class="pc-link">💻 GitHub</a>
             </div>
           </div>
         </div>
@@ -962,7 +1036,7 @@
           <h3 class="project-title">AI Content Generator</h3>
           <p class="project-desc">Laravel microservice powered by GPT-4 for SEO & marketing content. Queue-based processing, REST API, multi-language support, React dashboard.</p>
           <div class="project-tags"><span class="project-tag">Laravel</span><span class="project-tag">GPT-4</span><span class="project-tag">React</span><span class="project-tag">MySQL</span><span class="project-tag">Redis</span></div>
-          <div class="project-links"><a href="https://github.com/raahuldhiman-dev" target="_blank" class="project-link">GitHub →</a><a href="#contact" class="project-link alt">Demo</a></div>
+          <div class="project-links"><a href="https://github.com/raahuldhiman-dev" target="_blank" class="project-link">GitHub →</a></div>
         </div>
       </div>
       <div class="project-card" data-category="fullstack">
@@ -1167,9 +1241,9 @@
   <div class="footer-inner">
     <a href="#home" class="footer-logo">Rahul Dhiman</a>
     <div class="footer-links">
-      <a href="#about">About</a><a href="#skills">Skills</a><a href="#projects">Projects</a><a href="#contact">Contact</a>
+      <a href="#about">About</a><a href="#skills">Skills</a><a href="#projects">Projects</a><a href="#experience">Experience</a><a href="#contact">Contact</a>
     </div>
-    <div class="footer-copy">© 2025 · Built with ☕ in Mohali</div>
+    <div class="footer-copy">© 2026 · Built with ☕ in Mohali</div>
   </div>
 </footer>
 
@@ -1354,30 +1428,114 @@
   const chatSend = document.getElementById('aiChatSend');
   const chatMessages = document.getElementById('aiChatMessages');
 
-  chatToggle.addEventListener('click', () => chatPanel.classList.toggle('open'));
-  chatClose.addEventListener('click', () => chatPanel.classList.remove('open'));
+  const teaser = document.getElementById('aiTeaser');
+  function hideTeaser() { teaser.classList.remove('show'); }
+  function setChatOpen(open) {
+    chatPanel.classList.toggle('open', open);
+    chatToggle.classList.toggle('is-open', open);
+    if (open) hideTeaser();
+  }
+  chatToggle.addEventListener('click', () => setChatOpen(!chatPanel.classList.contains('open')));
+  chatClose.addEventListener('click', () => setChatOpen(false));
+  teaser.addEventListener('click', e => { if (e.target.id !== 'aiTeaserX') setChatOpen(true); });
+  document.getElementById('aiTeaserX').addEventListener('click', e => { e.stopPropagation(); hideTeaser(); });
 
-  const GREETING = "Hi! I'm Nova, Rahul's AI guide. Ask me about his experience, skills, projects, or how to get in touch.";
+  // Nudge visitors once per session so they notice the assistant
+  (function () {
+    let seen = false;
+    try { seen = sessionStorage.getItem('novaTeased') === '1'; } catch (e) {}
+    if (seen) return;
+    setTimeout(() => {
+      if (chatPanel.classList.contains('open')) return;
+      teaser.classList.add('show');
+      try { sessionStorage.setItem('novaTeased', '1'); } catch (e) {}
+      setTimeout(hideTeaser, 12000);
+    }, 4000);
+  })();
+
+  const P = t => '<p>' + t + '</p>';
+  const B = t => '<strong>' + t + '</strong>';
+  const UL = items => '<ul class="ai-list">' + items.map(i => '<li>' + i + '</li>').join('') + '</ul>';
+  const COPY = v => '<button type="button" class="ai-copy" data-copy="' + v + '">Copy</button>';
+  const ROW = (label, link, copyValue) => '<div class="ai-row"><span class="ai-label">' + label + '</span>' + link + (copyValue ? COPY(copyValue) : '') + '</div>';
+  const EMAIL = 'torahul12091@gmail.com';
+  const LINKEDIN = 'https://www.linkedin.com/in/rahuldhimanofficial';
+  const GITHUB = 'https://github.com/raahuldhiman-dev';
+
   const knowledge = {
-    skills: 'Rahul specializes in PHP/Laravel (95%), JavaScript/TypeScript (90%), Python (88%), React/Next.js (85%), FastAPI/Node.js (82%), GPT-4 integrations (85%), MySQL/PostgreSQL (90%), and Docker/Cloud (78%).',
-    experience: 'Rahul has 5+ years of experience. Currently: Software Engineer (Full Stack, AI Integration) at Softweaver Technologies (Mar 2025 - Present). Before that: Full Stack Engineer at Kwan Network Solutions (Aug 2023 - Mar 2025), Full Stack Engineer at Canvas Craft Media (Aug 2022 - Aug 2023), and PHP Developer at WorksDelight (Feb - Aug 2022). Ask me about any of them!',
-    softweaver: 'At Softweaver Technologies (Mar 2025 - Present, Mohali) Rahul is a Software Engineer (Full Stack, AI Integration). He designs and builds software infrastructure for web platforms with PHP, Laravel and JavaScript frameworks, integrates AI/ML APIs and third-party services into existing product pipelines, contributes to architecture decisions, design reviews and code quality standards, and collaborates with cross-functional teams in an agile environment. Tech: Laravel, PHP, JavaScript, React, MySQL, REST APIs.',
-    kwan: 'At Kwan Network Solutions (Aug 2023 - Mar 2025) Rahul was a Full Stack Engineer. He built and maintained PHP/Laravel backends for business-critical apps, created responsive front-ends with JavaScript, jQuery and Bootstrap, designed and optimised MySQL schemas for high-traffic apps, integrated REST APIs, payment gateways and communication tools, and took part in the full SDLC from requirements to production.',
-    canvas: 'At Canvas Craft Media (Aug 2022 - Aug 2023) Rahul was a Full Stack Engineer at a digital agency. He built client websites and landing pages with HTML5, CSS3, JavaScript and jQuery, turned Figma/Canva mockups into responsive pages, supported PHP/Laravel back-end integrations, and delivered several client projects in parallel.',
-    worksdelight: 'At WorksDelight (Feb - Aug 2022) Rahul was a PHP Developer. He built Laravel/MVC applications, added dynamic front-end behaviour with JavaScript, jQuery and AJAX, prototyped with Bubble.io, and delivered features under tight deadlines with code review and version control.',
-    current: 'Rahul is currently a Software Engineer (Full Stack, AI Integration) at Softweaver Technologies in Mohali, working on scalable web applications and AI integrations. Just ask "what does he do at Softweaver?" for details.',
-    projects: 'His featured projects include: DTradeX (algo trading bot), AI Content Generator, Appointment Booking System, Personal AI Assistant, and eCommerce Platform.',
-    education: 'Rahul holds an MCA in AI & Machine Learning from Amity University Online (Mar 2024 - Apr 2026) and a BCA from Himachal Pradesh University (2018-2021).',
-    certs: 'Certifications: Generative AI Foundations, Google Ads Search Certification, Advanced Excel, Professional and Life Skills, and Principles of Retailing.',
-    languages: 'Rahul speaks English (limited working), Hindi (full professional) and Punjabi (native).',
-    contact: 'You can reach Rahul via email at torahul12091@gmail.com, LinkedIn (rahuldhimanofficial), or through the contact form on this page.',
-    location: 'Rahul is based in Mohali, Punjab, India and is open to remote work worldwide.',
-    hire: 'Rahul is open to full-time and remote opportunities as an AI Engineer, ML Engineer, Full Stack Developer or Backend Developer. Contact him via email or LinkedIn.',
-    ai: 'Rahul works with GPT-4, the OpenAI API, LangChain, NLP and voice recognition, and builds AI assistants, AI-powered tools and automation systems.',
-    years: 'Rahul has 5+ years of development experience.',
-    thanks: "You're welcome! Have more questions? Just ask.",
-    hello: GREETING,
-    fallback: 'I can tell you about Rahul\'s experience (Softweaver, Kwan, Canvas Craft, WorksDelight), skills, projects, education, certifications, or how to contact him. Try "What did he do at Softweaver?" or "What are his skills?"'
+    skills: P(B('Core skills') + ' (self-rated proficiency)') + UL([
+      'PHP / Laravel: 95%', 'MySQL / PostgreSQL: 90%', 'JavaScript / TypeScript: 90%',
+      'Python: 88%', 'React / Next.js: 85%', 'GPT-4 integrations: 85%',
+      'FastAPI / Node.js: 82%', 'Docker / Cloud: 78%'
+    ]),
+    experience: P(B('5+ years') + ' of development experience:') + UL([
+      B('Softweaver Technologies') + ' · Software Engineer (Full Stack, AI Integration) · Mar 2025 - Present',
+      B('Kwan Network Solutions') + ' · Full Stack Engineer · Aug 2023 - Mar 2025',
+      B('Canvas Craft Media') + ' · Full Stack Engineer · Aug 2022 - Aug 2023',
+      B('WorksDelight') + ' · PHP Developer · Feb - Aug 2022'
+    ]) + P('Ask about any of them for details, e.g. "What did he do at Softweaver?"'),
+    softweaver: P(B('Softweaver Technologies') + ' · Software Engineer (Full Stack, AI Integration)<br>Mar 2025 - Present · Mohali') + UL([
+      'Designs and builds software infrastructure for web platforms with PHP, Laravel and JavaScript frameworks',
+      'Integrates AI/ML APIs and third-party services into existing product pipelines',
+      'Contributes to architecture decisions, design reviews and code quality standards',
+      'Collaborates with cross-functional teams in an agile environment'
+    ]) + P(B('Tech:') + ' Laravel, PHP, JavaScript, React, MySQL, REST APIs'),
+    kwan: P(B('Kwan Network Solutions') + ' · Full Stack Engineer<br>Aug 2023 - Mar 2025') + UL([
+      'Built and maintained PHP/Laravel backends for business-critical web apps',
+      'Created responsive front-ends with JavaScript, jQuery and Bootstrap',
+      'Designed and optimised MySQL schemas for high-traffic apps',
+      'Integrated REST APIs, payment gateways and communication tools',
+      'Took part in the full SDLC, from requirements to production'
+    ]) + P(B('Tech:') + ' PHP, Laravel, JavaScript, jQuery, MySQL, REST APIs, Git'),
+    canvas: P(B('Canvas Craft Media') + ' · Full Stack Engineer<br>Aug 2022 - Aug 2023 · Digital agency') + UL([
+      'Built client websites and landing pages with HTML5, CSS3, JavaScript and jQuery',
+      'Turned Figma/Canva mockups into responsive pages',
+      'Supported PHP/Laravel back-end integrations',
+      'Delivered several client projects in parallel'
+    ]) + P(B('Tech:') + ' HTML5, CSS3, JavaScript, jQuery, PHP, Bootstrap, WordPress'),
+    worksdelight: P(B('WorksDelight') + ' · PHP Developer<br>Feb - Aug 2022') + UL([
+      'Built Laravel / MVC applications',
+      'Added dynamic front-end behaviour with JavaScript, jQuery and AJAX',
+      'Prototyped quickly with Bubble.io',
+      'Delivered features under tight deadlines with code review and version control'
+    ]) + P(B('Tech:') + ' PHP, Laravel, JavaScript, jQuery, AJAX, Bubble.io, MySQL, Git'),
+    projects: P(B('Featured projects')) + UL([
+      B('DTradeX') + ': algorithmic trading bot',
+      B('AI Content Generator'),
+      B('Appointment Booking System') + ' with Zoom API',
+      B('Personal AI Assistant') + ': voice recognition + GPT-4',
+      B('eCommerce Platform') + ' with role-based auth'
+    ]) + P('See the <a href="#projects">Projects section</a> or <a href="' + GITHUB + '" target="_blank" rel="noopener">GitHub</a> for more.'),
+    education: P(B('Education')) + UL([
+      B('MCA, AI & Machine Learning') + '<br>Amity University Online · Mar 2024 - Apr 2026',
+      B('BCA') + '<br>Himachal Pradesh University · 2018 - 2021'
+    ]),
+    certs: P(B('Certifications')) + UL([
+      'Generative AI Foundations', 'Google Ads Search Certification', 'Advanced Excel',
+      'Professional and Life Skills', 'Principles of Retailing'
+    ]),
+    languages: P(B('Languages')) + UL(['English: limited working', 'Hindi: full professional', 'Punjabi: native']),
+    contact: P(B('Get in touch')) +
+      ROW('Email', '<a href="mailto:' + EMAIL + '">' + EMAIL + '</a>', EMAIL) +
+      ROW('LinkedIn', '<a href="' + LINKEDIN + '" target="_blank" rel="noopener">rahuldhimanofficial</a>', LINKEDIN) +
+      ROW('GitHub', '<a href="' + GITHUB + '" target="_blank" rel="noopener">raahuldhiman-dev</a>', GITHUB) +
+      P('Or use the <a href="#contact">contact form</a> on this page.'),
+    location: P(B('Location:') + ' Mohali, Punjab, India') + P('Open to remote work worldwide.'),
+    hire: P(B('Open to work') + ': full-time and remote.') + P(B('Target roles')) + UL([
+      'AI Engineer', 'ML Engineer', 'Full Stack Developer', 'Backend Developer'
+    ]) + ROW('Email', '<a href="mailto:' + EMAIL + '">' + EMAIL + '</a>', EMAIL) +
+      ROW('LinkedIn', '<a href="' + LINKEDIN + '" target="_blank" rel="noopener">rahuldhimanofficial</a>', LINKEDIN),
+    ai: P(B('AI / ML work')) + UL([
+      'GPT-4 and OpenAI API integrations', 'LangChain, NLP and voice recognition',
+      'AI assistants, AI-powered tools and automation systems'
+    ]),
+    years: P(B('5+ years') + ' of development experience.'),
+    thanks: P("You're welcome! Have more questions? Just ask."),
+    hello: P("Hi! I'm Nova, Rahul's AI guide. Ask me about his experience, skills, projects, or how to get in touch."),
+    fallback: P('I can help with:') + UL([
+      'Experience (Softweaver, Kwan, Canvas Craft, WorksDelight)', 'Skills and AI/ML work',
+      'Projects', 'Education and certifications', 'Contact details'
+    ]) + P('Try "What did he do at Softweaver?" or use the buttons above.')
   };
 
   // Ordered intents: most specific first. Patterns match whole words/prefixes.
@@ -1412,7 +1570,10 @@
   function addMessage(text, isUser) {
     const msg = document.createElement('div');
     msg.className = 'ai-msg ' + (isUser ? 'user' : 'bot');
-    msg.innerHTML = '<div class="ai-msg-bubble">' + text + '</div>';
+    const bubble = document.createElement('div');
+    bubble.className = 'ai-msg-bubble';
+    if (isUser) bubble.textContent = text; else bubble.innerHTML = text;
+    msg.appendChild(bubble);
     chatMessages.appendChild(msg);
     chatMessages.scrollTop = chatMessages.scrollHeight;
   }
@@ -1434,6 +1595,28 @@
       addMessage(getAIResponse(text), false);
     }, 800 + Math.random() * 600);
   }
+
+  // Copy buttons inside bot answers
+  chatMessages.addEventListener('click', e => {
+    const btn = e.target.closest('.ai-copy');
+    if (!btn) return;
+    const value = btn.dataset.copy;
+    const done = () => {
+      btn.textContent = 'Copied';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1500);
+    };
+    const fallback = () => {
+      const ta = document.createElement('textarea');
+      ta.value = value; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select();
+      try { document.execCommand('copy'); done(); } catch (err) {}
+      ta.remove();
+    };
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(value).then(done, fallback);
+    } else { fallback(); }
+  });
 
   chatSend.addEventListener('click', () => handleChat());
   document.querySelectorAll('.ai-chip').forEach(btn => {
