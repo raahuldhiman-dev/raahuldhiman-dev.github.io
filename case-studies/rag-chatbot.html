@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RAG Chatbot — Case Study | Rahul Dhiman</title>
+<meta name="description" content="A production-grade multi-tenant RAG document Q&A chatbot with multi-provider LLM failover, local ONNX embeddings, and OAuth auth. Built by Rahul Dhiman.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:   #050508;
+    --bg2:  #08080F;
+    --bg3:  #0C0C18;
+    --card: rgba(255,255,255,0.02);
+    --card-hover: rgba(255,255,255,0.05);
+    --border:  rgba(255,255,255,0.06);
+    --border2: rgba(255,255,255,0.12);
+    --text:  #EDF2FF;
+    --muted: #7B8AA8;
+    --muted2:#3D4560;
+    --acc1:  #FF5C3A;
+    --acc2:  #845EF7;
+    --acc3:  #00D9C0;
+    --acc4:  #FFB800;
+    --acc5:  #FF3D9A;
+    --g1: linear-gradient(135deg,#FF5C3A,#FF3D9A);
+    --g2: linear-gradient(135deg,#845EF7,#00D9C0);
+    --g3: linear-gradient(135deg,#FFB800,#FF5C3A);
+    --g4: linear-gradient(135deg,#FF5C3A,#845EF7,#00D9C0);
+    --gtext: linear-gradient(135deg,#FF5C3A,#845EF7,#00D9C0,#FFB800);
+    --font-display: 'Space Grotesk', sans-serif;
+    --font-body:    'Inter', sans-serif;
+    --font-mono:    'JetBrains Mono', monospace;
+    --shadow: 0 8px 32px rgba(0,0,0,0.4);
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--font-body);
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+
+  /* Grid lines like portfolio */
+  .grid-lines{
+    position:fixed;inset:0;z-index:0;pointer-events:none;
+    background-image:
+      linear-gradient(rgba(132,94,247,0.04) 1px, transparent 1px),
+      linear-gradient(90deg,rgba(132,94,247,0.04) 1px, transparent 1px);
+    background-size:80px 80px;
+  }
+
+  /* Ambient glow blobs */
+  .blob{
+    position:fixed;border-radius:50%;pointer-events:none;z-index:0;filter:blur(80px);
+  }
+  .blob-1{
+    width:500px;height:500px;top:-100px;left:-150px;
+    background:radial-gradient(circle,rgba(132,94,247,0.07) 0%,transparent 70%);
+  }
+  .blob-2{
+    width:400px;height:400px;bottom:10%;right:-80px;
+    background:radial-gradient(circle,rgba(0,217,192,0.05) 0%,transparent 70%);
+  }
+
+  ::-webkit-scrollbar{width:3px;}
+  ::-webkit-scrollbar-track{background:var(--bg);}
+  ::-webkit-scrollbar-thumb{background:var(--g1);border-radius:3px;}
+  ::selection{background:rgba(132,94,247,0.3);color:#fff;}
+
+  /* ---- NAV ---- */
+  nav{
+    position:sticky;top:0;z-index:100;
+    padding:16px 24px;
+    background:rgba(5,5,8,0.7);
+    backdrop-filter:blur(20px);
+    border-bottom:1px solid var(--border);
+  }
+  .nav-inner{
+    max-width:960px;margin:0 auto;
+    display:flex;align-items:center;justify-content:space-between;
+  }
+  .nav-logo{
+    font-family:var(--font-display);font-weight:700;font-size:17px;
+    text-decoration:none;color:var(--text);
+    display:flex;align-items:center;gap:10px;
+  }
+  .nav-logo-badge{
+    width:30px;height:30px;border-radius:8px;
+    background:var(--g1);
+    display:flex;align-items:center;justify-content:center;
+    font-size:13px;font-weight:800;color:#fff;
+  }
+  .nav-links{display:flex;gap:4px;align-items:center;}
+  .nav-links a{
+    color:var(--muted);font-size:13px;font-weight:500;
+    text-decoration:none;padding:8px 16px;border-radius:8px;transition:all 0.2s;
+  }
+  .nav-links a:hover{color:var(--text);background:var(--card);}
+  .btn-nav{
+    display:inline-flex;align-items:center;gap:6px;
+    background:var(--g1);color:#fff;font-weight:600;font-size:13px;
+    padding:9px 20px;border-radius:10px;text-decoration:none;border:none;
+    transition:transform 0.2s,box-shadow 0.2s;
+  }
+  .btn-nav:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(255,92,58,0.3);}
+
+  /* ---- HERO ---- */
+  .hero{
+    position:relative;z-index:1;
+    padding:80px 24px 60px;
+    max-width:960px;margin:0 auto;
+  }
+  .hero-tag{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:var(--font-mono);font-size:11px;color:var(--acc3);
+    background:rgba(0,217,192,0.08);border:1px solid rgba(0,217,192,0.2);
+    padding:5px 14px;border-radius:999px;margin-bottom:24px;
+  }
+  .hero-tag::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--acc3);animation:pulse 1.5s infinite;}
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.4;}}
+
+  .hero h1{
+    font-family:var(--font-display);font-weight:800;
+    font-size:clamp(2.2rem,5vw,3.6rem);line-height:1.05;
+    margin-bottom:20px;
+  }
+  .grad-text{
+    background:var(--gtext);
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+    background-clip:text;
+  }
+  .hero-sub{
+    color:var(--muted);font-size:16px;line-height:1.75;
+    max-width:620px;margin-bottom:36px;
+  }
+  .hero-sub strong{color:var(--text);}
+
+  .hero-meta{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:48px;}
+  .meta-chip{
+    display:inline-flex;align-items:center;gap:7px;
+    font-family:var(--font-mono);font-size:11px;
+    padding:6px 14px;border-radius:999px;border:1px solid var(--border2);
+    background:var(--card);color:var(--muted);
+  }
+  .meta-chip .dot{width:6px;height:6px;border-radius:50%;}
+
+  .hero-stats{display:flex;flex-wrap:wrap;gap:24px;}
+  .stat-box{
+    display:flex;flex-direction:column;gap:4px;
+    padding:16px 20px;border-radius:14px;
+    background:var(--card);border:1px solid var(--border);
+    min-width:120px;
+  }
+  .stat-num{font-family:var(--font-display);font-weight:700;font-size:1.6rem;line-height:1;}
+  .stat-label{font-size:11px;color:var(--muted);font-family:var(--font-mono);}
+
+  /* ---- SECTION FRAMEWORK ---- */
+  .section{
+    position:relative;z-index:1;
+    padding:70px 24px;
+    max-width:960px;margin:0 auto;
+  }
+  .section-divider{
+    max-width:960px;margin:0 auto;
+    height:1px;background:var(--border);
+  }
+  .section-label{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:var(--font-mono);font-size:11px;color:var(--acc2);
+    background:rgba(132,94,247,0.08);border:1px solid rgba(132,94,247,0.2);
+    padding:5px 14px;border-radius:999px;margin-bottom:16px;
+  }
+  .section h2{
+    font-family:var(--font-display);font-weight:700;
+    font-size:clamp(1.5rem,3vw,2.1rem);line-height:1.15;
+    margin-bottom:12px;
+  }
+  .section-desc{
+    color:var(--muted);font-size:15px;max-width:580px;line-height:1.75;
+    margin-bottom:36px;
+  }
+
+  /* ---- CARDS ---- */
+  .card{
+    background:var(--card);border:1px solid var(--border);
+    border-radius:16px;padding:24px;
+    transition:border-color 0.25s,background 0.25s,transform 0.25s;
+  }
+  .card:hover{
+    border-color:var(--border2);
+    background:var(--card-hover);
+    transform:translateY(-3px);
+  }
+  .card-icon{
+    width:44px;height:44px;border-radius:12px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:20px;margin-bottom:14px;
+    background:var(--card);border:1px solid var(--border2);
+  }
+  .card h3{
+    font-family:var(--font-display);font-weight:600;font-size:15px;
+    margin-bottom:8px;
+  }
+  .card p{color:var(--muted);font-size:13px;line-height:1.75;}
+
+  .grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
+  .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+  .grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+  @media(max-width:720px){
+    .grid-2,.grid-3,.grid-4{grid-template-columns:1fr;}
+    .hero-stats{flex-direction:column;}
+    nav .nav-links{display:none;}
+  }
+  @media(min-width:480px) and (max-width:720px){
+    .grid-2{grid-template-columns:repeat(2,1fr);}
+    .grid-4{grid-template-columns:repeat(2,1fr);}
+  }
+
+  /* ---- ARCHITECTURE DIAGRAM ---- */
+  .arch-diagram{
+    background:var(--bg2);border:1px solid var(--border);
+    border-radius:20px;padding:36px;
+    display:flex;flex-direction:column;gap:0;
+    position:relative;overflow:hidden;
+  }
+  .arch-diagram::before{
+    content:'';position:absolute;inset:0;
+    background:radial-gradient(ellipse at 50% 0%,rgba(132,94,247,0.06),transparent 60%);
+    pointer-events:none;
+  }
+  .arch-layer{
+    display:flex;align-items:center;gap:12px;
+    padding:14px 20px;border-radius:12px;
+    border:1px solid var(--border);background:var(--card);
+    position:relative;z-index:1;
+  }
+  .arch-layer-label{
+    font-family:var(--font-mono);font-size:10px;color:var(--muted2);
+    min-width:80px;text-transform:uppercase;letter-spacing:0.08em;
+  }
+  .arch-layer-nodes{display:flex;flex-wrap:wrap;gap:8px;flex:1;}
+  .arch-node{
+    font-family:var(--font-mono);font-size:11px;
+    padding:5px 12px;border-radius:8px;
+    border:1px solid var(--border2);
+    white-space:nowrap;
+  }
+  .node-orange{background:rgba(255,92,58,0.1);color:#FF8A70;border-color:rgba(255,92,58,0.25);}
+  .node-purple{background:rgba(132,94,247,0.1);color:#A98BF7;border-color:rgba(132,94,247,0.25);}
+  .node-teal{background:rgba(0,217,192,0.1);color:#33E5D0;border-color:rgba(0,217,192,0.25);}
+  .node-amber{background:rgba(255,184,0,0.1);color:#FFD055;border-color:rgba(255,184,0,0.25);}
+  .node-pink{background:rgba(255,61,154,0.1);color:#FF72C0;border-color:rgba(255,61,154,0.25);}
+  .node-gray{background:rgba(255,255,255,0.04);color:var(--muted);border-color:var(--border2);}
+
+  .arch-arrow{
+    display:flex;align-items:center;justify-content:center;
+    padding:6px 0;color:var(--muted2);font-size:16px;position:relative;z-index:1;
+  }
+
+  /* ---- TECH TABLE ---- */
+  .tech-table{
+    width:100%;border-collapse:collapse;
+    font-size:13px;
+  }
+  .tech-table th{
+    font-family:var(--font-mono);font-size:10px;text-transform:uppercase;
+    letter-spacing:0.08em;color:var(--muted2);
+    padding:12px 16px;text-align:left;
+    border-bottom:1px solid var(--border);
+  }
+  .tech-table td{
+    padding:14px 16px;border-bottom:1px solid var(--border);
+    color:var(--muted);vertical-align:top;
+  }
+  .tech-table td:first-child{
+    color:var(--text);font-weight:500;
+    font-family:var(--font-display);font-size:14px;
+    white-space:nowrap;
+  }
+  .tech-table tr:hover td{background:var(--card);}
+  .tech-table tr:last-child td{border-bottom:none;}
+  .tech-wrap{
+    background:var(--bg2);border:1px solid var(--border);
+    border-radius:16px;overflow:hidden;
+  }
+
+  /* ---- CODE BLOCK ---- */
+  .code-wrap{
+    background:var(--bg2);border:1px solid var(--border);
+    border-radius:16px;overflow:hidden;
+  }
+  .code-header{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:14px 20px;border-bottom:1px solid var(--border);
+  }
+  .code-dots{display:flex;gap:7px;}
+  .code-dot{width:10px;height:10px;border-radius:50%;}
+  .code-title{
+    font-family:var(--font-mono);font-size:11px;color:var(--muted2);
+  }
+  .code-lang{
+    font-family:var(--font-mono);font-size:10px;
+    padding:3px 10px;border-radius:6px;
+    background:rgba(132,94,247,0.1);border:1px solid rgba(132,94,247,0.2);
+    color:var(--acc2);
+  }
+  pre{
+    padding:24px;overflow-x:auto;
+    font-family:var(--font-mono);font-size:13px;line-height:1.75;
+  }
+  .kw{color:#845EF7;}
+  .fn{color:#00D9C0;}
+  .str{color:#FFB800;}
+  .cm{color:#3D4560;font-style:italic;}
+  .num{color:#FF5C3A;}
+  .var{color:#EDF2FF;}
+
+  /* ---- DECISION CARDS ---- */
+  .decision{
+    display:flex;gap:16px;
+    padding:20px;border-radius:14px;
+    background:var(--card);border:1px solid var(--border);
+    transition:border-color 0.2s;
+  }
+  .decision:hover{border-color:var(--border2);}
+  .decision-num{
+    font-family:var(--font-display);font-weight:700;font-size:2rem;
+    line-height:1;min-width:36px;
+    background:var(--gtext);-webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;background-clip:text;
+  }
+  .decision-body h3{
+    font-family:var(--font-display);font-weight:600;font-size:15px;
+    margin-bottom:6px;
+  }
+  .decision-body p{color:var(--muted);font-size:13px;line-height:1.75;}
+
+  /* ---- OUTCOME METRICS ---- */
+  .metric{
+    display:flex;flex-direction:column;gap:6px;
+    padding:22px;border-radius:14px;
+    background:var(--card);border:1px solid var(--border);
+    transition:all 0.25s;
+  }
+  .metric:hover{border-color:var(--border2);transform:translateY(-2px);}
+  .metric-val{
+    font-family:var(--font-display);font-weight:700;font-size:1.8rem;line-height:1;
+  }
+  .metric-label{color:var(--muted);font-size:12px;font-family:var(--font-mono);}
+  .metric-desc{color:var(--muted);font-size:12px;line-height:1.6;}
+
+  /* ---- CHALLENGE BLOCKS ---- */
+  .challenge{
+    padding:22px;border-radius:14px;
+    border-left:3px solid;
+    background:var(--card);
+  }
+  .challenge h3{
+    font-family:var(--font-display);font-weight:600;font-size:14px;
+    margin-bottom:8px;
+  }
+  .challenge p{color:var(--muted);font-size:13px;line-height:1.75;}
+  .challenge .fix{
+    display:inline-flex;align-items:center;gap:5px;
+    font-family:var(--font-mono);font-size:11px;
+    padding:3px 10px;border-radius:6px;
+    margin-top:10px;
+  }
+
+  /* ---- BADGE CHIPS ---- */
+  .chip{
+    display:inline-flex;align-items:center;
+    font-family:var(--font-mono);font-size:11px;
+    padding:4px 11px;border-radius:999px;
+    background:var(--card);border:1px solid var(--border2);
+    color:var(--muted);
+  }
+
+  /* ---- CTA FOOTER ---- */
+  .cta-block{
+    position:relative;z-index:1;
+    max-width:960px;margin:0 auto;
+    padding:60px 24px 80px;
+    text-align:center;
+  }
+  .cta-inner{
+    padding:60px 40px;border-radius:24px;
+    background:var(--bg2);border:1px solid var(--border);
+    position:relative;overflow:hidden;
+  }
+  .cta-inner::before{
+    content:'';position:absolute;inset:0;
+    background:radial-gradient(ellipse at 50% 0%,rgba(132,94,247,0.1),transparent 60%);
+    pointer-events:none;
+  }
+  .cta-inner h2{
+    font-family:var(--font-display);font-weight:800;
+    font-size:clamp(1.6rem,4vw,2.4rem);margin-bottom:12px;
+    position:relative;z-index:1;
+  }
+  .cta-inner p{
+    color:var(--muted);font-size:15px;max-width:480px;
+    margin:0 auto 32px;line-height:1.75;position:relative;z-index:1;
+  }
+  .cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;position:relative;z-index:1;}
+  .btn-primary{
+    display:inline-flex;align-items:center;gap:8px;
+    background:var(--g1);color:#fff;font-weight:600;font-size:14px;
+    padding:14px 28px;border-radius:12px;text-decoration:none;
+    border:none;transition:transform 0.2s,box-shadow 0.2s;
+  }
+  .btn-primary:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(255,92,58,0.35);}
+  .btn-secondary{
+    display:inline-flex;align-items:center;gap:8px;
+    background:var(--card);color:var(--text);font-weight:600;font-size:14px;
+    padding:13px 28px;border-radius:12px;text-decoration:none;
+    border:1px solid var(--border2);transition:all 0.2s;
+  }
+  .btn-secondary:hover{border-color:rgba(132,94,247,0.5);background:rgba(132,94,247,0.07);transform:translateY(-3px);}
+
+  /* ---- FOOTER ---- */
+  footer{
+    position:relative;z-index:1;
+    border-top:1px solid var(--border);
+    padding:28px 24px;
+    text-align:center;
+    font-family:var(--font-mono);font-size:11px;color:var(--muted2);
+  }
+  footer a{color:var(--acc1);text-decoration:none;}
+  footer a:hover{color:var(--acc2);}
+
+  /* ---- BACK LINK ---- */
+  .back-link{
+    display:inline-flex;align-items:center;gap:6px;
+    color:var(--muted);font-size:13px;text-decoration:none;
+    font-family:var(--font-mono);
+    padding:8px 14px;border-radius:8px;border:1px solid var(--border);
+    background:var(--card);transition:all 0.2s;
+  }
+  .back-link:hover{color:var(--acc1);border-color:rgba(255,92,58,0.3);}
+</style>
+</head>
+<body>
+
+<div class="grid-lines"></div>
+<div class="blob blob-1"></div>
+<div class="blob blob-2"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="https://raahuldhiman-dev.github.io" class="nav-logo">
+      <div class="nav-logo-badge">R</div>
+      Rahul Dhiman
+    </a>
+    <div class="nav-links">
+      <a href="https://raahuldhiman-dev.github.io/#projects">Projects</a>
+      <a href="https://github.com/raahuldhiman-dev/rag-chatbot" target="_blank">GitHub</a>
+      <a href="https://raahuldhiman-dev.github.io/#contact" class="btn-nav">Hire Me &rarr;</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <a href="https://raahuldhiman-dev.github.io/#projects" class="back-link" style="margin-bottom:28px;display:inline-flex;">
+    &larr; Back to Portfolio
+  </a>
+
+  <div style="margin-top:16px;">
+    <div class="hero-tag">Case Study &mdash; Production AI System</div>
+  </div>
+
+  <h1>Multi-Tenant<br><span class="grad-text">RAG Document Chatbot</span></h1>
+
+  <p class="hero-sub">
+    A production-grade document Q&amp;A system with <strong>per-user isolation</strong>,
+    <strong>six LLM providers with auto-failover</strong>, local ONNX embeddings at zero API cost,
+    and end-to-end encrypted credential storage.
+  </p>
+
+  <div class="hero-meta">
+    <span class="meta-chip"><span class="dot" style="background:#FF5C3A;"></span>Python / FastAPI</span>
+    <span class="meta-chip"><span class="dot" style="background:#845EF7;"></span>ChromaDB / RAG</span>
+    <span class="meta-chip"><span class="dot" style="background:#00D9C0;"></span>Multi-Provider LLM</span>
+    <span class="meta-chip"><span class="dot" style="background:#FFB800;"></span>OAuth 2.0</span>
+    <span class="meta-chip"><span class="dot" style="background:#FF3D9A;"></span>Docker / CI-CD</span>
+    <span class="meta-chip" style="color:var(--acc3);">&#9654; Personal Project &middot; 2024&ndash;2025</span>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat-box">
+      <span class="stat-num" style="background:var(--g1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">6</span>
+      <span class="stat-label">LLM Providers</span>
+    </div>
+    <div class="stat-box">
+      <span class="stat-num" style="background:var(--g2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">$0</span>
+      <span class="stat-label">Embedding API Cost</span>
+    </div>
+    <div class="stat-box">
+      <span class="stat-num" style="background:var(--g3);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">100%</span>
+      <span class="stat-label">Offline Test Suite</span>
+    </div>
+    <div class="stat-box">
+      <span class="stat-num" style="background:var(--g4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">MT</span>
+      <span class="stat-label">Multi-Tenant Isolated</span>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- PROBLEM -->
+<div class="section">
+  <div class="section-label">01 &mdash; The Problem</div>
+  <h2>Why Another Chatbot?</h2>
+  <p class="section-desc">
+    Off-the-shelf RAG libraries lock you into one LLM provider, charge per embedding,
+    and mix every user's documents in a shared vector index. Any one of these is a
+    production liability. This project was built to eliminate all three simultaneously.
+  </p>
+
+  <div class="grid-3" style="margin-top:8px;">
+    <div class="card">
+      <div class="card-icon" style="background:rgba(255,92,58,0.1);border-color:rgba(255,92,58,0.2);">&#128274;</div>
+      <h3>Vendor Lock-in</h3>
+      <p>When OpenAI raises prices or hits an outage, apps built on a single provider go dark. A failover chain was mandatory from day one.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:rgba(132,94,247,0.1);border-color:rgba(132,94,247,0.2);">&#128181;</div>
+      <h3>Embedding Cost at Scale</h3>
+      <p>Cloud embedding APIs charge per token. With high document volume, costs compound fast. Local ONNX MiniLM delivers comparable quality at zero marginal cost.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:rgba(0,217,192,0.1);border-color:rgba(0,217,192,0.2);">&#128275;</div>
+      <h3>Data Isolation</h3>
+      <p>Shared vector stores create cross-tenant data bleed risk. Each user needs a separate ChromaDB collection to enforce strict ownership boundaries.</p>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- ARCHITECTURE -->
+<div class="section">
+  <div class="section-label">02 &mdash; Architecture</div>
+  <h2>How It All Connects</h2>
+  <p class="section-desc">
+    A clean separation between ingestion, retrieval, generation, and authentication.
+    Each layer is independently swappable.
+  </p>
+
+  <div class="arch-diagram">
+    <div class="arch-layer">
+      <span class="arch-layer-label">Client</span>
+      <div class="arch-layer-nodes">
+        <span class="arch-node node-orange">React / cURL / REST Client</span>
+        <span class="arch-node node-gray">JWT Bearer Token</span>
+      </div>
+    </div>
+    <div class="arch-arrow">&#8595; OAuth 2.0 (Google / GitHub)</div>
+    <div class="arch-layer">
+      <span class="arch-layer-label">Auth</span>
+      <div class="arch-layer-nodes">
+        <span class="arch-node node-amber">FastAPI OAuth Router</span>
+        <span class="arch-node node-amber">JWT Session Middleware</span>
+        <span class="arch-node node-amber">SQLite Users DB</span>
+      </div>
+    </div>
+    <div class="arch-arrow">&#8595; Authenticated Request</div>
+    <div class="arch-layer">
+      <span class="arch-layer-label">Ingest</span>
+      <div class="arch-layer-nodes">
+        <span class="arch-node node-pink">PDF / TXT / DOCX Parser</span>
+        <span class="arch-node node-pink">Token-Aware Chunker (tiktoken)</span>
+        <span class="arch-node node-pink">ONNX MiniLM Embedder</span>
+      </div>
+    </div>
+    <div class="arch-arrow">&#8595; Embeddings stored per-user</div>
+    <div class="arch-layer">
+      <span class="arch-layer-label">Vector DB</span>
+      <div class="arch-layer-nodes">
+        <span class="arch-node node-teal">ChromaDB (per-user collection)</span>
+        <span class="arch-node node-teal">Cosine Similarity Top-K Retrieval</span>
+        <span class="arch-node node-teal">Fernet-Encrypted API Keys</span>
+      </div>
+    </div>
+    <div class="arch-arrow">&#8595; Retrieved chunks + history</div>
+    <div class="arch-layer">
+      <span class="arch-layer-label">LLM Layer</span>
+      <div class="arch-layer-nodes">
+        <span class="arch-node node-purple">OpenAI</span>
+        <span class="arch-node node-purple">Gemini</span>
+        <span class="arch-node node-purple">Claude</span>
+        <span class="arch-node node-purple">Grok</span>
+        <span class="arch-node node-purple">Groq</span>
+        <span class="arch-node node-purple">Ollama (local)</span>
+      </div>
+    </div>
+    <div class="arch-arrow">&#8595; Grounded answer + source citations</div>
+    <div class="arch-layer">
+      <span class="arch-layer-label">Response</span>
+      <div class="arch-layer-nodes">
+        <span class="arch-node node-orange">{ answer, sources[] }</span>
+        <span class="arch-node node-gray">Rolling Summary (6-turn window)</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- FEATURES -->
+<div class="section">
+  <div class="section-label">03 &mdash; Features</div>
+  <h2>What It Actually Does</h2>
+  <p class="section-desc">Eight production capabilities, each solving a real deployment problem.</p>
+
+  <div class="grid-4">
+    <div class="card">
+      <div class="card-icon" style="font-size:18px;background:rgba(255,92,58,0.1);border-color:rgba(255,92,58,0.2);">&#128190;</div>
+      <h3>Local Embeddings</h3>
+      <p>ONNX MiniLM runs entirely in-process. No embedding API, no latency, no per-token billing.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="font-size:18px;background:rgba(132,94,247,0.1);border-color:rgba(132,94,247,0.2);">&#9889;</div>
+      <h3>Auto-Failover LLM</h3>
+      <p>Provider chain tries the next model automatically on rate-limit or error. Zero manual intervention.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="font-size:18px;background:rgba(0,217,192,0.1);border-color:rgba(0,217,192,0.2);">&#128274;</div>
+      <h3>Multi-Tenant Isolation</h3>
+      <p>Each user gets their own ChromaDB collection. No cross-user data bleed, by design.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="font-size:18px;background:rgba(255,184,0,0.1);border-color:rgba(255,184,0,0.2);">&#128272;</div>
+      <h3>Encrypted Keys at Rest</h3>
+      <p>Fernet symmetric encryption protects stored API keys. Rotate the master key, re-encrypt all.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="font-size:18px;background:rgba(255,61,154,0.1);border-color:rgba(255,61,154,0.2);">&#128196;</div>
+      <h3>Smart Chunking</h3>
+      <p>tiktoken-aware splitting with 800-token chunks and 150-token overlap. No semantic truncation.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="font-size:18px;background:rgba(255,92,58,0.1);border-color:rgba(255,92,58,0.2);">&#128172;</div>
+      <h3>Rolling Summaries</h3>
+      <p>Conversation compresses to summaries after 6 turns. Context window stays clean across sessions.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="font-size:18px;background:rgba(132,94,247,0.1);border-color:rgba(132,94,247,0.2);">&#128203;</div>
+      <h3>Source Citations</h3>
+      <p>Every answer includes doc name, page number, and a 200-character snippet. No black-box outputs.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="font-size:18px;background:rgba(0,217,192,0.1);border-color:rgba(0,217,192,0.2);">&#127381;</div>
+      <h3>Offline Test Suite</h3>
+      <p>Fake embeddings, mock LLM, isolated temp DB. CI runs with zero external API calls.</p>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- TECH STACK -->
+<div class="section">
+  <div class="section-label">04 &mdash; Stack</div>
+  <h2>Technology Choices</h2>
+  <p class="section-desc">Every choice has a reason. No cargo-culting.</p>
+
+  <div class="tech-wrap">
+    <table class="tech-table">
+      <thead>
+        <tr>
+          <th>Layer</th>
+          <th>Technology</th>
+          <th>Why</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>API Framework</td>
+          <td><span class="chip">FastAPI</span></td>
+          <td>Automatic OpenAPI docs, async support, Pydantic validation out of the box</td>
+        </tr>
+        <tr>
+          <td>Vector Store</td>
+          <td><span class="chip">ChromaDB</span></td>
+          <td>Embeddable, file-based, supports per-collection namespacing without infrastructure</td>
+        </tr>
+        <tr>
+          <td>Embeddings</td>
+          <td><span class="chip">ONNX MiniLM</span></td>
+          <td>Local inference, 384-dim vectors, runs CPU-only without GPU or cloud dependency</td>
+        </tr>
+        <tr>
+          <td>Auth</td>
+          <td><span class="chip">OAuth 2.0 (Google / GitHub)</span></td>
+          <td>No password management, delegates identity to trusted providers</td>
+        </tr>
+        <tr>
+          <td>Encryption</td>
+          <td><span class="chip">Fernet (cryptography)</span></td>
+          <td>Symmetric authenticated encryption; rotate master key to re-encrypt all stored credentials</td>
+        </tr>
+        <tr>
+          <td>Chunking</td>
+          <td><span class="chip">tiktoken</span></td>
+          <td>Exact token counting matches the target LLM's tokenizer, prevents silent truncation</td>
+        </tr>
+        <tr>
+          <td>Persistence</td>
+          <td><span class="chip">SQLite</span></td>
+          <td>Zero-config relational DB for users and sessions; replaces with Postgres via one env var</td>
+        </tr>
+        <tr>
+          <td>Infra</td>
+          <td><span class="chip">Docker</span> <span class="chip">GitHub Actions</span></td>
+          <td>Reproducible environments, automated lint and test on every push</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- DESIGN DECISIONS -->
+<div class="section">
+  <div class="section-label">05 &mdash; Design Decisions</div>
+  <h2>Five Calls That Mattered</h2>
+  <p class="section-desc">These are the tradeoffs that shaped the final architecture.</p>
+
+  <div style="display:flex;flex-direction:column;gap:14px;">
+    <div class="decision">
+      <div class="decision-num">01</div>
+      <div class="decision-body">
+        <h3>ONNX over cloud embeddings</h3>
+        <p>Cloud embedding APIs introduce per-request latency and metered cost that compound with volume. ONNX MiniLM runs synchronously in-process with no network hop. The quality tradeoff for retrieval tasks is negligible at this chunk size.</p>
+      </div>
+    </div>
+    <div class="decision">
+      <div class="decision-num">02</div>
+      <div class="decision-body">
+        <h3>Provider chain over a single LLM</h3>
+        <p>A six-provider failover chain means the system degrades gracefully under rate limits or outages. The LLMProvider base class enforces a single interface so adding a new provider is a 50-line drop-in with no changes to the RAG core.</p>
+      </div>
+    </div>
+    <div class="decision">
+      <div class="decision-num">03</div>
+      <div class="decision-body">
+        <h3>Per-user ChromaDB collections, not row-level filtering</h3>
+        <p>Row-level filtering on a shared index requires every query to include a user filter predicate. Miss it once and you have a data leak. Separate collections make tenant isolation a structural guarantee, not a query discipline.</p>
+      </div>
+    </div>
+    <div class="decision">
+      <div class="decision-num">04</div>
+      <div class="decision-body">
+        <h3>Rolling summaries over full history</h3>
+        <p>Passing full conversation history grows the prompt indefinitely. After six turns the system compresses older turns into a running summary. The LLM sees a bounded context window regardless of how long the session runs.</p>
+      </div>
+    </div>
+    <div class="decision">
+      <div class="decision-num">05</div>
+      <div class="decision-body">
+        <h3>Explicit NO_CONTEXT_MESSAGE over hallucination</h3>
+        <p>When retrieval returns zero chunks, the system returns a fixed "no relevant context" message instead of letting the LLM fill the gap from parametric memory. Grounding must be structural, not a system-prompt request.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- CODE SAMPLE -->
+<div class="section">
+  <div class="section-label">06 &mdash; Implementation</div>
+  <h2>Core RAG Orchestrator</h2>
+  <p class="section-desc">The function that ties retrieval, grounding enforcement, and source citation together.</p>
+
+  <div class="code-wrap">
+    <div class="code-header">
+      <div class="code-dots">
+        <div class="code-dot" style="background:#FF5C3A;"></div>
+        <div class="code-dot" style="background:#FFB800;"></div>
+        <div class="code-dot" style="background:#00D9C0;"></div>
+      </div>
+      <span class="code-title">app/core/rag.py</span>
+      <span class="code-lang">Python</span>
+    </div>
+    <pre><span class="cm"># NO_CONTEXT_MESSAGE prevents hallucination when retrieval returns nothing</span>
+<span class="cm"># The LLM never fills gaps from parametric memory</span>
+
+<span class="kw">def</span> <span class="fn">answer_question</span>(
+    <span class="var">vectorstore</span>, <span class="var">llm</span>, <span class="var">question</span>,
+    <span class="var">top_k</span>=<span class="num">4</span>, <span class="var">history</span>=<span class="kw">None</span>, <span class="var">max_history_turns</span>=<span class="num">6</span>
+):
+    <span class="cm"># 1. Retrieve top-k chunks from user's isolated ChromaDB collection</span>
+    <span class="var">chunks</span> = <span class="var">vectorstore</span>.<span class="fn">query</span>(<span class="var">question</span>, <span class="var">top_k</span>=<span class="var">top_k</span>)
+
+    <span class="cm"># 2. Hard stop if nothing was retrieved -- no LLM call, no hallucination</span>
+    <span class="kw">if not</span> <span class="var">chunks</span>:
+        <span class="kw">return</span> {<span class="str">"answer"</span>: <span class="var">NO_CONTEXT_MESSAGE</span>, <span class="str">"sources"</span>: []}
+
+    <span class="cm"># 3. Generate grounded answer with conversation history</span>
+    <span class="var">answer</span> = <span class="var">llm</span>.<span class="fn">complete</span>(
+        <span class="var">question</span>, <span class="var">chunks</span>,
+        <span class="var">history</span>=<span class="var">history</span>,
+        <span class="var">max_history_turns</span>=<span class="var">max_history_turns</span>
+    )
+
+    <span class="cm"># 4. Build source citations from retrieved chunk metadata</span>
+    <span class="var">sources</span> = [
+        {
+            <span class="str">"doc_id"</span>:   <span class="var">c</span>.metadata.<span class="fn">get</span>(<span class="str">"doc_id"</span>),
+            <span class="str">"filename"</span>: <span class="var">c</span>.metadata.<span class="fn">get</span>(<span class="str">"filename"</span>),
+            <span class="str">"page"</span>:     <span class="var">c</span>.metadata.<span class="fn">get</span>(<span class="str">"page"</span>),
+            <span class="str">"snippet"</span>:  <span class="var">c</span>.text[:<span class="num">200</span>]
+        }
+        <span class="kw">for</span> <span class="var">c</span> <span class="kw">in</span> <span class="var">chunks</span>
+    ]
+
+    <span class="kw">return</span> {<span class="str">"answer"</span>: <span class="var">answer</span>, <span class="str">"sources"</span>: <span class="var">sources</span>}</pre>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- CHALLENGES -->
+<div class="section">
+  <div class="section-label">07 &mdash; Challenges</div>
+  <h2>What Was Actually Hard</h2>
+  <p class="section-desc">The problems that required real thinking, not just wiring libraries together.</p>
+
+  <div class="grid-2">
+    <div class="challenge" style="border-color:#FF5C3A;">
+      <h3>&#128293; LLM API surface inconsistency</h3>
+      <p>Each provider has different auth, error codes, and streaming protocols. The LLMProvider base class was designed last, after learning all six APIs -- not before. Designing the abstraction too early would have been wrong.</p>
+      <span class="fix" style="background:rgba(255,92,58,0.1);color:#FF8A70;border:1px solid rgba(255,92,58,0.2);">
+        &#10003; Unified base class with per-provider implementation
+      </span>
+    </div>
+    <div class="challenge" style="border-color:#845EF7;">
+      <h3>&#128256; Context window management</h3>
+      <p>Multi-turn conversations grow the prompt unboundedly. Naive history truncation loses mid-conversation context that answers depend on. Rolling summaries preserve meaning while keeping token usage flat.</p>
+      <span class="fix" style="background:rgba(132,94,247,0.1);color:#A98BF7;border:1px solid rgba(132,94,247,0.2);">
+        &#10003; Progressive summarization after 6-turn window
+      </span>
+    </div>
+    <div class="challenge" style="border-color:#00D9C0;">
+      <h3>&#128270; Testing without live APIs</h3>
+      <p>CI that calls real LLM APIs is slow, expensive, and flaky. Fake embeddings that return deterministic vectors and a mock LLM that echoes the prompt made the test suite fully offline and fast.</p>
+      <span class="fix" style="background:rgba(0,217,192,0.1);color:#33E5D0;border:1px solid rgba(0,217,192,0.2);">
+        &#10003; Offline pytest suite with mock providers
+      </span>
+    </div>
+    <div class="challenge" style="border-color:#FFB800;">
+      <h3>&#128272; Secure credential storage</h3>
+      <p>Users supply their own LLM API keys. Storing them in plaintext is a non-starter. Fernet encryption with a server-side master key encrypts at write time and decrypts at use time, with no plaintext ever persisted.</p>
+      <span class="fix" style="background:rgba(255,184,0,0.1);color:#FFD055;border:1px solid rgba(255,184,0,0.2);">
+        &#10003; Fernet symmetric encryption at rest
+      </span>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- OUTCOMES -->
+<div class="section">
+  <div class="section-label">08 &mdash; Outcomes</div>
+  <h2>What This Demonstrates</h2>
+  <p class="section-desc">What a hiring manager or client should take away from this project.</p>
+
+  <div class="grid-3">
+    <div class="metric">
+      <span class="metric-val" style="background:var(--g1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">6+1</span>
+      <span class="metric-label">LLM Providers</span>
+      <span class="metric-desc">Cloud failover chain plus local Ollama for air-gapped deployments.</span>
+    </div>
+    <div class="metric">
+      <span class="metric-val" style="background:var(--g2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">$0</span>
+      <span class="metric-label">Embedding Cost</span>
+      <span class="metric-desc">Local ONNX MiniLM: no token billing, no network round-trip, no dependency.</span>
+    </div>
+    <div class="metric">
+      <span class="metric-val" style="background:var(--g3);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">100%</span>
+      <span class="metric-label">CI Coverage</span>
+      <span class="metric-desc">Test suite runs fully offline. No live API keys required in CI.</span>
+    </div>
+    <div class="metric">
+      <span class="metric-val" style="background:var(--g4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">MT</span>
+      <span class="metric-label">Multi-Tenant Safe</span>
+      <span class="metric-desc">Structural isolation via per-user collections, not query-time filtering.</span>
+    </div>
+    <div class="metric">
+      <span class="metric-val" style="background:var(--g1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">0</span>
+      <span class="metric-label">Hallucination Path</span>
+      <span class="metric-desc">When retrieval is empty, the LLM is never called. No parametric gap-filling.</span>
+    </div>
+    <div class="metric">
+      <span class="metric-val" style="background:var(--g2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">&#8734;</span>
+      <span class="metric-label">Session Length</span>
+      <span class="metric-desc">Rolling summaries keep context window bounded regardless of conversation length.</span>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- LEARNINGS -->
+<div class="section">
+  <div class="section-label">09 &mdash; Learnings</div>
+  <h2>What This Project Taught Me</h2>
+  <p class="section-desc">The durable lessons from building a production AI system end-to-end.</p>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-icon" style="background:rgba(255,92,58,0.1);border-color:rgba(255,92,58,0.2);">&#127919;</div>
+      <h3>Abstractions should follow, not precede, the specifics</h3>
+      <p>I built the OpenAI provider first, then Gemini, then the base class. Each concrete implementation revealed what the interface actually needed. Abstracting first would have locked in wrong assumptions.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:rgba(132,94,247,0.1);border-color:rgba(132,94,247,0.2);">&#128274;</div>
+      <h3>Security is structural, not a checklist</h3>
+      <p>Encryption at rest, tenant isolation, and hallucination prevention are enforced by architecture, not by runtime checks that can be bypassed. The system cannot accidentally expose data because the right exposure path doesn't exist.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:rgba(0,217,192,0.1);border-color:rgba(0,217,192,0.2);">&#127981;</div>
+      <h3>Test design is a design problem</h3>
+      <p>Offline testing required the same design decisions as the production system: clean interfaces, injectable dependencies, no global state. Tests that require live APIs aren't testing the application logic -- they're integration tests dressed up as unit tests.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:rgba(255,184,0,0.1);border-color:rgba(255,184,0,0.2);">&#128200;</div>
+      <h3>RAG quality is a retrieval problem first</h3>
+      <p>Better prompts don't fix bad retrieval. If the wrong chunks come back, no instruction to the LLM recovers the answer. Chunk size, overlap, and similarity threshold matter more than the system prompt in most failure cases.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:rgba(255,61,154,0.1);border-color:rgba(255,61,154,0.2);">&#127758;</div>
+      <h3>Free-tier hosting has real constraints</h3>
+      <p>Persistent file storage, long-lived processes, and in-memory model loading are incompatible with serverless platforms. Understanding platform execution models is now part of architecture planning, not an afterthought.</p>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-block">
+  <div class="cta-inner">
+    <div class="hero-tag" style="display:inline-flex;margin-bottom:20px;">Available for work</div>
+    <h2>Want to build something<br><span class="grad-text">like this together?</span></h2>
+    <p>I'm open to full-time roles and freelance projects in AI engineering, full-stack development, and backend systems.</p>
+    <div class="cta-btns">
+      <a href="https://raahuldhiman-dev.github.io/#contact" class="btn-primary">Get in touch &rarr;</a>
+      <a href="https://github.com/raahuldhiman-dev/rag-chatbot" target="_blank" class="btn-secondary">&#128196; View Source</a>
+      <a href="https://raahuldhiman-dev.github.io" class="btn-secondary">&#128081; Portfolio</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div style="max-width:960px;margin:0 auto;">
+    Built by <a href="https://raahuldhiman-dev.github.io">Rahul Dhiman</a> &mdash;
+    <a href="https://github.com/raahuldhiman-dev/rag-chatbot" target="_blank">github.com/raahuldhiman-dev/rag-chatbot</a>
+    &nbsp;&middot;&nbsp; &copy; 2025
+  </div>
+</footer>
+
+</body>
+</html>

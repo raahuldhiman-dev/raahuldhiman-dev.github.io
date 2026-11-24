@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Polite Resume — Case Study | Rahul Dhiman</title>
+<meta name="description" content="ATS-optimized resume and cover letter builder with 40+ templates, prewritten recruiter-approved content, and a custom WordPress membership paywall. Built by Rahul Dhiman.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:   #050508;
+    --bg2:  #08080F;
+    --bg3:  #0C0C18;
+    --card: rgba(255,255,255,0.02);
+    --card-hover: rgba(255,255,255,0.05);
+    --border:  rgba(255,255,255,0.06);
+    --border2: rgba(255,255,255,0.12);
+    --text:  #EDF2FF;
+    --muted: #7B8AA8;
+    --muted2:#3D4560;
+    --acc1:  #FF5C3A;
+    --acc2:  #845EF7;
+    --acc3:  #00D9C0;
+    --acc4:  #FFB800;
+    --acc5:  #FF3D9A;
+    --g1: linear-gradient(135deg,#FF5C3A,#FF3D9A);
+    --g2: linear-gradient(135deg,#845EF7,#00D9C0);
+    --g3: linear-gradient(135deg,#FFB800,#FF5C3A);
+    --g4: linear-gradient(135deg,#FF5C3A,#845EF7,#00D9C0);
+    --gtext: linear-gradient(135deg,#FF5C3A,#845EF7,#00D9C0,#FFB800);
+    --font-display: 'Space Grotesk', sans-serif;
+    --font-body:    'Inter', sans-serif;
+    --font-mono:    'JetBrains Mono', monospace;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{background:var(--bg);color:var(--text);font-family:var(--font-body);line-height:1.6;overflow-x:hidden;}
+
+  .grid-lines{
+    position:fixed;inset:0;z-index:0;pointer-events:none;
+    background-image:
+      linear-gradient(rgba(132,94,247,0.04) 1px, transparent 1px),
+      linear-gradient(90deg,rgba(132,94,247,0.04) 1px, transparent 1px);
+    background-size:80px 80px;
+  }
+  .blob{position:fixed;border-radius:50%;pointer-events:none;z-index:0;filter:blur(80px);}
+  .blob-1{width:500px;height:500px;top:-100px;left:-150px;background:radial-gradient(circle,rgba(132,94,247,0.07) 0%,transparent 70%);}
+  .blob-2{width:400px;height:400px;bottom:10%;right:-80px;background:radial-gradient(circle,rgba(255,92,58,0.05) 0%,transparent 70%);}
+
+  ::-webkit-scrollbar{width:3px;}
+  ::-webkit-scrollbar-track{background:var(--bg);}
+  ::-webkit-scrollbar-thumb{background:var(--g1);border-radius:3px;}
+  ::selection{background:rgba(132,94,247,0.3);color:#fff;}
+
+  nav{
+    position:sticky;top:0;z-index:100;
+    padding:16px 24px;
+    background:rgba(5,5,8,0.7);backdrop-filter:blur(20px);
+    border-bottom:1px solid var(--border);
+  }
+  .nav-inner{max-width:960px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;}
+  .nav-logo{font-family:var(--font-display);font-weight:700;font-size:17px;text-decoration:none;color:var(--text);display:flex;align-items:center;gap:10px;}
+  .nav-logo-badge{width:30px;height:30px;border-radius:8px;background:var(--g1);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:#fff;}
+  .nav-links{display:flex;gap:4px;align-items:center;}
+  .nav-links a{color:var(--muted);font-size:13px;font-weight:500;text-decoration:none;padding:8px 16px;border-radius:8px;transition:all 0.2s;}
+  .nav-links a:hover{color:var(--text);background:var(--card);}
+  .btn-nav{display:inline-flex;align-items:center;gap:6px;background:var(--g1);color:#fff;font-weight:600;font-size:13px;padding:9px 20px;border-radius:10px;text-decoration:none;transition:transform 0.2s,box-shadow 0.2s;}
+  .btn-nav:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(255,92,58,0.3);}
+
+  .hero{position:relative;z-index:1;padding:80px 24px 60px;max-width:960px;margin:0 auto;}
+  .hero-tag{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:11px;color:var(--acc3);background:rgba(0,217,192,0.08);border:1px solid rgba(0,217,192,0.2);padding:5px 14px;border-radius:999px;margin-bottom:24px;}
+  .hero-tag::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--acc3);animation:pulse 1.5s infinite;}
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.4;}}
+
+  .hero h1{font-family:var(--font-display);font-weight:800;font-size:clamp(2.2rem,5vw,3.6rem);line-height:1.05;margin-bottom:20px;}
+  .grad-text{background:var(--gtext);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+  .hero-sub{color:var(--muted);font-size:16px;line-height:1.75;max-width:620px;margin-bottom:36px;}
+  .hero-sub strong{color:var(--text);}
+
+  .live-banner{display:inline-flex;align-items:center;gap:10px;padding:10px 20px;border-radius:12px;background:rgba(0,217,192,0.07);border:1px solid rgba(0,217,192,0.2);margin-bottom:28px;font-family:var(--font-mono);font-size:12px;color:var(--acc3);text-decoration:none;transition:all 0.2s;}
+  .live-banner:hover{background:rgba(0,217,192,0.12);}
+  .live-dot{width:7px;height:7px;border-radius:50%;background:var(--acc3);animation:pulse 1.5s infinite;}
+
+  .hero-meta{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:48px;}
+  .meta-chip{display:inline-flex;align-items:center;gap:7px;font-family:var(--font-mono);font-size:11px;padding:6px 14px;border-radius:999px;border:1px solid var(--border2);background:var(--card);color:var(--muted);}
+  .meta-chip .dot{width:6px;height:6px;border-radius:50%;}
+
+  .hero-stats{display:flex;flex-wrap:wrap;gap:24px;}
+  .stat-box{display:flex;flex-direction:column;gap:4px;padding:16px 20px;border-radius:14px;background:var(--card);border:1px solid var(--border);min-width:120px;}
+  .stat-num{font-family:var(--font-display);font-weight:700;font-size:1.6rem;line-height:1;}
+  .stat-label{font-size:11px;color:var(--muted);font-family:var(--font-mono);}
+
+  .section{position:relative;z-index:1;padding:70px 24px;max-width:960px;margin:0 auto;}
+  .section-divider{max-width:960px;margin:0 auto;height:1px;background:var(--border);}
+  .section-label{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:11px;color:var(--acc2);background:rgba(132,94,247,0.08);border:1px solid rgba(132,94,247,0.2);padding:5px 14px;border-radius:999px;margin-bottom:16px;}
+  .section h2{font-family:var(--font-display);font-weight:700;font-size:clamp(1.5rem,3vw,2.1rem);line-height:1.15;margin-bottom:12px;}
+  .section-desc{color:var(--muted);font-size:15px;max-width:580px;line-height:1.75;margin-bottom:36px;}
+
+  .card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:24px;transition:border-color 0.25s,background 0.25s,transform 0.25s;}
+  .card:hover{border-color:var(--border2);background:var(--card-hover);transform:translateY(-3px);}
+  .card-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:14px;background:var(--card);border:1px solid var(--border2);}
+  .card h3{font-family:var(--font-display);font-weight:600;font-size:15px;margin-bottom:8px;}
+  .card p{color:var(--muted);font-size:13px;line-height:1.75;}
+
+  .grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
+  .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+  .grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+  @media(max-width:720px){
+    .grid-2,.grid-3,.grid-4{grid-template-columns:1fr;}
+    .hero-stats{flex-direction:column;}
+    nav .nav-links{display:none;}
+  }
+  @media(min-width:480px) and (max-width:720px){
+    .grid-2{grid-template-columns:repeat(2,1fr);}
+    .grid-4{grid-template-columns:repeat(2,1fr);}
+  }
+
+  .arch-diagram{background:var(--bg2);border:1px solid var(--border);border-radius:20px;padding:36px;display:flex;flex-direction:column;gap:0;position:relative;overflow:hidden;}
+  .arch-diagram::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(132,94,247,0.06),transparent 60%);pointer-events:none;}
+  .arch-layer{display:flex;align-items:center;gap:12px;padding:14px 20px;border-radius:12px;border:1px solid var(--border);background:var(--card);position:relative;z-index:1;}
+  .arch-layer-label{font-family:var(--font-mono);font-size:10px;color:var(--muted2);min-width:90px;text-transform:uppercase;letter-spacing:0.08em;}
+  .arch-layer-nodes{display:flex;flex-wrap:wrap;gap:8px;flex:1;}
+  .arch-node{font-family:var(--font-mono);font-size:11px;padding:5px 12px;border-radius:8px;border:1px solid var(--border2);white-space:nowrap;}
+  .node-orange{background:rgba(255,92,58,0.1);color:#FF8A70;border-color:rgba(255,92,58,0.25);}
+  .node-purple{background:rgba(132,94,247,0.1);color:#A98BF7;border-color:rgba(132,94,247,0.25);}
+  .node-teal{background:rgba(0,217,192,0.1);color:#33E5D0;border-color:rgba(0,217,192,0.25);}
+  .node-amber{background:rgba(255,184,0,0.1);color:#FFD055;border-color:rgba(255,184,0,0.25);}
+  .node-pink{background:rgba(255,61,154,0.1);color:#FF72C0;border-color:rgba(255,61,154,0.25);}
+  .node-gray{background:rgba(255,255,255,0.04);color:var(--muted);border-color:var(--border2);}
+  .arch-arrow{display:flex;align-items:center;justify-content:center;padding:6px 0;color:var(--muted2);font-size:16px;position:relative;z-index:1;}
+
+  .tech-wrap{background:var(--bg2);border:1px solid var(--border);border-radius:16px;overflow:hidden;}
+  .tech-table{width:100%;border-collapse:collapse;font-size:13px;}
+  .tech-table th{font-family:var(--font-mono);font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted2);padding:12px 16px;text-align:left;border-bottom:1px solid var(--border);}
+  .tech-table td{padding:14px 16px;border-bottom:1px solid var(--border);color:var(--muted);vertical-align:top;}
+  .tech-table td:first-child{color:var(--text);font-weight:500;font-family:var(--font-display);font-size:14px;white-space:nowrap;}
+  .tech-table tr:hover td{background:var(--card);}
+  .tech-table tr:last-child td{border-bottom:none;}
+
+  .decision{display:flex;gap:16px;padding:20px;border-radius:14px;background:var(--card);border:1px solid var(--border);transition:border-color 0.2s;}
+  .decision:hover{border-color:var(--border2);}
+  .decision-num{font-family:var(--font-display);font-weight:700;font-size:2rem;line-height:1;min-width:36px;background:var(--gtext);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+  .decision-body h3{font-family:var(--font-display);font-weight:600;font-size:15px;margin-bottom:6px;}
+  .decision-body p{color:var(--muted);font-size:13px;line-height:1.75;}
+
+  .metric{display:flex;flex-direction:column;gap:6px;padding:22px;border-radius:14px;background:var(--card);border:1px solid var(--border);transition:all 0.25s;}
+  .metric:hover{border-color:var(--border2);transform:translateY(-2px);}
+  .metric-val{font-family:var(--font-display);font-weight:700;font-size:1.8rem;line-height:1;}
+  .metric-label{color:var(--muted);font-size:12px;font-family:var(--font-mono);}
+  .metric-desc{color:var(--muted);font-size:12px;line-height:1.6;}
+
+  .challenge{padding:22px;border-radius:14px;border-left:3px solid;background:var(--card);}
+  .challenge h3{font-family:var(--font-display);font-weight:600;font-size:14px;margin-bottom:8px;}
+  .challenge p{color:var(--muted);font-size:13px;line-height:1.75;}
+  .challenge .fix{display:inline-flex;align-items:center;gap:5px;font-family:var(--font-mono);font-size:11px;padding:3px 10px;border-radius:6px;margin-top:10px;}
+
+  .cta-block{position:relative;z-index:1;max-width:960px;margin:0 auto;padding:60px 24px 80px;text-align:center;}
+  .cta-inner{padding:60px 40px;border-radius:24px;background:var(--bg2);border:1px solid var(--border);position:relative;overflow:hidden;}
+  .cta-inner::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(132,94,247,0.1),transparent 60%);pointer-events:none;}
+  .cta-inner h2{font-family:var(--font-display);font-weight:800;font-size:clamp(1.6rem,4vw,2.4rem);margin-bottom:12px;position:relative;z-index:1;}
+  .cta-inner p{color:var(--muted);font-size:15px;max-width:480px;margin:0 auto 32px;line-height:1.75;position:relative;z-index:1;}
+  .cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;position:relative;z-index:1;}
+  .btn-primary{display:inline-flex;align-items:center;gap:8px;background:var(--g1);color:#fff;font-weight:600;font-size:14px;padding:14px 28px;border-radius:12px;text-decoration:none;border:none;transition:transform 0.2s,box-shadow 0.2s;}
+  .btn-primary:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(255,92,58,0.35);}
+  .btn-secondary{display:inline-flex;align-items:center;gap:8px;background:var(--card);color:var(--text);font-weight:600;font-size:14px;padding:13px 28px;border-radius:12px;text-decoration:none;border:1px solid var(--border2);transition:all 0.2s;}
+  .btn-secondary:hover{border-color:rgba(132,94,247,0.5);background:rgba(132,94,247,0.07);transform:translateY(-3px);}
+
+  footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:28px 24px;text-align:center;font-family:var(--font-mono);font-size:11px;color:var(--muted2);}
+  footer a{color:var(--acc1);text-decoration:none;}
+  footer a:hover{color:var(--acc2);}
+
+  .back-link{display:inline-flex;align-items:center;gap:6px;color:var(--muted);font-size:13px;text-decoration:none;font-family:var(--font-mono);padding:8px 14px;border-radius:8px;border:1px solid var(--border);background:var(--card);transition:all 0.2s;}
+  .back-link:hover{color:var(--acc1);border-color:rgba(255,92,58,0.3);}
+</style>
+</head>
+<body>
+
+<div class="grid-lines"></div>
+<div class="blob blob-1"></div>
+<div class="blob blob-2"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="https://raahuldhiman-dev.github.io" class="nav-logo">
+      <div class="nav-logo-badge">R</div>
+      Rahul Dhiman
+    </a>
+    <div class="nav-links">
+      <a href="https://raahuldhiman-dev.github.io/#projects">Projects</a>
+      <a href="https://politeresume.com" target="_blank" rel="noopener">Live Site</a>
+      <a href="https://raahuldhiman-dev.github.io/#contact" class="btn-nav">Hire Me &rarr;</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <a href="https://raahuldhiman-dev.github.io/#projects" class="back-link" style="margin-bottom:28px;display:inline-flex;">
+    &larr; Back to Portfolio
+  </a>
+
+  <div style="margin-top:16px;">
+    <div class="hero-tag">Case Study &mdash; Resume SaaS / WordPress</div>
+  </div>
+
+  <h1>Polite Resume<br><span class="grad-text">ATS-Optimized Resume Builder</span></h1>
+
+  <p class="hero-sub">
+    A production SaaS that helps job seekers build <strong>ATS-friendly resumes and cover letters</strong>
+    from 40+ professionally designed templates, populated with <strong>prewritten recruiter-approved content</strong>
+    for 50+ job roles. Built on WordPress with a custom membership and paywall flow, an ATS score checker,
+    and SEO-driven organic acquisition.
+  </p>
+
+  <a href="https://politeresume.com" target="_blank" rel="noopener" class="live-banner">
+    <span class="live-dot"></span>
+    Live at politeresume.com &rarr;
+  </a>
+
+  <div class="hero-meta">
+    <span class="meta-chip"><span class="dot" style="background:#FF5C3A;"></span>WordPress</span>
+    <span class="meta-chip"><span class="dot" style="background:#845EF7;"></span>Elementor Pro</span>
+    <span class="meta-chip"><span class="dot" style="background:#00D9C0;"></span>WooCommerce</span>
+    <span class="meta-chip"><span class="dot" style="background:#FFB800;"></span>MemberPress</span>
+    <span class="meta-chip" style="color:var(--acc3);">&#9989; Shipped &middot; Live</span>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat-box">
+      <span class="stat-num" style="background:var(--g1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">40+</span>
+      <span class="stat-label">Resume Templates</span>
+    </div>
+    <div class="stat-box">
+      <span class="stat-num" style="background:var(--g2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">50+</span>
+      <span class="stat-label">Job Roles Covered</span>
+    </div>
+    <div class="stat-box">
+      <span class="stat-num" style="background:var(--g3);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">ATS</span>
+      <span class="stat-label">Score Checker</span>
+    </div>
+    <div class="stat-box">
+      <span class="stat-num" style="background:var(--g4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">SEO</span>
+      <span class="stat-label">Organic Acquisition</span>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- PROBLEM -->
+<div class="section">
+  <div class="section-label">01 &mdash; The Problem</div>
+  <h2>Why Job Seekers Fail the ATS Filter</h2>
+  <p class="section-desc">
+    Most resume builders sell beautiful PDFs that are invisible to Applicant Tracking Systems.
+    Job seekers spend hours customizing a document that gets rejected before a human ever reads it.
+  </p>
+
+  <div class="grid-3">
+    <div class="card">
+      <div class="card-icon" style="background:rgba(255,92,58,0.1);border-color:rgba(255,92,58,0.2);">&#128684;</div>
+      <h3>ATS Rejection at Scale</h3>
+      <p>Up to 75% of resumes are rejected by ATS software before reaching a recruiter. Most resume tools optimize for visual design, not machine-readability, leaving candidates invisible to the systems that actually filter them.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:rgba(132,94,247,0.1);border-color:rgba(132,94,247,0.2);">&#128196;</div>
+      <h3>Blank Page Problem</h3>
+      <p>Even motivated job seekers freeze when writing about themselves. Generic advice like "use action verbs" doesn't help someone who doesn't know what a recruiter actually wants to read for their specific role.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:rgba(0,217,192,0.1);border-color:rgba(0,217,192,0.2);">&#128200;</div>
+      <h3>No Feedback Loop</h3>
+      <p>Traditional resume tools give no signal about whether the output will pass keyword matching. Users submit and hope. There's no way to know if the document is performing until interviews fail to materialize.</p>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- ARCHITECTURE -->
+<div class="section">
+  <div class="section-label">02 &mdash; Architecture</div>
+  <h2>How the Platform Is Structured</h2>
+  <p class="section-desc">
+    A WordPress-first stack chosen deliberately for SEO velocity and low infrastructure overhead,
+    with custom membership logic built on top of WooCommerce and MemberPress.
+  </p>
+
+  <div class="arch-diagram">
+    <div class="arch-layer">
+      <span class="arch-layer-label">Acquisition</span>
+      <div class="arch-layer-nodes">
+        <span class="arch-node node-amber">SEO Blog Content (role-specific)</span>
+        <span class="arch-node node-amber">Google Search (ATS resume keywords)</span>
+        <span class="arch-node node-amber">Template Landing Pages</span>
+      </div>
+    </div>
+    <div class="arch-arrow">&#8595; Visitor lands on role-specific template or blog post</div>
+    <div class="arch-layer">
+      <span class="arch-layer-label">Frontend</span>
+      <div class="arch-layer-nodes">
+        <span class="arch-node node-orange">WordPress + Elementor Pro</span>
+        <span class="arch-node node-orange">Custom Gutenberg Blocks</span>
+        <span class="arch-node node-orange">ATS Score Checker Widget</span>
+      </div>
+    </div>
+    <div class="arch-arrow">&#8595; Free tier shows template preview; premium locks content</div>
+    <div class="arch-layer">
+      <span class="arch-layer-label">Paywall</span>
+      <div class="arch-layer-nodes">
+        <span class="arch-node node-purple">MemberPress (access rules)</span>
+        <span class="arch-node node-purple">WooCommerce (payments)</span>
+        <span class="arch-node node-purple">Stripe / PayPal gateways</span>
+      </div>
+    </div>
+    <div class="arch-arrow">&#8595; Member unlocks full template library + prewritten content</div>
+    <div class="arch-layer">
+      <span class="arch-layer-label">Content</span>
+      <div class="arch-layer-nodes">
+        <span class="arch-node node-teal">40+ Resume Templates (DOCX + PDF)</span>
+        <span class="arch-node node-teal">Cover Letter Templates</span>
+        <span class="arch-node node-teal">Role-specific Bullet Point Libraries</span>
+      </div>
+    </div>
+    <div class="arch-arrow">&#8595; User downloads or copies content to their own editor</div>
+    <div class="arch-layer">
+      <span class="arch-layer-label">Infrastructure</span>
+      <div class="arch-layer-nodes">
+        <span class="arch-node node-gray">Managed WordPress Hosting</span>
+        <span class="arch-node node-gray">Cloudflare CDN</span>
+        <span class="arch-node node-gray">SMTP (Brevo/Sendinblue)</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- FEATURES -->
+<div class="section">
+  <div class="section-label">03 &mdash; Features</div>
+  <h2>What the Platform Delivers</h2>
+  <p class="section-desc">Seven capabilities that move a job seeker from blank page to submitted application.</p>
+
+  <div class="grid-3">
+    <div class="card">
+      <div class="card-icon" style="background:rgba(255,92,58,0.1);border-color:rgba(255,92,58,0.2);">&#128196;</div>
+      <h3>40+ ATS-Optimized Templates</h3>
+      <p>Resume templates designed to pass keyword extraction by major ATS systems (Workday, Greenhouse, Lever). Clean formatting, no tables or columns that confuse parsers, and standard section headings that ATS systems recognize.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:rgba(132,94,247,0.1);border-color:rgba(132,94,247,0.2);">&#9997;</div>
+      <h3>Prewritten Role Content</h3>
+      <p>Recruiter-approved bullet points and summaries for 50+ job roles, from software engineers to marketing managers. Users select bullets that match their experience and customize rather than writing from scratch.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:rgba(0,217,192,0.1);border-color:rgba(0,217,192,0.2);">&#128202;</div>
+      <h3>ATS Score Checker</h3>
+      <p>Paste a job description and resume text to get a keyword match score. Shows which keywords from the job description are present in the resume and which are missing, before the application is submitted.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:rgba(255,184,0,0.1);border-color:rgba(255,184,0,0.2);">&#128140;</div>
+      <h3>Cover Letter Builder</h3>
+      <p>Role-matched cover letter templates with customizable opening paragraphs, body sections, and closings. Follows the same keyword-first philosophy as the resume templates.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:rgba(255,61,154,0.1);border-color:rgba(255,61,154,0.2);">&#128274;</div>
+      <h3>Membership + Paywall</h3>
+      <p>Free tier gives access to template previews. Premium membership unlocks the full library, prewritten content, and ATS checker. MemberPress enforces access rules at the page and content block level.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:rgba(255,92,58,0.1);border-color:rgba(255,92,58,0.2);">&#128269;</div>
+      <h3>SEO Content Strategy</h3>
+      <p>Role-specific landing pages and blog content targeting high-intent search queries like "software engineer resume template ATS" and "marketing manager cover letter examples." Organic acquisition without paid ads.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:rgba(132,94,247,0.1);border-color:rgba(132,94,247,0.2);">&#128229;</div>
+      <h3>Instant Download</h3>
+      <p>Premium members download templates as DOCX files, editable in any word processor. No proprietary builder lock-in. The user owns the file and can customize it freely outside the platform.</p>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- STACK -->
+<div class="section">
+  <div class="section-label">04 &mdash; Stack</div>
+  <h2>Technology Choices</h2>
+  <p class="section-desc">WordPress chosen for SEO velocity and ecosystem; each plugin chosen for a specific capability gap, not convenience.</p>
+
+  <div class="tech-wrap">
+    <table class="tech-table">
+      <thead>
+        <tr>
+          <th>Layer</th>
+          <th>Technology</th>
+          <th>Why This Choice</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>CMS</td>
+          <td>WordPress</td>
+          <td>Largest content ecosystem and strongest SEO tooling. The plugin market covers every required capability (membership, payments, email) without custom backend development. Time-to-launch mattered.</td>
+        </tr>
+        <tr>
+          <td>Page Builder</td>
+          <td>Elementor Pro</td>
+          <td>Enables high-fidelity template preview pages with dynamic content widgets. The theme builder powers role-specific landing pages at scale without duplicating HTML.</td>
+        </tr>
+        <tr>
+          <td>Membership</td>
+          <td>MemberPress</td>
+          <td>Access rules at the page, post, and content block level. Integrates with WooCommerce for one-time and subscription purchases. Provides member dashboards without custom development.</td>
+        </tr>
+        <tr>
+          <td>Payments</td>
+          <td>WooCommerce + Stripe</td>
+          <td>WooCommerce handles the product and checkout flow. Stripe processes payments with strong fraud controls. PayPal added as an alternative gateway for users without cards.</td>
+        </tr>
+        <tr>
+          <td>SEO</td>
+          <td>Rank Math Pro</td>
+          <td>Schema markup for template pages (HowTo, FAQPage), on-page optimization guidance, and XML sitemap management. Schema improves CTR from search results beyond raw ranking.</td>
+        </tr>
+        <tr>
+          <td>Email</td>
+          <td>Brevo (Sendinblue)</td>
+          <td>Transactional email (membership confirmation, password reset) and marketing sequences. SMTP delivery avoids shared hosting spam reputation issues.</td>
+        </tr>
+        <tr>
+          <td>CDN / Security</td>
+          <td>Cloudflare</td>
+          <td>Global CDN for asset delivery, DDoS protection, and bot mitigation. Free tier covers the traffic level of a growing SaaS without infrastructure cost.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- HARD PROBLEMS -->
+<div class="section">
+  <div class="section-label">05 &mdash; Hard Problems</div>
+  <h2>What Was Actually Difficult</h2>
+  <p class="section-desc">Three non-obvious problems that shaped how the platform was built.</p>
+
+  <div style="display:flex;flex-direction:column;gap:16px;">
+    <div class="challenge" style="border-color:var(--acc1);">
+      <h3>&#127380; ATS Parser Compatibility Across Template Designs</h3>
+      <p>ATS systems parse resumes differently. A template that looks clean to a human can produce garbage output when parsed by Workday's or Greenhouse's extractors. Tables, text boxes, headers and footers, and multi-column layouts all break differently across parsers. Every template had to be validated against the parse output of the major ATS systems, not just visually reviewed. Templates with known parse failures were removed or redesigned regardless of visual quality.</p>
+      <span class="fix" style="background:rgba(255,92,58,0.1);color:#FF8A70;border:1px solid rgba(255,92,58,0.2);">&#10003; ATS parse validation for every template</span>
+    </div>
+    <div class="challenge" style="border-color:var(--acc2);">
+      <h3>&#128274; Paywall Enforcement Without a Custom Backend</h3>
+      <p>MemberPress enforces access at the WordPress page level, but template download files (DOCX, PDF) are static assets stored in the media library with publicly guessable URLs. A member who downloads a file can share the direct URL, bypassing the paywall entirely. The fix was moving premium files outside the web root and serving them through a PHP passthrough that validates the active membership session before streaming the file. No file is ever accessible via a direct URL.</p>
+      <span class="fix" style="background:rgba(132,94,247,0.1);color:#A98BF7;border:1px solid rgba(132,94,247,0.2);">&#10003; PHP passthrough with session validation</span>
+    </div>
+    <div class="challenge" style="border-color:var(--acc3);">
+      <h3>&#128270; SEO at Scale Without Keyword Cannibalization</h3>
+      <p>Role-specific resume template pages are structurally similar. Without a deliberate content strategy, Google treats them as near-duplicate content and suppresses the whole set. Each landing page required a unique angle: different primary keyword, different prewritten content examples, different FAQ schema, and unique internal linking targets. Rank Math's content analysis was used to enforce minimum uniqueness thresholds before publishing a new role page.</p>
+      <span class="fix" style="background:rgba(0,217,192,0.1);color:#33E5D0;border:1px solid rgba(0,217,192,0.2);">&#10003; Per-page uniqueness enforcement + FAQ schema</span>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- DESIGN DECISIONS -->
+<div class="section">
+  <div class="section-label">06 &mdash; Design Decisions</div>
+  <h2>Four Calls That Defined the Product</h2>
+  <p class="section-desc">The choices behind the template strategy, paywall model, and content approach.</p>
+
+  <div style="display:flex;flex-direction:column;gap:14px;">
+    <div class="decision">
+      <div class="decision-num">01</div>
+      <div class="decision-body">
+        <h3>DOCX download over in-browser editor</h3>
+        <p>Many resume SaaS products lock users into a proprietary editor and charge to export. Polite Resume takes the opposite position: download a standard DOCX file and edit it in Word, Google Docs, or LibreOffice. This removes friction from the first purchase decision (no "try before you buy" flow to build), and it means the product promise is fulfilled the moment the file downloads, not dependent on the quality of a custom editor.</p>
+      </div>
+    </div>
+    <div class="decision">
+      <div class="decision-num">02</div>
+      <div class="decision-body">
+        <h3>WordPress over a custom-built stack</h3>
+        <p>A custom Next.js + backend stack would take months to reach feature parity with what WordPress provides out of the box: SEO tooling, membership plugins, payment gateways, email, and content management. For a content-heavy SaaS where organic SEO is the primary acquisition channel, WordPress ships the product faster, with better SEO defaults from day one. The trade-off is less control over performance and no custom user dashboard without plugin overhead.</p>
+      </div>
+    </div>
+    <div class="decision">
+      <div class="decision-num">03</div>
+      <div class="decision-body">
+        <h3>Role-specific landing pages over a template gallery</h3>
+        <p>A generic "resume templates" gallery competes with hundreds of existing sites on broad keywords. Role-specific pages ("software engineer resume template" or "nurse resume template") target high-intent, lower-competition queries where the visitor already knows exactly what they need. Each page doubles as a sales page and an SEO target. The result is a long-tail keyword strategy that compounds over time without paid acquisition.</p>
+      </div>
+    </div>
+    <div class="decision">
+      <div class="decision-num">04</div>
+      <div class="decision-body">
+        <h3>Prewritten content as the core value proposition</h3>
+        <p>Most resume tools sell the template. Polite Resume sells the words inside it. Prewritten bullet points eliminate the blank-page problem that blocks most job seekers from finishing a resume. This is also more defensible than template design: anyone can copy a layout, but a library of recruiter-validated content for 50+ job roles takes significant curation effort to replicate.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- OUTCOMES -->
+<div class="section">
+  <div class="section-label">07 &mdash; Outcomes</div>
+  <h2>What Was Built and Shipped</h2>
+  <p class="section-desc">A live, revenue-generating SaaS with an SEO-driven acquisition funnel and a defensible content moat.</p>
+
+  <div class="grid-4">
+    <div class="metric">
+      <span class="metric-val" style="background:var(--g1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Live</span>
+      <span class="metric-label">Production Status</span>
+      <span class="metric-desc">Fully shipped at politeresume.com with active membership flow</span>
+    </div>
+    <div class="metric">
+      <span class="metric-val" style="background:var(--g2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">40+</span>
+      <span class="metric-label">ATS Templates</span>
+      <span class="metric-desc">Every template validated for ATS parse compatibility</span>
+    </div>
+    <div class="metric">
+      <span class="metric-val" style="background:var(--g3);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">50+</span>
+      <span class="metric-label">Role Variants</span>
+      <span class="metric-desc">Role-specific landing pages each targeting distinct keyword clusters</span>
+    </div>
+    <div class="metric">
+      <span class="metric-val" style="background:var(--g4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">0</span>
+      <span class="metric-label">Custom Backend</span>
+      <span class="metric-desc">Full SaaS capability delivered entirely on WordPress ecosystem</span>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- SITE PREVIEW -->
+<div class="section">
+  <div class="section-label">08 &mdash; Live Site</div>
+  <h2>See It in Production</h2>
+  <p class="section-desc">Fully live at politeresume.com with an active membership and payment flow.</p>
+
+  <div style="border-radius:20px;overflow:hidden;border:1px solid var(--border);background:var(--bg2);">
+    <div style="display:flex;align-items:center;gap:8px;padding:14px 20px;border-bottom:1px solid var(--border);">
+      <div style="display:flex;gap:7px;">
+        <div style="width:10px;height:10px;border-radius:50%;background:#FF5F57;"></div>
+        <div style="width:10px;height:10px;border-radius:50%;background:#FFBD2E;"></div>
+        <div style="width:10px;height:10px;border-radius:50%;background:#28C840;"></div>
+      </div>
+      <span style="font-family:var(--font-mono);font-size:11px;color:var(--muted2);flex:1;text-align:center;">politeresume.com</span>
+    </div>
+    <div style="padding:60px 24px;text-align:center;background:linear-gradient(135deg,#0a0a1a,#1a0a2e,#862e9c);min-height:260px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;">
+      <div style="width:56px;height:56px;border-radius:16px;background:rgba(134,46,156,0.2);border:1px solid rgba(134,46,156,0.4);display:flex;align-items:center;justify-content:center;font-size:26px;">&#128274;</div>
+      <div>
+        <div style="font-family:var(--font-display);font-weight:700;font-size:18px;color:var(--text);margin-bottom:6px;">Source Protected</div>
+        <div style="font-family:var(--font-mono);font-size:12px;color:var(--muted);">Preview restricted &mdash; visit the live site directly</div>
+      </div>
+      <a href="https://politeresume.com" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;font-family:var(--font-mono);font-size:12px;color:#c77dff;border:1px solid rgba(134,46,156,0.4);padding:8px 18px;border-radius:8px;text-decoration:none;background:rgba(134,46,156,0.1);transition:all 0.2s;">Visit Live Site &rarr;</a>
+    </div>
+  </div>
+
+  <div style="text-align:center;margin-top:28px;">
+    <a href="https://politeresume.com" target="_blank" rel="noopener" class="btn-primary">Visit Live Site &rarr;</a>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-block">
+  <div class="cta-inner">
+    <h2>Need a <span class="grad-text">SaaS or WordPress build?</span></h2>
+    <p>I build full-stack products and WordPress SaaS platforms from scratch, including custom membership flows, payment integrations, and SEO content architecture. Get in touch.</p>
+    <div class="cta-btns">
+      <a href="https://raahuldhiman-dev.github.io/#contact" class="btn-primary">Get in Touch &rarr;</a>
+      <a href="https://raahuldhiman-dev.github.io/#projects" class="btn-secondary">Other Projects</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  Built by <a href="https://raahuldhiman-dev.github.io">Rahul Dhiman</a> &middot;
+  <a href="https://raahuldhiman-dev.github.io/#projects">All Projects</a>
+</footer>
+
+</body>
+</html>
