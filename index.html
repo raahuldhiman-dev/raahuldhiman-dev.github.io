@@ -440,6 +440,7 @@
       max-width: 520px; margin-bottom: 32px;
     }
     .hero-desc strong { color: var(--text); font-weight: 600; }
+    .hero-roles { display: block; margin-top: 12px; font-family: var(--font-mono); font-size: 12px; color: var(--acc2); line-height: 1.7; }
     .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 40px; }
     .btn-primary {
       display: inline-flex; align-items: center; gap: 8px;
@@ -1134,9 +1135,10 @@
 <div class="mobile-nav" id="mobileNav" role="navigation" aria-label="Mobile menu">
   <a href="#home" onclick="closeMob()">Home</a>
   <a href="#about" onclick="closeMob()">About</a>
+  <a href="#experience" onclick="closeMob()">Experience</a>
   <a href="#skills" onclick="closeMob()">Skills</a>
   <a href="#projects" onclick="closeMob()">Projects</a>
-  <a href="#experience" onclick="closeMob()">Experience</a>
+  <a href="#industries" onclick="closeMob()">Industries</a>
   <a href="#contact" onclick="closeMob()">Contact</a>
   <a href="#contact" onclick="closeMob()" style="background:var(--g1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Hire Me →</a>
 </div>
@@ -1148,9 +1150,10 @@
     <div class="nav-links">
       <a href="#home" data-section="home" class="active">Home</a>
       <a href="#about" data-section="about">About</a>
+      <a href="#experience" data-section="experience">Experience</a>
       <a href="#skills" data-section="skills">Skills</a>
       <a href="#projects" data-section="projects">Projects</a>
-      <a href="#experience" data-section="experience">Experience</a>
+      <a href="#industries" data-section="industries">Industries</a>
       <a href="#contact" data-section="contact">Contact</a>
       <a href="#contact" class="btn-cta">Hire Me →</a>
     </div>
@@ -1174,6 +1177,7 @@
       <div class="hero-role" id="typewriter"><span class="tc">|</span></div>
       <p class="hero-desc">
         <strong>Full-Stack Developer & AI Engineer</strong> turning complex ideas into production-grade software. 5+ years shipping web apps, AI tools, and automation systems.
+        <span class="hero-roles">Open to roles: AI Engineer · ML Engineer · Full Stack Developer · Backend Developer</span>
       </p>
       <div class="hero-btns">
         <a href="#projects" class="btn-primary">See My Work →</a>
@@ -1292,305 +1296,6 @@
           </div>
         </div>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- Skills -->
-<section id="skills" aria-labelledby="skills-title">
-  <div class="wrap">
-    <span class="badge">Tech Stack</span>
-    <h2 id="skills-title" class="sec-title fade-up">Tools of the <span style="background:var(--g2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Trade</span></h2>
-    <p class="sec-desc">A curated toolkit spanning backend, frontend, AI, and cloud — constantly evolving.</p>
-    <div class="skills-showcase scale-in d1" id="skillBubbles">
-      <div class="skill-bubble" style="--h:1"><div class="skill-bubble-icon">🐘</div><div class="skill-bubble-name">PHP/Laravel</div><div class="skill-bubble-pct">95%</div></div>
-      <div class="skill-bubble"><div class="skill-bubble-icon">📜</div><div class="skill-bubble-name">JS/TS</div><div class="skill-bubble-pct">90%</div></div>
-      <div class="skill-bubble"><div class="skill-bubble-icon">🐍</div><div class="skill-bubble-name">Python</div><div class="skill-bubble-pct">88%</div></div>
-      <div class="skill-bubble"><div class="skill-bubble-icon">⚛️</div><div class="skill-bubble-name">React/Next</div><div class="skill-bubble-pct">85%</div></div>
-      <div class="skill-bubble"><div class="skill-bubble-icon">⚡</div><div class="skill-bubble-name">FastAPI/Node</div><div class="skill-bubble-pct">82%</div></div>
-      <div class="skill-bubble"><div class="skill-bubble-icon">🤖</div><div class="skill-bubble-name">GPT-4/AI</div><div class="skill-bubble-pct">85%</div></div>
-      <div class="skill-bubble"><div class="skill-bubble-icon">🗄️</div><div class="skill-bubble-name">SQL</div><div class="skill-bubble-pct">90%</div></div>
-      <div class="skill-bubble"><div class="skill-bubble-icon">🐳</div><div class="skill-bubble-name">Docker</div><div class="skill-bubble-pct">78%</div></div>
-      <div class="skill-bubble"><div class="skill-bubble-icon">☁️</div><div class="skill-bubble-name">AWS/GCP/OCI</div><div class="skill-bubble-pct">78%</div></div>
-      <div class="skill-bubble"><div class="skill-bubble-icon">🔷</div><div class="skill-bubble-name">Next.js</div><div class="skill-bubble-pct">82%</div></div>
-      <div class="skill-bubble"><div class="skill-bubble-icon">🎨</div><div class="skill-bubble-name">Tailwind</div><div class="skill-bubble-pct">85%</div></div>
-      <div class="skill-bubble"><div class="skill-bubble-icon">📡</div><div class="skill-bubble-name">Redis</div><div class="skill-bubble-pct">80%</div></div>
-      <div class="skill-bubble"><div class="skill-bubble-icon">🌐</div><div class="skill-bubble-name">WordPress</div><div class="skill-bubble-pct">90%</div></div>
-      <div class="skill-bubble"><div class="skill-bubble-icon">🛍️</div><div class="skill-bubble-name">WooCommerce</div><div class="skill-bubble-pct">85%</div></div>
-    </div>
-    <div class="skill-bars-advanced fade-up d2" id="barSkills">
-      <div class="skill-bar-item"><div class="skill-bar-header"><span class="skill-bar-name">PHP / Laravel</span><span class="skill-bar-pct">95%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-width="95" style="background:var(--g1);"></div></div></div>
-      <div class="skill-bar-item"><div class="skill-bar-header"><span class="skill-bar-name">JavaScript / TypeScript</span><span class="skill-bar-pct">90%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-width="90" style="background:var(--g2);"></div></div></div>
-      <div class="skill-bar-item"><div class="skill-bar-header"><span class="skill-bar-name">Python</span><span class="skill-bar-pct">88%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-width="88" style="background:var(--g3);"></div></div></div>
-      <div class="skill-bar-item"><div class="skill-bar-header"><span class="skill-bar-name">MySQL / PostgreSQL</span><span class="skill-bar-pct">90%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-width="90" style="background:var(--g4);"></div></div></div>
-      <div class="skill-bar-item"><div class="skill-bar-header"><span class="skill-bar-name">React / Next.js</span><span class="skill-bar-pct">85%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-width="85" style="background:var(--g1);"></div></div></div>
-      <div class="skill-bar-item"><div class="skill-bar-header"><span class="skill-bar-name">GPT-4 / AI Integration</span><span class="skill-bar-pct">85%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-width="85" style="background:var(--g2);"></div></div></div>
-      <div class="skill-bar-item"><div class="skill-bar-header"><span class="skill-bar-name">FastAPI / Node.js</span><span class="skill-bar-pct">82%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-width="82" style="background:var(--g3);"></div></div></div>
-      <div class="skill-bar-item"><div class="skill-bar-header"><span class="skill-bar-name">Docker / Cloud (AWS · GCP · OCI)</span><span class="skill-bar-pct">78%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-width="78" style="background:var(--g4);"></div></div></div>
-    </div>
-    <div class="skill-badges fade-up d3">
-      <span class="skill-badge">Laravel</span><span class="skill-badge">React</span><span class="skill-badge">Python</span>
-      <span class="skill-badge">GPT-4 API</span><span class="skill-badge">FastAPI</span><span class="skill-badge">Node.js</span>
-      <span class="skill-badge">Next.js</span><span class="skill-badge">Tailwind</span><span class="skill-badge">Docker</span>
-      <span class="skill-badge">MySQL</span><span class="skill-badge">Redis</span><span class="skill-badge">Cloudflare</span>
-      <span class="skill-badge">Zerodha API</span><span class="skill-badge">LangChain</span><span class="skill-badge">AWS</span><span class="skill-badge">Google Cloud (GCP)</span><span class="skill-badge">Oracle Cloud (OCI)</span><span class="skill-badge">Azure</span><span class="skill-badge">GitHub Actions</span>
-      <span class="skill-badge">WordPress</span><span class="skill-badge">WooCommerce</span><span class="skill-badge">Elementor</span><span class="skill-badge">ACF</span><span class="skill-badge">WP REST API</span><span class="skill-badge">Yoast SEO</span>
-    </div>
-  </div>
-</section>
-
-<!-- Projects -->
-<section id="projects" aria-labelledby="projects-title">
-  <div class="wrap">
-    <span class="badge">Portfolio</span>
-    <h2 id="projects-title" class="sec-title fade-up">Featured <span style="background:var(--g3);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Projects</span></h2>
-    <p class="sec-desc">Production-grade work from AI SaaS to algorithmic trading. Real code, real impact.</p>
-    <div class="project-filters fade-up d1">
-      <button class="filter-btn active" onclick="filterProjects(this,'all')">All</button>
-      <button class="filter-btn" onclick="filterProjects(this,'ai')">AI / ML</button>
-      <button class="filter-btn" onclick="filterProjects(this,'fullstack')">Full-Stack</button>
-      <button class="filter-btn" onclick="filterProjects(this,'cloud')">Cloud</button>
-      <button class="filter-btn" onclick="filterProjects(this,'fintech')">FinTech</button>
-      <button class="filter-btn" onclick="filterProjects(this,'backend')">Backend</button>
-      <button class="filter-btn" onclick="filterProjects(this,'wordpress')">WordPress</button>
-    </div>
-    <div class="projects-grid fade-up d2" id="projectsGrid">
-
-      <!-- Medviso -->
-      <div class="project-card" data-category="ai backend">
-        <div class="project-thumb pt-gradient-3">
-          <span class="project-thumb-emoji">🫀</span>
-        </div>
-        <div class="project-body">
-          <div class="project-meta"><span class="project-category">Healthcare · Backend</span><span class="project-status ps-live">Maintained</span></div>
-          <h3 class="project-title">Medviso · Transfer Solution</h3>
-          <p class="project-desc">I maintain transfer.medviso.com, the Medviso Transfer Solution, for Medviso, a Swedish company behind cardiac image analysis and medical 3D printing software. My work is in Python: using Matplotlib to render data into images, plus keeping the service running.</p>
-          <div class="project-tags"><span class="project-tag">Python</span><span class="project-tag">Matplotlib</span><span class="project-tag">Image rendering</span><span class="project-tag">Maintenance</span></div>
-          <div class="project-links"><a href="https://medviso.com" target="_blank" rel="noopener" class="project-link">medviso.com →</a><a href="https://transfer.medviso.com" target="_blank" rel="noopener" class="project-link">Transfer (login) →</a></div>
-        </div>
-      </div>
-
-      <!-- RAG Chatbot -->
-      <div class="project-card" data-category="ai backend">
-        <div class="project-thumb pt-gradient-1">
-          <img data-src="https://opengraph.githubassets.com/1/raahuldhiman-dev/rag-chatbot" alt="RAG Chatbot preview" loading="lazy">
-          <span class="project-thumb-emoji">🧠</span>
-          <div class="project-thumb-overlay"><a href="https://github.com/raahuldhiman-dev/rag-chatbot" target="_blank" rel="noopener">View on GitHub ↗</a></div>
-        </div>
-        <div class="project-body">
-          <div class="project-meta"><span class="project-category">AI · Backend</span><span class="project-status ps-live">Open Source</span></div>
-          <h3 class="project-title">RAG Chatbot</h3>
-          <p class="project-desc">Multi-tenant document Q&A with retrieval-augmented generation. Token-aware chunking, per-user ChromaDB search, cited answers, multi-provider LLM failover, OAuth login, and encrypted API keys.</p>
-          <div class="project-tags"><span class="project-tag">Python</span><span class="project-tag">FastAPI</span><span class="project-tag">ChromaDB</span><span class="project-tag">OpenAI / Gemini / Claude</span><span class="project-tag">Docker</span></div>
-          <div class="project-links"><a href="https://github.com/raahuldhiman-dev/rag-chatbot" target="_blank" rel="noopener" class="project-link">GitHub →</a><a href="case-studies/rag-chatbot.html" target="_blank" rel="noopener" class="project-link alt">Case Study →</a></div>
-        </div>
-      </div>
-
-      <!-- AWS Face Recognition -->
-      <div class="project-card" data-category="ai cloud">
-        <div class="project-thumb pt-gradient-2">
-          <img data-src="https://opengraph.githubassets.com/1/raahuldhiman-dev/aws-face-detection-with-aws-s3" alt="AWS Face Recognition preview" loading="lazy">
-          <span class="project-thumb-emoji">☁️</span>
-          <div class="project-thumb-overlay"><a href="https://github.com/raahuldhiman-dev/aws-face-detection-with-aws-s3" target="_blank" rel="noopener">View on GitHub ↗</a></div>
-        </div>
-        <div class="project-body">
-          <div class="project-meta"><span class="project-category">AI · Cloud</span><span class="project-status ps-live">Open Source</span></div>
-          <h3 class="project-title">AWS Face Recognition System</h3>
-          <p class="project-desc">Real-time face detection and person registration on Amazon Rekognition, DynamoDB and S3 with a Flask UI, plus a used-car price analysis pipeline.</p>
-          <div class="project-tags"><span class="project-tag">Python</span><span class="project-tag">Flask</span><span class="project-tag">AWS Rekognition</span><span class="project-tag">S3</span><span class="project-tag">DynamoDB</span></div>
-          <div class="project-links"><a href="https://github.com/raahuldhiman-dev/aws-face-detection-with-aws-s3" target="_blank" rel="noopener" class="project-link">GitHub →</a></div>
-        </div>
-      </div>
-
-      <!-- AI Content Generator -->
-      <div class="project-card" data-category="ai fullstack backend">
-        <div class="project-thumb pt-gradient-1" style="background:linear-gradient(135deg,#0d1a0d,#1a3a1a,#2f9e44);">
-          <span class="project-thumb-emoji">🤖</span>
-        </div>
-        <div class="project-body">
-          <div class="project-meta"><span class="project-category">AI · Full-Stack</span><span class="project-status ps-live">Shipped</span></div>
-          <h3 class="project-title">AI Content Generator</h3>
-          <p class="project-desc">Laravel microservice powered by GPT-4 for SEO & marketing content. Queue-based processing, REST API, multi-language support, React dashboard.</p>
-          <div class="project-tags"><span class="project-tag">Laravel</span><span class="project-tag">GPT-4</span><span class="project-tag">React</span><span class="project-tag">MySQL</span><span class="project-tag">Redis</span></div>
-          <div class="project-links"><a href="#contact" class="project-link">Code on request →</a></div>
-        </div>
-      </div>
-
-      <!-- Stock Price Predictor -->
-      <div class="project-card" data-category="ai fintech">
-        <div class="project-thumb pt-gradient-3">
-          <img data-src="https://opengraph.githubassets.com/1/raahuldhiman-dev/stock-price-predictor" alt="Stock Price Predictor preview" loading="lazy">
-          <span class="project-thumb-emoji">📉</span>
-          <div class="project-thumb-overlay"><a href="https://github.com/raahuldhiman-dev/stock-price-predictor" target="_blank" rel="noopener">View on GitHub ↗</a></div>
-        </div>
-        <div class="project-body">
-          <div class="project-meta"><span class="project-category">ML · FinTech</span><span class="project-status ps-live">Open Source</span></div>
-          <h3 class="project-title">Stock Price Predictor (LSTM)</h3>
-          <p class="project-desc">Deep learning time-series forecasting with an LSTM model: Yahoo Finance data, training, next-day prediction and actual-vs-predicted charts, in a Streamlit app.</p>
-          <div class="project-tags"><span class="project-tag">Python</span><span class="project-tag">TensorFlow / Keras</span><span class="project-tag">pandas</span><span class="project-tag">Streamlit</span></div>
-          <div class="project-links"><a href="https://github.com/raahuldhiman-dev/stock-price-predictor" target="_blank" rel="noopener" class="project-link">GitHub →</a></div>
-        </div>
-      </div>
-
-      <!-- DTradeX -->
-      <div class="project-card" data-category="fintech backend">
-        <div class="project-thumb" style="background:linear-gradient(135deg,#0a1a0a,#0a2a1a,#0ca678);">
-          <span class="project-thumb-emoji">📈</span>
-        </div>
-        <div class="project-body">
-          <div class="project-meta"><span class="project-category">FinTech · Backend</span><span class="project-status ps-wip">In Progress</span></div>
-          <h3 class="project-title">DTradeX · Algo Trading</h3>
-          <p class="project-desc">Automated trading bot with Zerodha Kite API, real-time stock & crypto signals, a risk management engine, and a P&L dashboard.</p>
-          <div class="project-tags"><span class="project-tag">Python</span><span class="project-tag">Zerodha API</span><span class="project-tag">FastAPI</span><span class="project-tag">Redis</span><span class="project-tag">React</span></div>
-          <div class="project-links"><a href="#contact" class="project-link">Code on request →</a></div>
-        </div>
-      </div>
-
-      <!-- Personal AI Assistant -->
-      <div class="project-card" data-category="ai">
-        <div class="project-thumb pt-gradient-5">
-          <img data-src="https://opengraph.githubassets.com/1/raahuldhiman-dev/voice-ai-assistant" alt="Voice AI Assistant preview" loading="lazy">
-          <span class="project-thumb-emoji">🎙️</span>
-          <div class="project-thumb-overlay"><a href="https://github.com/raahuldhiman-dev/voice-ai-assistant" target="_blank" rel="noopener">View on GitHub ↗</a></div>
-        </div>
-        <div class="project-body">
-          <div class="project-meta"><span class="project-category">AI · Automation</span><span class="project-status ps-wip">In Progress</span></div>
-          <h3 class="project-title">Personal AI Assistant</h3>
-          <p class="project-desc">Voice-enabled Python assistant combining speech recognition, GPT-4 responses and text-to-speech, with task automation and conversational memory.</p>
-          <div class="project-tags"><span class="project-tag">Python</span><span class="project-tag">GPT-4</span><span class="project-tag">SpeechRecognition</span><span class="project-tag">FastAPI</span></div>
-          <div class="project-links"><a href="https://github.com/raahuldhiman-dev/voice-ai-assistant" target="_blank" rel="noopener" class="project-link">GitHub →</a></div>
-        </div>
-      </div>
-
-      <!-- Booking System -->
-      <div class="project-card" data-category="fullstack backend">
-        <div class="project-thumb" style="background:linear-gradient(135deg,#0a0a1a,#1a1a3a,#4c6ef5);">
-          <span class="project-thumb-emoji">📅</span>
-        </div>
-        <div class="project-body">
-          <div class="project-meta"><span class="project-category">Full-Stack</span><span class="project-status ps-live">Shipped</span></div>
-          <h3 class="project-title">Booking System</h3>
-          <p class="project-desc">Booking platform with Zoom integration, role-based access, real-time notifications, calendar sync, and Stripe payments.</p>
-          <div class="project-tags"><span class="project-tag">Laravel</span><span class="project-tag">Zoom API</span><span class="project-tag">Vue.js</span><span class="project-tag">MySQL</span><span class="project-tag">Stripe</span></div>
-          <div class="project-links"><a href="#contact" class="project-link">Code on request →</a></div>
-        </div>
-      </div>
-
-      <!-- eCommerce Platform -->
-      <div class="project-card" data-category="fullstack backend">
-        <div class="project-thumb" style="background:linear-gradient(135deg,#1a0a0a,#3a1a0a,#f76707);">
-          <span class="project-thumb-emoji">🛒</span>
-        </div>
-        <div class="project-body">
-          <div class="project-meta"><span class="project-category">eCommerce</span><span class="project-status ps-live">Shipped</span></div>
-          <h3 class="project-title">eCommerce Platform</h3>
-          <p class="project-desc">Laravel 11 multi-role eCommerce with Admin, Merchant & Customer portals. Spatie role-based permissions, product management, order tracking.</p>
-          <div class="project-tags"><span class="project-tag">Laravel 11</span><span class="project-tag">Spatie</span><span class="project-tag">React</span><span class="project-tag">MySQL</span></div>
-          <div class="project-links"><a href="#contact" class="project-link">Code on request →</a></div>
-        </div>
-      </div>
-
-      <!-- Laravel Chat App -->
-      <div class="project-card" data-category="fullstack backend">
-        <div class="project-thumb pt-gradient-4">
-          <img data-src="https://opengraph.githubassets.com/1/raahuldhiman-dev/Laravel-Chat-App" alt="Laravel Chat App preview" loading="lazy">
-          <span class="project-thumb-emoji">💬</span>
-          <div class="project-thumb-overlay"><a href="https://github.com/raahuldhiman-dev/Laravel-Chat-App" target="_blank" rel="noopener">View on GitHub ↗</a></div>
-        </div>
-        <div class="project-body">
-          <div class="project-meta"><span class="project-category">Full-Stack · Real-time</span><span class="project-status ps-live">Open Source</span></div>
-          <h3 class="project-title">Laravel Chat App</h3>
-          <p class="project-desc">Multi-user real-time chat: Sanctum auth, direct and group conversations, attachments, unread tracking, typing indicators and self-hosted WebSockets.</p>
-          <div class="project-tags"><span class="project-tag">Laravel</span><span class="project-tag">Vue 3</span><span class="project-tag">Pinia</span><span class="project-tag">Sanctum</span><span class="project-tag">WebSockets</span></div>
-          <div class="project-links"><a href="https://github.com/raahuldhiman-dev/Laravel-Chat-App" target="_blank" rel="noopener" class="project-link">GitHub →</a></div>
-        </div>
-      </div>
-
-      <!-- Desi Market -->
-      <div class="project-card" data-category="wordpress fullstack">
-        <div class="project-thumb" style="background:linear-gradient(135deg,#0a1a0a,#1a2a0a,#5c940d);">
-          <img data-src="assets/projects/desi-market.jpg" alt="Desi Market preview" loading="lazy">
-          <span class="project-thumb-emoji">🛞</span>
-          <div class="project-thumb-overlay"><a href="https://desi-market.in" target="_blank" rel="noopener">Visit Live Site ↗</a></div>
-        </div>
-        <div class="project-body">
-          <div class="project-meta"><span class="project-category">WordPress · eCommerce</span><span class="project-status ps-live">Shipped</span></div>
-          <h3 class="project-title">Desi Market</h3>
-          <p class="project-desc">WooCommerce store for a local tyre and car-accessories business in Sonipat, Haryana. 297-product catalogue covering tyres, alloy wheels, car electronics, and accessories — with Google Maps integration, Cloudflare CDN, and Google Site Kit for analytics and SEO.</p>
-          <div class="project-tags"><span class="project-tag">WordPress</span><span class="project-tag">WooCommerce</span><span class="project-tag">Cloudflare</span><span class="project-tag">Google Site Kit</span><span class="project-tag">SEO</span></div>
-          <div class="project-links"><a href="https://desi-market.in" target="_blank" rel="noopener" class="project-link">Live Site →</a></div>
-        </div>
-      </div>
-
-      <!-- Polite Resume -->
-      <div class="project-card" data-category="wordpress fullstack">
-        <div class="project-thumb" style="background:linear-gradient(135deg,#0a0a1a,#1a0a2e,#862e9c);">
-          <img data-src="assets/projects/polite-resume.jpg" alt="Polite Resume preview" loading="lazy">
-          <span class="project-thumb-emoji">📄</span>
-          <div class="project-thumb-overlay"><a href="https://politeresume.com" target="_blank" rel="noopener">Visit Live Site ↗</a></div>
-        </div>
-        <div class="project-body">
-          <div class="project-meta"><span class="project-category">WordPress · SaaS</span><span class="project-status ps-live">Shipped</span></div>
-          <h3 class="project-title">Polite Resume</h3>
-          <p class="project-desc">ATS-friendly resume and cover letter builder with 40+ templates, prewritten recruiter-approved content, and an ATS score checker. Built on WordPress with Elementor and a custom membership/paywall flow for premium template access.</p>
-          <div class="project-tags"><span class="project-tag">WordPress</span><span class="project-tag">Elementor</span><span class="project-tag">WooCommerce</span><span class="project-tag">ATS Optimization</span><span class="project-tag">SEO</span></div>
-          <div class="project-links"><a href="https://politeresume.com" target="_blank" rel="noopener" class="project-link">Live Site →</a><a href="case-studies/polite-resume.html" target="_blank" rel="noopener" class="project-link alt">Case Study →</a></div>
-        </div>
-      </div>
-
-      <!-- D-TradeX -->
-      <div class="project-card" data-category="fintech backend fullstack">
-        <div class="project-thumb pt-gradient-5">
-          <img data-src="assets/projects/dtradex.jpg" alt="D-TradeX preview" loading="lazy">
-          <span class="project-thumb-emoji">📈</span>
-          <div class="project-thumb-overlay"><a href="https://finance.dhimansoft.com" target="_blank" rel="noopener">Visit Live Site ↗</a></div>
-        </div>
-        <div class="project-body">
-          <div class="project-meta"><span class="project-category">Full-Stack · FinTech · AlgoTrading</span><span class="project-status ps-wip">In Progress</span></div>
-          <h3 class="project-title">D-TradeX</h3>
-          <p class="project-desc">Automated trading suite with multi-broker connectivity (Zerodha, Upstox, Angel One, Nuvama, Dhan), real-time options analytics, a canonical Greeks engine (Black-76/BSM), ML-driven signal classification, and sub-200ms tick delivery via Redis Streams.</p>
-          <div class="project-tags"><span class="project-tag">Next.js</span><span class="project-tag">FastAPI</span><span class="project-tag">Python</span><span class="project-tag">Redis Streams</span><span class="project-tag">LightGBM</span><span class="project-tag">PostgreSQL</span></div>
-          <div class="project-links"><a href="https://finance.dhimansoft.com" target="_blank" rel="noopener" class="project-link">Live Site →</a><a href="case-studies/dtradex.html" target="_blank" rel="noopener" class="project-link alt">Case Study →</a></div>
-        </div>
-      </div>
-
-      <!-- BLK Art Auction -->
-      <div class="project-card" data-category="fullstack backend">
-        <div class="project-thumb" style="background:linear-gradient(135deg,#080808,#1a1a1a,#2a2a2a);">
-          <img data-src="assets/projects/blk-art-auction.jpg" alt="BLK Art Auction preview" loading="lazy">
-          <span class="project-thumb-emoji">🖼️</span>
-          <div class="project-thumb-overlay"><a href="https://blkartauction.com" target="_blank" rel="noopener">Visit Live Site ↗</a></div>
-        </div>
-        <div class="project-body">
-          <div class="project-meta"><span class="project-category">Full-Stack · eCommerce</span><span class="project-status ps-live">Shipped</span></div>
-          <h3 class="project-title">BLK Art Auction</h3>
-          <p class="project-desc">Online auction platform for original artwork — paintings, sculptures, prints, and photography. Features real-time bidding, anti-sniping protection, artist onboarding, authentication workflows, and a timed-lot system with insured delivery.</p>
-          <div class="project-tags"><span class="project-tag">Next.js</span><span class="project-tag">Real-time Bidding</span><span class="project-tag">Stripe</span><span class="project-tag">Node.js</span><span class="project-tag">PostgreSQL</span></div>
-          <div class="project-links"><a href="https://blkartauction.com" target="_blank" rel="noopener" class="project-link">Live Site →</a><a href="case-studies/blk-art-auction.html" target="_blank" rel="noopener" class="project-link alt">Case Study →</a></div>
-        </div>
-      </div>
-
-    </div>
-    <div style="text-align:center;margin-top:40px;"><a href="https://github.com/raahuldhiman-dev" target="_blank" rel="noopener noreferrer" class="btn-secondary">View All on GitHub →</a></div>
-  </div>
-</section>
-
-<!-- Industries -->
-<section id="industries" aria-labelledby="industries-title">
-  <div class="wrap">
-    <span class="badge">Domains</span>
-    <h2 id="industries-title" class="sec-title fade-up">Industries I've <span style="background:var(--g1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Served</span></h2>
-    <p class="sec-desc">The kinds of businesses my software has been built for, drawn from the projects above and my roles below, including client web applications across several industry verticals at Kwan Network Solutions.</p>
-    <div class="ind-grid">
-      <article class="ind-card fade-up"><span class="ind-emoji" aria-hidden="true">🏥</span><h3 class="ind-title">Healthcare &amp; Medical Imaging</h3><p class="ind-desc">Maintaining Medviso's transfer.medviso.com, with Python and Matplotlib rendering data into images.</p></article>
-      <article class="ind-card fade-up"><span class="ind-emoji" aria-hidden="true">🛒</span><h3 class="ind-title">eCommerce &amp; Retail</h3><p class="ind-desc">A WooCommerce store for a local tyre and car-accessories business, and a Laravel multi-role eCommerce platform.</p></article>
-      <article class="ind-card fade-up"><span class="ind-emoji" aria-hidden="true">🎨</span><h3 class="ind-title">Art &amp; Auctions</h3><p class="ind-desc">BLK Art Auction: real-time bidding, anti-sniping protection and artist onboarding.</p></article>
-      <article class="ind-card fade-up"><span class="ind-emoji" aria-hidden="true">📈</span><h3 class="ind-title">FinTech &amp; Trading</h3><p class="ind-desc">D-TradeX multi-broker trading suite and an LSTM stock price forecaster.</p></article>
-      <article class="ind-card fade-up"><span class="ind-emoji" aria-hidden="true">💼</span><h3 class="ind-title">HR &amp; Career Tech</h3><p class="ind-desc">Polite Resume: an ATS-friendly resume and cover letter builder with a membership flow.</p></article>
-      <article class="ind-card fade-up"><span class="ind-emoji" aria-hidden="true">🤖</span><h3 class="ind-title">AI &amp; SaaS</h3><p class="ind-desc">A multi-tenant RAG document Q&amp;A product and a GPT-4 content generation microservice.</p></article>
-      <article class="ind-card fade-up"><span class="ind-emoji" aria-hidden="true">📣</span><h3 class="ind-title">Marketing &amp; Digital Agencies</h3><p class="ind-desc">Websites and campaign landing pages for small and mid-sized clients at Canvas Craft Media.</p></article>
-      <article class="ind-card fade-up"><span class="ind-emoji" aria-hidden="true">📅</span><h3 class="ind-title">Booking &amp; Scheduling</h3><p class="ind-desc">A booking platform with Zoom integration, calendar sync and Stripe payments.</p></article>
-      <article class="ind-card fade-up"><span class="ind-emoji" aria-hidden="true">💬</span><h3 class="ind-title">Real-time Messaging</h3><p class="ind-desc">A multi-user chat app with direct and group conversations and self-hosted WebSockets.</p></article>
     </div>
   </div>
 </section>
@@ -1716,6 +1421,299 @@
           <div style="font-size:13px;color:var(--muted);line-height:2;">AI SaaS platforms<br>Algo trading bots<br>AI agents & automation</div>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- Skills -->
+<section id="skills" aria-labelledby="skills-title">
+  <div class="wrap">
+    <span class="badge">Tech Stack</span>
+    <h2 id="skills-title" class="sec-title fade-up">Tools of the <span style="background:var(--g2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Trade</span></h2>
+    <p class="sec-desc">A curated toolkit spanning backend, frontend, AI, and cloud — constantly evolving.</p>
+    <div class="skills-showcase scale-in d1" id="skillBubbles">
+      <div class="skill-bubble" style="--h:1"><div class="skill-bubble-icon">🐘</div><div class="skill-bubble-name">PHP/Laravel</div><div class="skill-bubble-pct">95%</div></div>
+      <div class="skill-bubble"><div class="skill-bubble-icon">📜</div><div class="skill-bubble-name">JS/TS</div><div class="skill-bubble-pct">90%</div></div>
+      <div class="skill-bubble"><div class="skill-bubble-icon">🐍</div><div class="skill-bubble-name">Python</div><div class="skill-bubble-pct">88%</div></div>
+      <div class="skill-bubble"><div class="skill-bubble-icon">⚛️</div><div class="skill-bubble-name">React/Next</div><div class="skill-bubble-pct">85%</div></div>
+      <div class="skill-bubble"><div class="skill-bubble-icon">⚡</div><div class="skill-bubble-name">FastAPI/Node</div><div class="skill-bubble-pct">82%</div></div>
+      <div class="skill-bubble"><div class="skill-bubble-icon">🤖</div><div class="skill-bubble-name">GPT-4/AI</div><div class="skill-bubble-pct">85%</div></div>
+      <div class="skill-bubble"><div class="skill-bubble-icon">🗄️</div><div class="skill-bubble-name">SQL</div><div class="skill-bubble-pct">90%</div></div>
+      <div class="skill-bubble"><div class="skill-bubble-icon">🐳</div><div class="skill-bubble-name">Docker</div><div class="skill-bubble-pct">78%</div></div>
+      <div class="skill-bubble"><div class="skill-bubble-icon">☁️</div><div class="skill-bubble-name">AWS/GCP/OCI</div><div class="skill-bubble-pct">78%</div></div>
+      <div class="skill-bubble"><div class="skill-bubble-icon">🔷</div><div class="skill-bubble-name">Next.js</div><div class="skill-bubble-pct">82%</div></div>
+      <div class="skill-bubble"><div class="skill-bubble-icon">🎨</div><div class="skill-bubble-name">Tailwind</div><div class="skill-bubble-pct">85%</div></div>
+      <div class="skill-bubble"><div class="skill-bubble-icon">📡</div><div class="skill-bubble-name">Redis</div><div class="skill-bubble-pct">80%</div></div>
+      <div class="skill-bubble"><div class="skill-bubble-icon">🌐</div><div class="skill-bubble-name">WordPress</div><div class="skill-bubble-pct">90%</div></div>
+      <div class="skill-bubble"><div class="skill-bubble-icon">🛍️</div><div class="skill-bubble-name">WooCommerce</div><div class="skill-bubble-pct">85%</div></div>
+    </div>
+    <div class="skill-bars-advanced fade-up d2" id="barSkills">
+      <div class="skill-bar-item"><div class="skill-bar-header"><span class="skill-bar-name">PHP / Laravel</span><span class="skill-bar-pct">95%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-width="95" style="background:var(--g1);"></div></div></div>
+      <div class="skill-bar-item"><div class="skill-bar-header"><span class="skill-bar-name">JavaScript / TypeScript</span><span class="skill-bar-pct">90%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-width="90" style="background:var(--g2);"></div></div></div>
+      <div class="skill-bar-item"><div class="skill-bar-header"><span class="skill-bar-name">Python</span><span class="skill-bar-pct">88%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-width="88" style="background:var(--g3);"></div></div></div>
+      <div class="skill-bar-item"><div class="skill-bar-header"><span class="skill-bar-name">MySQL / PostgreSQL</span><span class="skill-bar-pct">90%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-width="90" style="background:var(--g4);"></div></div></div>
+      <div class="skill-bar-item"><div class="skill-bar-header"><span class="skill-bar-name">React / Next.js</span><span class="skill-bar-pct">85%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-width="85" style="background:var(--g1);"></div></div></div>
+      <div class="skill-bar-item"><div class="skill-bar-header"><span class="skill-bar-name">GPT-4 / AI Integration</span><span class="skill-bar-pct">85%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-width="85" style="background:var(--g2);"></div></div></div>
+      <div class="skill-bar-item"><div class="skill-bar-header"><span class="skill-bar-name">FastAPI / Node.js</span><span class="skill-bar-pct">82%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-width="82" style="background:var(--g3);"></div></div></div>
+      <div class="skill-bar-item"><div class="skill-bar-header"><span class="skill-bar-name">Docker / Cloud (AWS · GCP · OCI)</span><span class="skill-bar-pct">78%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-width="78" style="background:var(--g4);"></div></div></div>
+    </div>
+    <div class="skill-badges fade-up d3">
+      <span class="skill-badge">Laravel</span><span class="skill-badge">React</span><span class="skill-badge">Python</span>
+      <span class="skill-badge">GPT-4 API</span><span class="skill-badge">FastAPI</span><span class="skill-badge">Node.js</span>
+      <span class="skill-badge">Next.js</span><span class="skill-badge">Tailwind</span><span class="skill-badge">Docker</span>
+      <span class="skill-badge">MySQL</span><span class="skill-badge">Redis</span><span class="skill-badge">Cloudflare</span>
+      <span class="skill-badge">Zerodha API</span><span class="skill-badge">LangChain</span><span class="skill-badge">AWS</span><span class="skill-badge">Google Cloud (GCP)</span><span class="skill-badge">Oracle Cloud (OCI)</span><span class="skill-badge">Azure</span><span class="skill-badge">GitHub Actions</span>
+      <span class="skill-badge">WordPress</span><span class="skill-badge">WooCommerce</span><span class="skill-badge">Elementor</span><span class="skill-badge">ACF</span><span class="skill-badge">WP REST API</span><span class="skill-badge">Yoast SEO</span>
+    </div>
+  </div>
+</section>
+
+<!-- Projects -->
+<section id="projects" aria-labelledby="projects-title">
+  <div class="wrap">
+    <span class="badge">Portfolio</span>
+    <h2 id="projects-title" class="sec-title fade-up">Featured <span style="background:var(--g3);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Projects</span></h2>
+    <p class="sec-desc">Production-grade work from AI SaaS to algorithmic trading. Real code, real impact.</p>
+    <div class="project-filters fade-up d1">
+      <button class="filter-btn active" onclick="filterProjects(this,'all')">All</button>
+      <button class="filter-btn" onclick="filterProjects(this,'ai')">AI / ML</button>
+      <button class="filter-btn" onclick="filterProjects(this,'fullstack')">Full-Stack</button>
+      <button class="filter-btn" onclick="filterProjects(this,'cloud')">Cloud</button>
+      <button class="filter-btn" onclick="filterProjects(this,'fintech')">FinTech</button>
+      <button class="filter-btn" onclick="filterProjects(this,'backend')">Backend</button>
+      <button class="filter-btn" onclick="filterProjects(this,'wordpress')">WordPress</button>
+    </div>
+    <div class="projects-grid fade-up d2" id="projectsGrid">
+
+      <!-- Medviso -->
+      <div class="project-card" data-category="ai backend">
+        <div class="project-thumb pt-gradient-3">
+          <img data-src="assets/projects/medviso.jpg" alt="Medviso preview" loading="lazy">
+          <span class="project-thumb-emoji">🫀</span>
+          <div class="project-thumb-overlay"><a href="https://medviso.com" target="_blank" rel="noopener">Visit medviso.com ↗</a></div>
+        </div>
+        <div class="project-body">
+          <div class="project-meta"><span class="project-category">Healthcare · Backend</span><span class="project-status ps-live">Maintained</span></div>
+          <h3 class="project-title">Medviso · Transfer Solution</h3>
+          <p class="project-desc">I maintain transfer.medviso.com, the Medviso Transfer Solution, for Medviso, a Swedish company behind cardiac image analysis and medical 3D printing software. My work is in Python: using Matplotlib to render data into images, plus keeping the service running.</p>
+          <div class="project-tags"><span class="project-tag">Python</span><span class="project-tag">Matplotlib</span><span class="project-tag">Image rendering</span><span class="project-tag">Maintenance</span></div>
+          <div class="project-links"><a href="https://medviso.com" target="_blank" rel="noopener" class="project-link">medviso.com →</a></div>
+        </div>
+      </div>
+
+      <!-- RAG Chatbot -->
+      <div class="project-card" data-category="ai backend">
+        <div class="project-thumb pt-gradient-1">
+          <img data-src="assets/projects/gh-rag-chatbot.png" alt="RAG Chatbot preview" loading="lazy">
+          <span class="project-thumb-emoji">🧠</span>
+          <div class="project-thumb-overlay"><a href="https://github.com/raahuldhiman-dev/rag-chatbot" target="_blank" rel="noopener">View on GitHub ↗</a></div>
+        </div>
+        <div class="project-body">
+          <div class="project-meta"><span class="project-category">AI · Backend</span><span class="project-status ps-live">Open Source</span></div>
+          <h3 class="project-title">RAG Chatbot</h3>
+          <p class="project-desc">Multi-tenant document Q&A with retrieval-augmented generation. Token-aware chunking, per-user ChromaDB search, cited answers, multi-provider LLM failover, OAuth login, and encrypted API keys.</p>
+          <div class="project-tags"><span class="project-tag">Python</span><span class="project-tag">FastAPI</span><span class="project-tag">ChromaDB</span><span class="project-tag">OpenAI / Gemini / Claude</span><span class="project-tag">Docker</span></div>
+          <div class="project-links"><a href="https://github.com/raahuldhiman-dev/rag-chatbot" target="_blank" rel="noopener" class="project-link">GitHub →</a><a href="case-studies/rag-chatbot.html" target="_blank" rel="noopener" class="project-link alt">Case Study →</a></div>
+        </div>
+      </div>
+
+      <!-- AWS Face Recognition -->
+      <div class="project-card" data-category="ai cloud">
+        <div class="project-thumb pt-gradient-2">
+          <img data-src="assets/projects/gh-aws-face-detection-with-aws-s3.png" alt="AWS Face Recognition System preview" loading="lazy">
+          <span class="project-thumb-emoji">☁️</span>
+          <div class="project-thumb-overlay"><a href="https://github.com/raahuldhiman-dev/aws-face-detection-with-aws-s3" target="_blank" rel="noopener">View on GitHub ↗</a></div>
+        </div>
+        <div class="project-body">
+          <div class="project-meta"><span class="project-category">AI · Cloud</span><span class="project-status ps-live">Open Source</span></div>
+          <h3 class="project-title">AWS Face Recognition System</h3>
+          <p class="project-desc">Real-time face detection and person registration on Amazon Rekognition, DynamoDB and S3 with a Flask UI, plus a used-car price analysis pipeline.</p>
+          <div class="project-tags"><span class="project-tag">Python</span><span class="project-tag">Flask</span><span class="project-tag">AWS Rekognition</span><span class="project-tag">S3</span><span class="project-tag">DynamoDB</span></div>
+          <div class="project-links"><a href="https://github.com/raahuldhiman-dev/aws-face-detection-with-aws-s3" target="_blank" rel="noopener" class="project-link">GitHub →</a></div>
+        </div>
+      </div>
+
+      <!-- AI Content Generator -->
+      <div class="project-card" data-category="ai fullstack backend">
+        <div class="project-thumb pt-gradient-1">
+          <img data-src="assets/projects/ai-content-generator.jpg" alt="AI Content Generator preview" loading="lazy">
+          <span class="project-thumb-emoji">🤖</span>
+          <div class="project-thumb-overlay"><a href="#contact">Code on request ↗</a></div>
+        </div>
+        <div class="project-body">
+          <div class="project-meta"><span class="project-category">AI · Full-Stack</span><span class="project-status ps-live">Shipped</span></div>
+          <h3 class="project-title">AI Content Generator</h3>
+          <p class="project-desc">Laravel microservice powered by GPT-4 for SEO & marketing content. Queue-based processing, REST API, multi-language support, React dashboard.</p>
+          <div class="project-tags"><span class="project-tag">Laravel</span><span class="project-tag">GPT-4</span><span class="project-tag">React</span><span class="project-tag">MySQL</span><span class="project-tag">Redis</span></div>
+          <div class="project-links"><a href="#contact" class="project-link">Code on request →</a></div>
+        </div>
+      </div>
+
+      <!-- Stock Price Predictor -->
+      <div class="project-card" data-category="ai fintech">
+        <div class="project-thumb pt-gradient-3">
+          <img data-src="assets/projects/gh-stock-price-predictor.png" alt="Stock Price Predictor preview" loading="lazy">
+          <span class="project-thumb-emoji">📉</span>
+          <div class="project-thumb-overlay"><a href="https://github.com/raahuldhiman-dev/stock-price-predictor" target="_blank" rel="noopener">View on GitHub ↗</a></div>
+        </div>
+        <div class="project-body">
+          <div class="project-meta"><span class="project-category">ML · FinTech</span><span class="project-status ps-live">Open Source</span></div>
+          <h3 class="project-title">Stock Price Predictor (LSTM)</h3>
+          <p class="project-desc">Deep learning time-series forecasting with an LSTM model: Yahoo Finance data, training, next-day prediction and actual-vs-predicted charts, in a Streamlit app.</p>
+          <div class="project-tags"><span class="project-tag">Python</span><span class="project-tag">TensorFlow / Keras</span><span class="project-tag">pandas</span><span class="project-tag">Streamlit</span></div>
+          <div class="project-links"><a href="https://github.com/raahuldhiman-dev/stock-price-predictor" target="_blank" rel="noopener" class="project-link">GitHub →</a></div>
+        </div>
+      </div>
+
+      <!-- DTradeX -->
+      <div class="project-card" data-category="ai">
+        <div class="project-thumb pt-gradient-5">
+          <img data-src="assets/projects/gh-voice-ai-assistant.png" alt="Personal AI Assistant preview" loading="lazy">
+          <span class="project-thumb-emoji">🎙️</span>
+          <div class="project-thumb-overlay"><a href="https://github.com/raahuldhiman-dev/voice-ai-assistant" target="_blank" rel="noopener">View on GitHub ↗</a></div>
+        </div>
+        <div class="project-body">
+          <div class="project-meta"><span class="project-category">AI · Automation</span><span class="project-status ps-wip">In Progress</span></div>
+          <h3 class="project-title">Personal AI Assistant</h3>
+          <p class="project-desc">Voice-enabled Python assistant combining speech recognition, GPT-4 responses and text-to-speech, with task automation and conversational memory.</p>
+          <div class="project-tags"><span class="project-tag">Python</span><span class="project-tag">GPT-4</span><span class="project-tag">SpeechRecognition</span><span class="project-tag">FastAPI</span></div>
+          <div class="project-links"><a href="https://github.com/raahuldhiman-dev/voice-ai-assistant" target="_blank" rel="noopener" class="project-link">GitHub →</a></div>
+        </div>
+      </div>
+
+      <!-- Booking System -->
+      <div class="project-card" data-category="fullstack backend">
+        <div class="project-thumb pt-gradient-2">
+          <img data-src="assets/projects/booking-system.jpg" alt="Booking System preview" loading="lazy">
+          <span class="project-thumb-emoji">📅</span>
+          <div class="project-thumb-overlay"><a href="#contact">Code on request ↗</a></div>
+        </div>
+        <div class="project-body">
+          <div class="project-meta"><span class="project-category">Full-Stack</span><span class="project-status ps-live">Shipped</span></div>
+          <h3 class="project-title">Booking System</h3>
+          <p class="project-desc">Booking platform with Zoom integration, role-based access, real-time notifications, calendar sync, and Stripe payments.</p>
+          <div class="project-tags"><span class="project-tag">Laravel</span><span class="project-tag">Zoom API</span><span class="project-tag">Vue.js</span><span class="project-tag">MySQL</span><span class="project-tag">Stripe</span></div>
+          <div class="project-links"><a href="#contact" class="project-link">Code on request →</a></div>
+        </div>
+      </div>
+
+      <!-- eCommerce Platform -->
+      <div class="project-card" data-category="fullstack backend">
+        <div class="project-thumb pt-gradient-3">
+          <img data-src="assets/projects/ecommerce-platform.jpg" alt="eCommerce Platform preview" loading="lazy">
+          <span class="project-thumb-emoji">🛒</span>
+          <div class="project-thumb-overlay"><a href="#contact">Code on request ↗</a></div>
+        </div>
+        <div class="project-body">
+          <div class="project-meta"><span class="project-category">eCommerce</span><span class="project-status ps-live">Shipped</span></div>
+          <h3 class="project-title">eCommerce Platform</h3>
+          <p class="project-desc">Laravel 11 multi-role eCommerce with Admin, Merchant & Customer portals. Spatie role-based permissions, product management, order tracking.</p>
+          <div class="project-tags"><span class="project-tag">Laravel 11</span><span class="project-tag">Spatie</span><span class="project-tag">React</span><span class="project-tag">MySQL</span></div>
+          <div class="project-links"><a href="#contact" class="project-link">Code on request →</a></div>
+        </div>
+      </div>
+
+      <!-- Laravel Chat App -->
+      <div class="project-card" data-category="fullstack backend">
+        <div class="project-thumb pt-gradient-4">
+          <img data-src="assets/projects/gh-Laravel-Chat-App.png" alt="Laravel Chat App preview" loading="lazy">
+          <span class="project-thumb-emoji">💬</span>
+          <div class="project-thumb-overlay"><a href="https://github.com/raahuldhiman-dev/Laravel-Chat-App" target="_blank" rel="noopener">View on GitHub ↗</a></div>
+        </div>
+        <div class="project-body">
+          <div class="project-meta"><span class="project-category">Full-Stack · Real-time</span><span class="project-status ps-live">Open Source</span></div>
+          <h3 class="project-title">Laravel Chat App</h3>
+          <p class="project-desc">Multi-user real-time chat: Sanctum auth, direct and group conversations, attachments, unread tracking, typing indicators and self-hosted WebSockets.</p>
+          <div class="project-tags"><span class="project-tag">Laravel</span><span class="project-tag">Vue 3</span><span class="project-tag">Pinia</span><span class="project-tag">Sanctum</span><span class="project-tag">WebSockets</span></div>
+          <div class="project-links"><a href="https://github.com/raahuldhiman-dev/Laravel-Chat-App" target="_blank" rel="noopener" class="project-link">GitHub →</a></div>
+        </div>
+      </div>
+
+      <!-- Desi Market -->
+      <div class="project-card" data-category="wordpress fullstack">
+        <div class="project-thumb" style="background:linear-gradient(135deg,#0a1a0a,#1a2a0a,#5c940d);">
+          <img data-src="assets/projects/desi-market.jpg" alt="Desi Market preview" loading="lazy">
+          <span class="project-thumb-emoji">🛞</span>
+          <div class="project-thumb-overlay"><a href="https://desi-market.in" target="_blank" rel="noopener">Visit Live Site ↗</a></div>
+        </div>
+        <div class="project-body">
+          <div class="project-meta"><span class="project-category">WordPress · eCommerce</span><span class="project-status ps-live">Shipped</span></div>
+          <h3 class="project-title">Desi Market</h3>
+          <p class="project-desc">WooCommerce store for a local tyre and car-accessories business in Sonipat, Haryana. 297-product catalogue covering tyres, alloy wheels, car electronics, and accessories — with Google Maps integration, Cloudflare CDN, and Google Site Kit for analytics and SEO.</p>
+          <div class="project-tags"><span class="project-tag">WordPress</span><span class="project-tag">WooCommerce</span><span class="project-tag">Cloudflare</span><span class="project-tag">Google Site Kit</span><span class="project-tag">SEO</span></div>
+          <div class="project-links"><a href="https://desi-market.in" target="_blank" rel="noopener" class="project-link">Live Site →</a></div>
+        </div>
+      </div>
+
+      <!-- Polite Resume -->
+      <div class="project-card" data-category="wordpress fullstack">
+        <div class="project-thumb" style="background:linear-gradient(135deg,#0a0a1a,#1a0a2e,#862e9c);">
+          <img data-src="assets/projects/polite-resume.jpg" alt="Polite Resume preview" loading="lazy">
+          <span class="project-thumb-emoji">📄</span>
+          <div class="project-thumb-overlay"><a href="https://politeresume.com" target="_blank" rel="noopener">Visit Live Site ↗</a></div>
+        </div>
+        <div class="project-body">
+          <div class="project-meta"><span class="project-category">WordPress · SaaS</span><span class="project-status ps-live">Shipped</span></div>
+          <h3 class="project-title">Polite Resume</h3>
+          <p class="project-desc">ATS-friendly resume and cover letter builder with 40+ templates, prewritten recruiter-approved content, and an ATS score checker. Built on WordPress with Elementor and a custom membership/paywall flow for premium template access.</p>
+          <div class="project-tags"><span class="project-tag">WordPress</span><span class="project-tag">Elementor</span><span class="project-tag">WooCommerce</span><span class="project-tag">ATS Optimization</span><span class="project-tag">SEO</span></div>
+          <div class="project-links"><a href="https://politeresume.com" target="_blank" rel="noopener" class="project-link">Live Site →</a><a href="case-studies/polite-resume.html" target="_blank" rel="noopener" class="project-link alt">Case Study →</a></div>
+        </div>
+      </div>
+
+      <!-- D-TradeX -->
+      <div class="project-card" data-category="fintech backend fullstack">
+        <div class="project-thumb pt-gradient-5">
+          <img data-src="assets/projects/dtradex.jpg" alt="D-TradeX preview" loading="lazy">
+          <span class="project-thumb-emoji">📈</span>
+          <div class="project-thumb-overlay"><a href="https://finance.dhimansoft.com" target="_blank" rel="noopener">Visit Live Site ↗</a></div>
+        </div>
+        <div class="project-body">
+          <div class="project-meta"><span class="project-category">Full-Stack · FinTech · AlgoTrading</span><span class="project-status ps-wip">In Progress</span></div>
+          <h3 class="project-title">D-TradeX</h3>
+          <p class="project-desc">Automated trading suite with multi-broker connectivity (Zerodha, Upstox, Angel One, Nuvama, Dhan), real-time options analytics, a canonical Greeks engine (Black-76/BSM), ML-driven signal classification, and sub-200ms tick delivery via Redis Streams.</p>
+          <div class="project-tags"><span class="project-tag">Next.js</span><span class="project-tag">FastAPI</span><span class="project-tag">Python</span><span class="project-tag">Redis Streams</span><span class="project-tag">LightGBM</span><span class="project-tag">PostgreSQL</span></div>
+          <div class="project-links"><a href="https://finance.dhimansoft.com" target="_blank" rel="noopener" class="project-link">Live Site →</a><a href="case-studies/dtradex.html" target="_blank" rel="noopener" class="project-link alt">Case Study →</a></div>
+        </div>
+      </div>
+
+      <!-- BLK Art Auction -->
+      <div class="project-card" data-category="fullstack backend">
+        <div class="project-thumb" style="background:linear-gradient(135deg,#080808,#1a1a1a,#2a2a2a);">
+          <img data-src="assets/projects/blk-art-auction.jpg" alt="BLK Art Auction preview" loading="lazy">
+          <span class="project-thumb-emoji">🖼️</span>
+          <div class="project-thumb-overlay"><a href="https://blkartauction.com" target="_blank" rel="noopener">Visit Live Site ↗</a></div>
+        </div>
+        <div class="project-body">
+          <div class="project-meta"><span class="project-category">Full-Stack · eCommerce</span><span class="project-status ps-live">Shipped</span></div>
+          <h3 class="project-title">BLK Art Auction</h3>
+          <p class="project-desc">Online auction platform for original artwork — paintings, sculptures, prints, and photography. Features real-time bidding, anti-sniping protection, artist onboarding, authentication workflows, and a timed-lot system with insured delivery.</p>
+          <div class="project-tags"><span class="project-tag">Next.js</span><span class="project-tag">Real-time Bidding</span><span class="project-tag">Stripe</span><span class="project-tag">Node.js</span><span class="project-tag">PostgreSQL</span></div>
+          <div class="project-links"><a href="https://blkartauction.com" target="_blank" rel="noopener" class="project-link">Live Site →</a><a href="case-studies/blk-art-auction.html" target="_blank" rel="noopener" class="project-link alt">Case Study →</a></div>
+        </div>
+      </div>
+
+    </div>
+    <div style="text-align:center;margin-top:40px;"><a href="https://github.com/raahuldhiman-dev" target="_blank" rel="noopener noreferrer" class="btn-secondary">View All on GitHub →</a></div>
+  </div>
+</section>
+
+<!-- Industries -->
+<section id="industries" aria-labelledby="industries-title">
+  <div class="wrap">
+    <span class="badge">Domains</span>
+    <h2 id="industries-title" class="sec-title fade-up">Industries I've <span style="background:var(--g1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Served</span></h2>
+    <p class="sec-desc">The kinds of businesses my software has been built for, drawn from the projects above and my roles below, including client web applications across several industry verticals at Kwan Network Solutions.</p>
+    <div class="ind-grid">
+      <article class="ind-card fade-up"><span class="ind-emoji" aria-hidden="true">🏥</span><h3 class="ind-title">Healthcare &amp; Medical Imaging</h3><p class="ind-desc">Maintaining Medviso's transfer.medviso.com, with Python and Matplotlib rendering data into images.</p></article>
+      <article class="ind-card fade-up"><span class="ind-emoji" aria-hidden="true">🛒</span><h3 class="ind-title">eCommerce &amp; Retail</h3><p class="ind-desc">A WooCommerce store for a local tyre and car-accessories business, and a Laravel multi-role eCommerce platform.</p></article>
+      <article class="ind-card fade-up"><span class="ind-emoji" aria-hidden="true">🎨</span><h3 class="ind-title">Art &amp; Auctions</h3><p class="ind-desc">BLK Art Auction: real-time bidding, anti-sniping protection and artist onboarding.</p></article>
+      <article class="ind-card fade-up"><span class="ind-emoji" aria-hidden="true">📈</span><h3 class="ind-title">FinTech &amp; Trading</h3><p class="ind-desc">D-TradeX multi-broker trading suite and an LSTM stock price forecaster.</p></article>
+      <article class="ind-card fade-up"><span class="ind-emoji" aria-hidden="true">💼</span><h3 class="ind-title">HR &amp; Career Tech</h3><p class="ind-desc">Polite Resume: an ATS-friendly resume and cover letter builder with a membership flow.</p></article>
+      <article class="ind-card fade-up"><span class="ind-emoji" aria-hidden="true">🤖</span><h3 class="ind-title">AI &amp; SaaS</h3><p class="ind-desc">A multi-tenant RAG document Q&amp;A product and a GPT-4 content generation microservice.</p></article>
+      <article class="ind-card fade-up"><span class="ind-emoji" aria-hidden="true">📣</span><h3 class="ind-title">Marketing &amp; Digital Agencies</h3><p class="ind-desc">Websites and campaign landing pages for small and mid-sized clients at Canvas Craft Media.</p></article>
+      <article class="ind-card fade-up"><span class="ind-emoji" aria-hidden="true">📅</span><h3 class="ind-title">Booking &amp; Scheduling</h3><p class="ind-desc">A booking platform with Zoom integration, calendar sync and Stripe payments.</p></article>
+      <article class="ind-card fade-up"><span class="ind-emoji" aria-hidden="true">💬</span><h3 class="ind-title">Real-time Messaging</h3><p class="ind-desc">A multi-user chat app with direct and group conversations and self-hosted WebSockets.</p></article>
     </div>
   </div>
 </section>
@@ -1889,7 +1887,7 @@
   <div class="footer-inner">
     <a href="#home" class="footer-logo">Rahul Dhiman</a>
     <div class="footer-links">
-      <a href="#about">About</a><a href="#skills">Skills</a><a href="#projects">Projects</a><a href="#industries">Industries</a><a href="#experience">Experience</a><a href="#faq">FAQ</a><a href="#contact">Contact</a>
+      <a href="#about">About</a><a href="#experience">Experience</a><a href="#skills">Skills</a><a href="#projects">Projects</a><a href="#industries">Industries</a><a href="#faq">FAQ</a><a href="#contact">Contact</a>
     </div>
     <div class="footer-copy">© 2026 · Built with ☕ in Mohali<br><span style="opacity:.7">Rahul Dhiman, also written Raahul Dhiman, Rahul Singh Dhiman</span></div>
   </div>
@@ -1972,7 +1970,7 @@
   window.addEventListener('scroll', () => {
     document.getElementById('nav').classList.toggle('scrolled', scrollY > 60);
     const y = scrollY + 80;
-    ['home','about','skills','projects','experience','contact'].forEach(id => {
+    ['home','about','experience','skills','projects','industries','contact'].forEach(id => {
       const s = document.getElementById(id);
       if (!s) return;
       const l = document.querySelector(`.nav-links a[data-section="${id}"]`);
