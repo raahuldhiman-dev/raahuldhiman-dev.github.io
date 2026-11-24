@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>D-TradeX — Case Study | Rahul Dhiman</title>
+<meta name="description" content="Full-stack algorithmic trading platform with multi-broker connectivity, real-time options analytics, ML signal classification, and sub-200ms tick delivery. Built by Rahul Dhiman.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:   #050508;
+    --bg2:  #08080F;
+    --bg3:  #0C0C18;
+    --card: rgba(255,255,255,0.02);
+    --card-hover: rgba(255,255,255,0.05);
+    --border:  rgba(255,255,255,0.06);
+    --border2: rgba(255,255,255,0.12);
+    --text:  #EDF2FF;
+    --muted: #7B8AA8;
+    --muted2:#3D4560;
+    --acc1:  #FF5C3A;
+    --acc2:  #845EF7;
+    --acc3:  #00D9C0;
+    --acc4:  #FFB800;
+    --acc5:  #FF3D9A;
+    --g1: linear-gradient(135deg,#FF5C3A,#FF3D9A);
+    --g2: linear-gradient(135deg,#845EF7,#00D9C0);
+    --g3: linear-gradient(135deg,#FFB800,#FF5C3A);
+    --g4: linear-gradient(135deg,#FF5C3A,#845EF7,#00D9C0);
+    --gtext: linear-gradient(135deg,#FF5C3A,#845EF7,#00D9C0,#FFB800);
+    --font-display: 'Space Grotesk', sans-serif;
+    --font-body:    'Inter', sans-serif;
+    --font-mono:    'JetBrains Mono', monospace;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{background:var(--bg);color:var(--text);font-family:var(--font-body);line-height:1.6;overflow-x:hidden;}
+
+  .grid-lines{
+    position:fixed;inset:0;z-index:0;pointer-events:none;
+    background-image:
+      linear-gradient(rgba(132,94,247,0.04) 1px, transparent 1px),
+      linear-gradient(90deg,rgba(132,94,247,0.04) 1px, transparent 1px);
+    background-size:80px 80px;
+  }
+  .blob{position:fixed;border-radius:50%;pointer-events:none;z-index:0;filter:blur(80px);}
+  .blob-1{width:500px;height:500px;top:-100px;left:-150px;background:radial-gradient(circle,rgba(132,94,247,0.07) 0%,transparent 70%);}
+  .blob-2{width:400px;height:400px;bottom:10%;right:-80px;background:radial-gradient(circle,rgba(0,217,192,0.05) 0%,transparent 70%);}
+
+  ::-webkit-scrollbar{width:3px;}
+  ::-webkit-scrollbar-track{background:var(--bg);}
+  ::-webkit-scrollbar-thumb{background:var(--g1);border-radius:3px;}
+  ::selection{background:rgba(132,94,247,0.3);color:#fff;}
+
+  nav{
+    position:sticky;top:0;z-index:100;
+    padding:16px 24px;
+    background:rgba(5,5,8,0.7);backdrop-filter:blur(20px);
+    border-bottom:1px solid var(--border);
+  }
+  .nav-inner{max-width:960px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;}
+  .nav-logo{font-family:var(--font-display);font-weight:700;font-size:17px;text-decoration:none;color:var(--text);display:flex;align-items:center;gap:10px;}
+  .nav-logo-badge{width:30px;height:30px;border-radius:8px;background:var(--g1);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:#fff;}
+  .nav-links{display:flex;gap:4px;align-items:center;}
+  .nav-links a{color:var(--muted);font-size:13px;font-weight:500;text-decoration:none;padding:8px 16px;border-radius:8px;transition:all 0.2s;}
+  .nav-links a:hover{color:var(--text);background:var(--card);}
+  .btn-nav{display:inline-flex;align-items:center;gap:6px;background:var(--g1);color:#fff;font-weight:600;font-size:13px;padding:9px 20px;border-radius:10px;text-decoration:none;transition:transform 0.2s,box-shadow 0.2s;}
+  .btn-nav:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(255,92,58,0.3);}
+
+  .hero{position:relative;z-index:1;padding:80px 24px 60px;max-width:960px;margin:0 auto;}
+  .hero-tag{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:11px;color:var(--acc4);background:rgba(255,184,0,0.08);border:1px solid rgba(255,184,0,0.2);padding:5px 14px;border-radius:999px;margin-bottom:24px;}
+  .hero-tag::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--acc4);animation:pulse 1.5s infinite;}
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.4;}}
+
+  .hero h1{font-family:var(--font-display);font-weight:800;font-size:clamp(2.2rem,5vw,3.6rem);line-height:1.05;margin-bottom:20px;}
+  .grad-text{background:var(--gtext);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+  .hero-sub{color:var(--muted);font-size:16px;line-height:1.75;max-width:620px;margin-bottom:36px;}
+  .hero-sub strong{color:var(--text);}
+
+  .hero-meta{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:48px;}
+  .meta-chip{display:inline-flex;align-items:center;gap:7px;font-family:var(--font-mono);font-size:11px;padding:6px 14px;border-radius:999px;border:1px solid var(--border2);background:var(--card);color:var(--muted);}
+  .meta-chip .dot{width:6px;height:6px;border-radius:50%;}
+
+  .hero-stats{display:flex;flex-wrap:wrap;gap:24px;}
+  .stat-box{display:flex;flex-direction:column;gap:4px;padding:16px 20px;border-radius:14px;background:var(--card);border:1px solid var(--border);min-width:120px;}
+  .stat-num{font-family:var(--font-display);font-weight:700;font-size:1.6rem;line-height:1;}
+  .stat-label{font-size:11px;color:var(--muted);font-family:var(--font-mono);}
+
+  .section{position:relative;z-index:1;padding:70px 24px;max-width:960px;margin:0 auto;}
+  .section-divider{max-width:960px;margin:0 auto;height:1px;background:var(--border);}
+  .section-label{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:11px;color:var(--acc2);background:rgba(132,94,247,0.08);border:1px solid rgba(132,94,247,0.2);padding:5px 14px;border-radius:999px;margin-bottom:16px;}
+  .section h2{font-family:var(--font-display);font-weight:700;font-size:clamp(1.5rem,3vw,2.1rem);line-height:1.15;margin-bottom:12px;}
+  .section-desc{color:var(--muted);font-size:15px;max-width:580px;line-height:1.75;margin-bottom:36px;}
+
+  .card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:24px;transition:border-color 0.25s,background 0.25s,transform 0.25s;}
+  .card:hover{border-color:var(--border2);background:var(--card-hover);transform:translateY(-3px);}
+  .card-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:14px;background:var(--card);border:1px solid var(--border2);}
+  .card h3{font-family:var(--font-display);font-weight:600;font-size:15px;margin-bottom:8px;}
+  .card p{color:var(--muted);font-size:13px;line-height:1.75;}
+
+  .grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
+  .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+  .grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+  @media(max-width:720px){
+    .grid-2,.grid-3,.grid-4{grid-template-columns:1fr;}
+    .hero-stats{flex-direction:column;}
+    nav .nav-links{display:none;}
+  }
+  @media(min-width:480px) and (max-width:720px){
+    .grid-2{grid-template-columns:repeat(2,1fr);}
+    .grid-4{grid-template-columns:repeat(2,1fr);}
+  }
+
+  .arch-diagram{background:var(--bg2);border:1px solid var(--border);border-radius:20px;padding:36px;display:flex;flex-direction:column;gap:0;position:relative;overflow:hidden;}
+  .arch-diagram::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(132,94,247,0.06),transparent 60%);pointer-events:none;}
+  .arch-layer{display:flex;align-items:center;gap:12px;padding:14px 20px;border-radius:12px;border:1px solid var(--border);background:var(--card);position:relative;z-index:1;}
+  .arch-layer-label{font-family:var(--font-mono);font-size:10px;color:var(--muted2);min-width:90px;text-transform:uppercase;letter-spacing:0.08em;}
+  .arch-layer-nodes{display:flex;flex-wrap:wrap;gap:8px;flex:1;}
+  .arch-node{font-family:var(--font-mono);font-size:11px;padding:5px 12px;border-radius:8px;border:1px solid var(--border2);white-space:nowrap;}
+  .node-orange{background:rgba(255,92,58,0.1);color:#FF8A70;border-color:rgba(255,92,58,0.25);}
+  .node-purple{background:rgba(132,94,247,0.1);color:#A98BF7;border-color:rgba(132,94,247,0.25);}
+  .node-teal{background:rgba(0,217,192,0.1);color:#33E5D0;border-color:rgba(0,217,192,0.25);}
+  .node-amber{background:rgba(255,184,0,0.1);color:#FFD055;border-color:rgba(255,184,0,0.25);}
+  .node-pink{background:rgba(255,61,154,0.1);color:#FF72C0;border-color:rgba(255,61,154,0.25);}
+  .node-gray{background:rgba(255,255,255,0.04);color:var(--muted);border-color:var(--border2);}
+  .arch-arrow{display:flex;align-items:center;justify-content:center;padding:6px 0;color:var(--muted2);font-size:16px;position:relative;z-index:1;}
+
+  .tech-wrap{background:var(--bg2);border:1px solid var(--border);border-radius:16px;overflow:hidden;}
+  .tech-table{width:100%;border-collapse:collapse;font-size:13px;}
+  .tech-table th{font-family:var(--font-mono);font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted2);padding:12px 16px;text-align:left;border-bottom:1px solid var(--border);}
+  .tech-table td{padding:14px 16px;border-bottom:1px solid var(--border);color:var(--muted);vertical-align:top;}
+  .tech-table td:first-child{color:var(--text);font-weight:500;font-family:var(--font-display);font-size:14px;white-space:nowrap;}
+  .tech-table tr:hover td{background:var(--card);}
+  .tech-table tr:last-child td{border-bottom:none;}
+
+  .decision{display:flex;gap:16px;padding:20px;border-radius:14px;background:var(--card);border:1px solid var(--border);transition:border-color 0.2s;}
+  .decision:hover{border-color:var(--border2);}
+  .decision-num{font-family:var(--font-display);font-weight:700;font-size:2rem;line-height:1;min-width:36px;background:var(--gtext);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+  .decision-body h3{font-family:var(--font-display);font-weight:600;font-size:15px;margin-bottom:6px;}
+  .decision-body p{color:var(--muted);font-size:13px;line-height:1.75;}
+
+  .metric{display:flex;flex-direction:column;gap:6px;padding:22px;border-radius:14px;background:var(--card);border:1px solid var(--border);transition:all 0.25s;}
+  .metric:hover{border-color:var(--border2);transform:translateY(-2px);}
+  .metric-val{font-family:var(--font-display);font-weight:700;font-size:1.8rem;line-height:1;}
+  .metric-label{color:var(--muted);font-size:12px;font-family:var(--font-mono);}
+  .metric-desc{color:var(--muted);font-size:12px;line-height:1.6;}
+
+  .challenge{padding:22px;border-radius:14px;border-left:3px solid;background:var(--card);}
+  .challenge h3{font-family:var(--font-display);font-weight:600;font-size:14px;margin-bottom:8px;}
+  .challenge p{color:var(--muted);font-size:13px;line-height:1.75;}
+  .challenge .fix{display:inline-flex;align-items:center;gap:5px;font-family:var(--font-mono);font-size:11px;padding:3px 10px;border-radius:6px;margin-top:10px;}
+
+  .broker-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;}
+  @media(max-width:720px){.broker-grid{grid-template-columns:repeat(3,1fr);}}
+  .broker-card{padding:16px 12px;border-radius:12px;background:var(--card);border:1px solid var(--border);text-align:center;transition:all 0.2s;}
+  .broker-card:hover{border-color:var(--border2);transform:translateY(-2px);}
+  .broker-card .b-icon{font-size:22px;margin-bottom:8px;}
+  .broker-card .b-name{font-family:var(--font-mono);font-size:11px;color:var(--muted);}
+  .broker-card .b-api{font-size:10px;color:var(--muted2);margin-top:4px;}
+
+  .wip-banner{display:flex;align-items:center;gap:12px;padding:14px 20px;border-radius:12px;background:rgba(255,184,0,0.06);border:1px solid rgba(255,184,0,0.2);margin-bottom:36px;}
+  .wip-dot{width:8px;height:8px;border-radius:50%;background:var(--acc4);animation:pulse 1.5s infinite;flex-shrink:0;}
+  .wip-banner span{font-family:var(--font-mono);font-size:12px;color:var(--acc4);}
+  .wip-banner a{color:var(--acc4);text-decoration:underline;font-size:12px;font-family:var(--font-mono);}
+
+  .cta-block{position:relative;z-index:1;max-width:960px;margin:0 auto;padding:60px 24px 80px;text-align:center;}
+  .cta-inner{padding:60px 40px;border-radius:24px;background:var(--bg2);border:1px solid var(--border);position:relative;overflow:hidden;}
+  .cta-inner::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(132,94,247,0.1),transparent 60%);pointer-events:none;}
+  .cta-inner h2{font-family:var(--font-display);font-weight:800;font-size:clamp(1.6rem,4vw,2.4rem);margin-bottom:12px;position:relative;z-index:1;}
+  .cta-inner p{color:var(--muted);font-size:15px;max-width:480px;margin:0 auto 32px;line-height:1.75;position:relative;z-index:1;}
+  .cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;position:relative;z-index:1;}
+  .btn-primary{display:inline-flex;align-items:center;gap:8px;background:var(--g1);color:#fff;font-weight:600;font-size:14px;padding:14px 28px;border-radius:12px;text-decoration:none;border:none;transition:transform 0.2s,box-shadow 0.2s;}
+  .btn-primary:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(255,92,58,0.35);}
+  .btn-secondary{display:inline-flex;align-items:center;gap:8px;background:var(--card);color:var(--text);font-weight:600;font-size:14px;padding:13px 28px;border-radius:12px;text-decoration:none;border:1px solid var(--border2);transition:all 0.2s;}
+  .btn-secondary:hover{border-color:rgba(132,94,247,0.5);background:rgba(132,94,247,0.07);transform:translateY(-3px);}
+
+  footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:28px 24px;text-align:center;font-family:var(--font-mono);font-size:11px;color:var(--muted2);}
+  footer a{color:var(--acc1);text-decoration:none;}
+  footer a:hover{color:var(--acc2);}
+
+  .back-link{display:inline-flex;align-items:center;gap:6px;color:var(--muted);font-size:13px;text-decoration:none;font-family:var(--font-mono);padding:8px 14px;border-radius:8px;border:1px solid var(--border);background:var(--card);transition:all 0.2s;}
+  .back-link:hover{color:var(--acc1);border-color:rgba(255,92,58,0.3);}
+</style>
+</head>
+<body>
+
+<div class="grid-lines"></div>
+<div class="blob blob-1"></div>
+<div class="blob blob-2"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="https://raahuldhiman-dev.github.io" class="nav-logo">
+      <div class="nav-logo-badge">R</div>
+      Rahul Dhiman
+    </a>
+    <div class="nav-links">
+      <a href="https://raahuldhiman-dev.github.io/#projects">Projects</a>
+      <a href="https://finance.dhimansoft.com" target="_blank" rel="noopener">Live Site</a>
+      <a href="https://raahuldhiman-dev.github.io/#contact" class="btn-nav">Hire Me &rarr;</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <a href="https://raahuldhiman-dev.github.io/#projects" class="back-link" style="margin-bottom:28px;display:inline-flex;">
+    &larr; Back to Portfolio
+  </a>
+
+  <div style="margin-top:16px;">
+    <div class="hero-tag">Case Study &mdash; Algorithmic Trading Platform</div>
+  </div>
+
+  <h1>D-TradeX<br><span class="grad-text">Automated Trading Suite</span></h1>
+
+  <p class="hero-sub">
+    A production-grade algorithmic trading platform connecting <strong>five Indian brokers</strong> through a unified adapter layer,
+    with real-time options analytics, a canonical <strong>Black-76/BSM Greeks engine</strong>,
+    a <strong>LightGBM ML signal classifier</strong>, and sub-200ms tick-to-frontend delivery via
+    <strong>Redis Streams</strong>. Built from the ground up with a strict no-mock-data principle.
+  </p>
+
+  <div class="wip-banner">
+    <span class="wip-dot"></span>
+    <span>Actively in development &mdash; live at <a href="https://finance.dhimansoft.com" target="_blank" rel="noopener">finance.dhimansoft.com &rarr;</a></span>
+  </div>
+
+  <div class="hero-meta">
+    <span class="meta-chip"><span class="dot" style="background:#FF5C3A;"></span>Next.js 16</span>
+    <span class="meta-chip"><span class="dot" style="background:#845EF7;"></span>FastAPI / Python</span>
+    <span class="meta-chip"><span class="dot" style="background:#00D9C0;"></span>Redis Streams</span>
+    <span class="meta-chip"><span class="dot" style="background:#FFB800;"></span>LightGBM</span>
+    <span class="meta-chip"><span class="dot" style="background:#FF3D9A;"></span>PostgreSQL + MongoDB</span>
+    <span class="meta-chip" style="color:var(--acc4);">&#127381; Personal Project &middot; In Progress</span>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat-box">
+      <span class="stat-num" style="background:var(--g1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">5</span>
+      <span class="stat-label">Brokers Connected</span>
+    </div>
+    <div class="stat-box">
+      <span class="stat-num" style="background:var(--g2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">&lt;200ms</span>
+      <span class="stat-label">Tick-to-UI Latency</span>
+    </div>
+    <div class="stat-box">
+      <span class="stat-num" style="background:var(--g3);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">9K</span>
+      <span class="stat-label">WS Token Cap Managed</span>
+    </div>
+    <div class="stat-box">
+      <span class="stat-num" style="background:var(--g4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">31</span>
+      <span class="stat-label">Env Variables in Prod</span>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- PROBLEM -->
+<div class="section">
+  <div class="section-label">01 &mdash; The Problem</div>
+  <h2>Why Build a Custom Trading Platform?</h2>
+  <p class="section-desc">
+    Indian retail algorithmic trading is fragmented across incompatible broker APIs, inconsistent Greeks calculations,
+    and platforms that hide their data sources. Building on top of existing tools means inheriting all of that debt.
+  </p>
+
+  <div class="grid-3">
+    <div class="card">
+      <div class="card-icon" style="background:rgba(255,92,58,0.1);border-color:rgba(255,92,58,0.2);">&#128279;</div>
+      <h3>Fragmented Broker APIs</h3>
+      <p>Each broker (Zerodha, Upstox, Angel One, Nuvama, Dhan) exposes a different API shape, authentication flow, and tick format. No unified abstraction exists in the market.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:rgba(132,94,247,0.1);border-color:rgba(132,94,247,0.2);">&#127362;</div>
+      <h3>Inconsistent Greeks</h3>
+      <p>Broker-native Greeks use different models and reference rates. Comparing options positions across brokers produces misleading risk numbers. A canonical engine was essential.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:rgba(0,217,192,0.1);border-color:rgba(0,217,192,0.2);">&#128202;</div>
+      <h3>Mock Data Everywhere</h3>
+      <p>Most retail algo platforms seed their databases with static or simulated data. Any strategy backtested or paper-traded against it is measuring noise, not market reality.</p>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- BROKERS -->
+<div class="section">
+  <div class="section-label">02 &mdash; Broker Layer</div>
+  <h2>Five Brokers, One Adapter</h2>
+  <p class="section-desc">
+    A single broker adapter pattern normalizes authentication, tick formats, order placement, and historical data
+    across all five supported brokers. Adding a sixth broker requires implementing one interface, not rewriting the platform.
+  </p>
+
+  <div class="broker-grid" style="margin-bottom:32px;">
+    <div class="broker-card">
+      <div class="b-icon">&#9951;</div>
+      <div class="b-name">Zerodha</div>
+      <div class="b-api">Kite Connect</div>
+    </div>
+    <div class="broker-card">
+      <div class="b-icon">&#128200;</div>
+      <div class="b-name">Upstox</div>
+      <div class="b-api">Upstox API v2</div>
+    </div>
+    <div class="broker-card">
+      <div class="b-icon">&#128181;</div>
+      <div class="b-name">Angel One</div>
+      <div class="b-api">SmartAPI</div>
+    </div>
+    <div class="broker-card">
+      <div class="b-icon">&#128084;</div>
+      <div class="b-name">Nuvama</div>
+      <div class="b-api">Nuvama API</div>
+    </div>
+    <div class="broker-card">
+      <div class="b-icon">&#127381;</div>
+      <div class="b-name">Dhan</div>
+      <div class="b-api">DhanHQ API</div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:0;">
+    <h3 style="margin-bottom:10px;">Zerodha WebSocket Token Cap</h3>
+    <p style="color:var(--muted);font-size:13px;line-height:1.75;">
+      Kite Connect's WebSocket allows up to 9,000 instrument tokens per connection. The subscription manager
+      enforces this cap automatically, routing tokens within the limit to the WebSocket and falling back to
+      REST polling for instruments that exceed it. This prevents silent disconnects at market open when
+      watchlists are large.
+    </p>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- ARCHITECTURE -->
+<div class="section">
+  <div class="section-label">03 &mdash; Architecture</div>
+  <h2>How the Platform Is Wired</h2>
+  <p class="section-desc">
+    Seven distinct layers from live market feed to the trader's browser, each with a single clear responsibility.
+  </p>
+
+  <div class="arch-diagram">
+    <div class="arch-layer">
+      <span class="arch-layer-label">Market Data</span>
+      <div class="arch-layer-nodes">
+        <span class="arch-node node-amber">Broker WebSocket Feeds</span>
+        <span class="arch-node node-amber">Kite Connect Historical API</span>
+        <span class="arch-node node-amber">TrueData / GFDL (licensed)</span>
+      </div>
+    </div>
+    <div class="arch-arrow">&#8595; Normalized tick via broker adapter</div>
+    <div class="arch-layer">
+      <span class="arch-layer-label">Adapter Layer</span>
+      <div class="arch-layer-nodes">
+        <span class="arch-node node-orange">Broker Adapter (per broker)</span>
+        <span class="arch-node node-orange">Token Subscription Manager</span>
+        <span class="arch-node node-orange">REST Polling Fallback</span>
+      </div>
+    </div>
+    <div class="arch-arrow">&#8595; Uniform tick format pushed to Redis Streams</div>
+    <div class="arch-layer">
+      <span class="arch-layer-label">Streaming</span>
+      <div class="arch-layer-nodes">
+        <span class="arch-node node-pink">Redis Streams</span>
+        <span class="arch-node node-pink">&lt;200ms tick-to-consumer SLA</span>
+        <span class="arch-node node-pink">Consumer group per strategy</span>
+      </div>
+    </div>
+    <div class="arch-arrow">&#8595; Analytics workers consume stream</div>
+    <div class="arch-layer">
+      <span class="arch-layer-label">Analytics</span>
+      <div class="arch-layer-nodes">
+        <span class="arch-node node-purple">Greeks Engine (Black-76/BSM)</span>
+        <span class="arch-node node-purple">LightGBM Signal Classifier</span>
+        <span class="arch-node node-purple">Celery + Beat task scheduler</span>
+      </div>
+    </div>
+    <div class="arch-arrow">&#8595; Computed data written to DB + cache</div>
+    <div class="arch-layer">
+      <span class="arch-layer-label">Persistence</span>
+      <div class="arch-layer-nodes">
+        <span class="arch-node node-teal">PostgreSQL (auth, orders, users)</span>
+        <span class="arch-node node-teal">MongoDB (TTL tick cache)</span>
+        <span class="arch-node node-teal">Redis (session + stream)</span>
+      </div>
+    </div>
+    <div class="arch-arrow">&#8595; FastAPI serves data to Next.js frontend</div>
+    <div class="arch-layer">
+      <span class="arch-layer-label">API</span>
+      <div class="arch-layer-nodes">
+        <span class="arch-node node-orange">FastAPI (Python)</span>
+        <span class="arch-node node-orange">fastapi-users 13.x (auth)</span>
+        <span class="arch-node node-orange">JWT HttpOnly + refresh rotation</span>
+      </div>
+    </div>
+    <div class="arch-arrow">&#8595; Rendered to trader dashboard</div>
+    <div class="arch-layer">
+      <span class="arch-layer-label">Frontend</span>
+      <div class="arch-layer-nodes">
+        <span class="arch-node node-purple">Next.js 16 (App Router)</span>
+        <span class="arch-node node-purple">Auth.js v5 (Google + GitHub OAuth)</span>
+        <span class="arch-node node-gray">React Native Android (planned)</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- FEATURES -->
+<div class="section">
+  <div class="section-label">04 &mdash; Features</div>
+  <h2>What the Platform Delivers</h2>
+  <p class="section-desc">Nine production capabilities covering data ingestion, analytics, execution, and risk management.</p>
+
+  <div class="grid-3">
+    <div class="card">
+      <div class="card-icon" style="background:rgba(255,92,58,0.1);border-color:rgba(255,92,58,0.2);">&#128200;</div>
+      <h3>Live Options Chain</h3>
+      <p>Unified options chain streaming from all connected brokers. Strikes, OI, volume, bid/ask, and computed Greeks displayed in real time with sub-200ms refresh.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:rgba(132,94,247,0.1);border-color:rgba(132,94,247,0.2);">&#127362;</div>
+      <h3>Canonical Greeks Engine</h3>
+      <p>Delta, Gamma, Theta, Vega, and Rho calculated using Black-76 (futures-style) and BSM (equity options) rather than relying on broker-native Greeks, which differ by model and reference rate.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:rgba(0,217,192,0.1);border-color:rgba(0,217,192,0.2);">&#129302;</div>
+      <h3>ML Signal Classifier</h3>
+      <p>LightGBM model trained on Nifty 50 price and options flow features. Outputs directional signal probabilities used to filter or weight strategy entries.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:rgba(255,184,0,0.1);border-color:rgba(255,184,0,0.2);">&#128196;</div>
+      <h3>Strategy Backtesting</h3>
+      <p>Backtest against Kite Connect historical data or licensed TrueData/GFDL feeds. No static seed data. All backtest results reflect real market conditions.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:rgba(255,61,154,0.1);border-color:rgba(255,61,154,0.2);">&#127381;</div>
+      <h3>Paper Trading</h3>
+      <p>Paper trading mode uses live feed pricing with unmissable UI labeling. No simulated prices. Strategies are validated against the same tick stream as live execution.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:rgba(255,92,58,0.1);border-color:rgba(255,92,58,0.2);">&#128274;</div>
+      <h3>RBAC + Multi-Tenant Auth</h3>
+      <p>Role-based access control with per-user broker credential isolation. Each user's tokens and positions are scoped independently. JWT HttpOnly cookies with refresh token rotation.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:rgba(132,94,247,0.1);border-color:rgba(132,94,247,0.2);">&#128202;</div>
+      <h3>Risk Controls</h3>
+      <p>Per-strategy daily loss limits, max open position caps, and automatic strategy pause triggers. Risk rules are enforced at the API layer, not just the UI.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:rgba(0,217,192,0.1);border-color:rgba(0,217,192,0.2);">&#128196;</div>
+      <h3>Broker Token Automation</h3>
+      <p>Daily access token refresh automation for brokers that require it. Tokens are rotated before market open without manual intervention using scheduled Celery tasks.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:rgba(255,184,0,0.1);border-color:rgba(255,184,0,0.2);">&#128241;</div>
+      <h3>Android App (Planned)</h3>
+      <p>React Native mobile client sharing the same FastAPI backend. Planned for position monitoring, alerts, and strategy toggle on the go without full desktop access.</p>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- STACK -->
+<div class="section">
+  <div class="section-label">05 &mdash; Stack</div>
+  <h2>Technology Choices</h2>
+  <p class="section-desc">Every choice maps to a specific platform constraint. Low latency, real-time data, and multi-broker normalization drove every decision.</p>
+
+  <div class="tech-wrap">
+    <table class="tech-table">
+      <thead>
+        <tr>
+          <th>Layer</th>
+          <th>Technology</th>
+          <th>Why This Choice</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Frontend</td>
+          <td>Next.js 16 (App Router)</td>
+          <td>Server components for data-heavy dashboard pages. Shared TypeScript types with the FastAPI schemas via code generation reduce type drift between layers.</td>
+        </tr>
+        <tr>
+          <td>Backend</td>
+          <td>FastAPI (Python)</td>
+          <td>Python is the primary language for quantitative finance and ML. FastAPI's async support handles concurrent broker WebSocket connections without blocking the main thread.</td>
+        </tr>
+        <tr>
+          <td>Streaming</td>
+          <td>Redis Streams</td>
+          <td>Persistent consumer groups allow multiple analytics workers to consume the same tick stream independently. Delivery latency stays under 200ms. Redis also serves as the session and cache layer.</td>
+        </tr>
+        <tr>
+          <td>ML</td>
+          <td>LightGBM</td>
+          <td>Gradient-boosted trees outperform deep learning on tabular market data with limited training samples. LightGBM's inference speed is compatible with tick-by-tick signal evaluation.</td>
+        </tr>
+        <tr>
+          <td>Primary DB</td>
+          <td>PostgreSQL</td>
+          <td>Transactional integrity for order records, user accounts, and position state. ACID guarantees are non-negotiable when real capital is involved.</td>
+        </tr>
+        <tr>
+          <td>Tick Cache</td>
+          <td>MongoDB (TTL)</td>
+          <td>Time-series tick data is expensive to query repeatedly from broker APIs. MongoDB's TTL indexes expire cached ticks automatically, keeping the cache lean without manual cleanup jobs.</td>
+        </tr>
+        <tr>
+          <td>Task Queue</td>
+          <td>Celery + Beat</td>
+          <td>Replaces APScheduler for more reliable distributed task execution. Beat handles daily token rotation, strategy health checks, and scheduled backtests.</td>
+        </tr>
+        <tr>
+          <td>Auth</td>
+          <td>fastapi-users 13.x + Auth.js v5</td>
+          <td>fastapi-users handles backend user management and JWT rotation. Auth.js v5 on the Next.js side adds Google and GitHub OAuth without duplicating session logic.</td>
+        </tr>
+        <tr>
+          <td>Infra</td>
+          <td>Docker + IONOS VPS + Plesk</td>
+          <td>Four-container stack (backend, frontend, MongoDB, Redis) managed via Docker Compose. GHCR stores images. Plesk handles Apache reverse proxy and SSL on the same VPS.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- HARD PROBLEMS -->
+<div class="section">
+  <div class="section-label">06 &mdash; Hard Problems</div>
+  <h2>What Was Actually Difficult</h2>
+  <p class="section-desc">Four non-trivial engineering problems that shaped the platform's architecture.</p>
+
+  <div style="display:flex;flex-direction:column;gap:16px;">
+    <div class="challenge" style="border-color:var(--acc1);">
+      <h3>&#9985; PostgreSQL-to-MongoDB User Identity Bridge</h3>
+      <p>Auth lives in PostgreSQL (via fastapi-users). Tick cache and time-series data live in MongoDB. When a user action needs to join data across both stores, there is no foreign key. The fix was a canonical user UUID propagated to both systems on registration, with a lightweight cross-store lookup service that resolves identity without a full join. CORS, WebSocket, and CSP issues on the Plesk/nginx stack were resolved in the same audit pass.</p>
+      <span class="fix" style="background:rgba(255,92,58,0.1);color:#FF8A70;border:1px solid rgba(255,92,58,0.2);">&#10003; Canonical UUID bridge + unified audit</span>
+    </div>
+    <div class="challenge" style="border-color:var(--acc2);">
+      <h3>&#127758; Zerodha 9,000-Token WebSocket Cap</h3>
+      <p>Kite Connect's WebSocket silently drops instrument subscriptions above 9,000 tokens per connection. During market open, a full Nifty options chain easily exceeds this. The subscription manager maintains a live token counter and routes overflow instruments to a REST polling queue with a configurable refresh interval. The WebSocket receives priority instruments; REST fills the gap. No instruments are silently dropped.</p>
+      <span class="fix" style="background:rgba(132,94,247,0.1);color:#A98BF7;border:1px solid rgba(132,94,247,0.2);">&#10003; Token counter + REST polling fallback</span>
+    </div>
+    <div class="challenge" style="border-color:var(--acc3);">
+      <h3>&#128683; No-Mock-Data Constraint Across All Environments</h3>
+      <p>Standard development practice seeds a local database with fake prices and fake trades. For a trading platform, that produces strategies that work against invented data and fail in production. The constraint: all financial data must come from live broker connections or licensed feeds (Kite Connect, TrueData, GFDL). MongoDB serves as a TTL cache, never an authoritative seed. Paper trading retains simulated execution but uses live feed pricing with an unmissable UI label. This constraint was enforced at the architecture level, not by convention.</p>
+      <span class="fix" style="background:rgba(0,217,192,0.1);color:#33E5D0;border:1px solid rgba(0,217,192,0.2);">&#10003; Live-only data policy enforced architecturally</span>
+    </div>
+    <div class="challenge" style="border-color:var(--acc4);">
+      <h3>&#128218; pydantic-settings CORS_ORIGINS Format Bug</h3>
+      <p>pydantic-settings 2.2.1 parses comma-separated environment variables as a string, not a list. CORS_ORIGINS set to comma-separated values crashed the FastAPI startup. The fix is JSON array format in the .env file. The bug was identified during a production stabilization pass that also resolved a Next.js healthcheck binding mismatch (HOSTNAME=0.0.0.0 vs localhost), a MongoDB Atlas switchover, and a Redis module install regression — all in the same deployment window.</p>
+      <span class="fix" style="background:rgba(255,184,0,0.1);color:#FFD055;border:1px solid rgba(255,184,0,0.2);">&#10003; JSON array format + multi-issue stabilization</span>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- DESIGN DECISIONS -->
+<div class="section">
+  <div class="section-label">07 &mdash; Design Decisions</div>
+  <h2>Five Calls That Shaped the Architecture</h2>
+  <p class="section-desc">The choices that determined reliability, data integrity, and long-term extensibility.</p>
+
+  <div style="display:flex;flex-direction:column;gap:14px;">
+    <div class="decision">
+      <div class="decision-num">01</div>
+      <div class="decision-body">
+        <h3>Canonical Greeks over broker-native Greeks</h3>
+        <p>Broker-native Greeks differ by model (some use BSM, some use a simplified approximation) and by the risk-free rate reference. Comparing positions across brokers using their native Greeks produces meaningless risk aggregates. The platform computes all Greeks internally using Black-76 for futures-style options and BSM for equity options, with a consistent risk-free rate. Broker data is used only for market prices and OI, never for derived risk metrics.</p>
+      </div>
+    </div>
+    <div class="decision">
+      <div class="decision-num">02</div>
+      <div class="decision-body">
+        <h3>MongoDB as a TTL cache, not a database</h3>
+        <p>Time-series tick data is high-volume and short-lived. Storing it persistently in PostgreSQL would inflate the primary database with data that has a natural expiry. MongoDB's TTL indexes expire ticks automatically at a configurable interval. The cache reduces broker API calls on repeated queries while keeping storage lean. MongoDB is explicitly excluded from being treated as an authoritative data source for any financial calculation.</p>
+      </div>
+    </div>
+    <div class="decision">
+      <div class="decision-num">03</div>
+      <div class="decision-body">
+        <h3>Redis Streams over WebSocket fan-out from the backend</h3>
+        <p>Pushing ticks directly from broker WebSockets to connected browser clients creates tight coupling: every new broker connection needs its own fan-out logic, and a broker disconnect propagates immediately to the UI. Redis Streams decouple ingestion from delivery. The adapter writes to the stream; analytics workers and the Next.js data layer consume independently. A broker hiccup does not cascade to the trader's screen.</p>
+      </div>
+    </div>
+    <div class="decision">
+      <div class="decision-num">04</div>
+      <div class="decision-body">
+        <h3>LightGBM over deep learning for signal classification</h3>
+        <p>Neural networks require large labeled datasets to generalize. Indian equity options data with reliable labels (actual outcomes, not just price moves) is limited in depth. LightGBM performs well on tabular features with moderate training data, provides feature importance that is interpretable for strategy debugging, and runs fast enough for tick-by-tick evaluation. Deep learning was evaluated and ruled out at this stage.</p>
+      </div>
+    </div>
+    <div class="decision">
+      <div class="decision-num">05</div>
+      <div class="decision-body">
+        <h3>Celery + Beat over APScheduler</h3>
+        <p>APScheduler runs in-process and loses scheduled tasks on restart. For a trading platform, missed daily token rotation means broker connections fail at market open. Celery + Beat runs as a separate process, persists task state to Redis, and survives application restarts. Any task critical to market participation runs through Celery, not in-process schedulers.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- OUTCOMES -->
+<div class="section">
+  <div class="section-label">08 &mdash; Current State</div>
+  <h2>What Has Been Built</h2>
+  <p class="section-desc">A production-deployed platform actively in development, with the core data pipeline and analytics layer operational.</p>
+
+  <div class="grid-4">
+    <div class="metric">
+      <span class="metric-val" style="background:var(--g1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Live</span>
+      <span class="metric-label">Deployment Status</span>
+      <span class="metric-desc">Running at finance.dhimansoft.com; all four containers healthy</span>
+    </div>
+    <div class="metric">
+      <span class="metric-val" style="background:var(--g2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">5</span>
+      <span class="metric-label">Brokers Integrated</span>
+      <span class="metric-desc">Zerodha, Upstox, Angel One, Nuvama, Dhan via unified adapter</span>
+    </div>
+    <div class="metric">
+      <span class="metric-val" style="background:var(--g3);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">&lt;200ms</span>
+      <span class="metric-label">Tick-to-UI SLA</span>
+      <span class="metric-desc">Redis Streams consumer groups delivering within latency target</span>
+    </div>
+    <div class="metric">
+      <span class="metric-val" style="background:var(--g4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">0</span>
+      <span class="metric-label">Mock Data in Prod</span>
+      <span class="metric-desc">All market data from live broker APIs or licensed feed vendors</span>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- SITE PREVIEW -->
+<div class="section">
+  <div class="section-label">09 &mdash; Live Site</div>
+  <h2>See It in Production</h2>
+  <p class="section-desc">The platform is live at finance.dhimansoft.com and actively being developed.</p>
+
+  <div style="border-radius:20px;overflow:hidden;border:1px solid var(--border);background:var(--bg2);">
+    <div style="display:flex;align-items:center;gap:8px;padding:14px 20px;border-bottom:1px solid var(--border);">
+      <div style="display:flex;gap:7px;">
+        <div style="width:10px;height:10px;border-radius:50%;background:#FF5F57;"></div>
+        <div style="width:10px;height:10px;border-radius:50%;background:#FFBD2E;"></div>
+        <div style="width:10px;height:10px;border-radius:50%;background:#28C840;"></div>
+      </div>
+      <span style="font-family:var(--font-mono);font-size:11px;color:var(--muted2);flex:1;text-align:center;">finance.dhimansoft.com</span>
+    </div>
+    <div style="padding:60px 24px;text-align:center;background:linear-gradient(135deg,#0a0f1e,#0d1f3c,#102040);min-height:260px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;">
+      <div style="width:56px;height:56px;border-radius:16px;background:rgba(0,217,192,0.1);border:1px solid rgba(0,217,192,0.2);display:flex;align-items:center;justify-content:center;font-size:26px;">&#128274;</div>
+      <div>
+        <div style="font-family:var(--font-display);font-weight:700;font-size:18px;color:var(--text);margin-bottom:6px;">Source Protected</div>
+        <div style="font-family:var(--font-mono);font-size:12px;color:var(--muted);">Active development &mdash; preview restricted</div>
+      </div>
+      <a href="https://finance.dhimansoft.com" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;font-family:var(--font-mono);font-size:12px;color:var(--acc3);border:1px solid rgba(0,217,192,0.3);padding:8px 18px;border-radius:8px;text-decoration:none;background:rgba(0,217,192,0.06);transition:all 0.2s;">Visit Live Site &rarr;</a>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-block">
+  <div class="cta-inner">
+    <h2>Building something in<br><span class="grad-text">FinTech or trading?</span></h2>
+    <p>I build full-stack systems at the intersection of real-time data, financial APIs, and ML. If you need a technical partner who understands broker infrastructure and market data pipelines, get in touch.</p>
+    <div class="cta-btns">
+      <a href="https://raahuldhiman-dev.github.io/#contact" class="btn-primary">Get in Touch &rarr;</a>
+      <a href="https://raahuldhiman-dev.github.io/#projects" class="btn-secondary">Other Projects</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  Built by <a href="https://raahuldhiman-dev.github.io">Rahul Dhiman</a> &middot;
+  <a href="https://raahuldhiman-dev.github.io/#projects">All Projects</a>
+</footer>
+
+</body>
+</html>
