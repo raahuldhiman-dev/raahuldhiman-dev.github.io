@@ -93,7 +93,10 @@
         "AWS",
         "Google Cloud Platform",
         "Oracle Cloud Infrastructure",
-        "Microsoft Azure"
+        "Microsoft Azure",
+        "Healthcare software",
+        "eCommerce",
+        "FinTech"
       ],
       "knowsLanguage": [
         "English",
@@ -214,6 +217,14 @@
           "acceptedAnswer": {
             "@type": "Answer",
             "text": "Yes. Rahul Dhiman is also written Raahul Dhiman, Rahuldhiman, Raahuldhiman, Rahul Singh Dhiman or Rahul S. Dhiman. They all refer to the same Full-Stack and AI Engineer from Mohali, India, whose profiles are LinkedIn (raahuldhimanofficial) and GitHub (raahuldhiman-dev)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What industries has Rahul Dhiman worked in?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Rahul Dhiman has built software for healthcare and medical imaging (Medviso), eCommerce and retail, online art auctions, fintech and algorithmic trading, HR and career technology, AI SaaS, marketing agencies, booking and scheduling, and real-time messaging. At Kwan Network Solutions he also built client web applications across several industry verticals."
           }
         }
       ]
@@ -614,6 +625,14 @@
       transition: all 0.2s; cursor: default;
     }
     .skill-badge:hover { border-color: rgba(132,94,247,0.4); color: var(--acc2); transform: translateY(-2px); }
+
+    /* Industries */
+    .ind-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-top: 8px; }
+    .ind-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 22px; transition: border-color 0.25s, transform 0.25s; }
+    .ind-card:hover { border-color: var(--border2); transform: translateY(-3px); }
+    .ind-emoji { font-size: 28px; display: block; margin-bottom: 10px; }
+    .ind-title { font-family: var(--font-display); font-size: 16px; font-weight: 600; margin-bottom: 6px; }
+    .ind-desc { color: var(--muted); font-size: 13.5px; line-height: 1.7; }
 
     /* Projects */
     #projects { background: var(--bg2); }
@@ -1521,9 +1540,9 @@
 
       <!-- D-TradeX -->
       <div class="project-card" data-category="fintech backend fullstack">
-        <div class="project-thumb" style="background:linear-gradient(135deg,#0a0f1e,#0d1f3c,#102040);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;">
-          <div style="font-size:48px;">📈</div>
-          <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(0,217,192,0.7);letter-spacing:0.1em;">LIVE · finance.dhimansoft.com</div>
+        <div class="project-thumb pt-gradient-5">
+          <img data-src="assets/projects/dtradex.jpg" alt="D-TradeX preview" loading="lazy">
+          <span class="project-thumb-emoji">📈</span>
           <div class="project-thumb-overlay"><a href="https://finance.dhimansoft.com" target="_blank" rel="noopener">Visit Live Site ↗</a></div>
         </div>
         <div class="project-body">
@@ -1553,6 +1572,26 @@
 
     </div>
     <div style="text-align:center;margin-top:40px;"><a href="https://github.com/raahuldhiman-dev" target="_blank" rel="noopener noreferrer" class="btn-secondary">View All on GitHub →</a></div>
+  </div>
+</section>
+
+<!-- Industries -->
+<section id="industries" aria-labelledby="industries-title">
+  <div class="wrap">
+    <span class="badge">Domains</span>
+    <h2 id="industries-title" class="sec-title fade-up">Industries I've <span style="background:var(--g1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Served</span></h2>
+    <p class="sec-desc">The kinds of businesses my software has been built for, drawn from the projects above and my roles below, including client web applications across several industry verticals at Kwan Network Solutions.</p>
+    <div class="ind-grid">
+      <article class="ind-card fade-up"><span class="ind-emoji" aria-hidden="true">🏥</span><h3 class="ind-title">Healthcare &amp; Medical Imaging</h3><p class="ind-desc">Maintaining Medviso's transfer.medviso.com, with Python and Matplotlib rendering data into images.</p></article>
+      <article class="ind-card fade-up"><span class="ind-emoji" aria-hidden="true">🛒</span><h3 class="ind-title">eCommerce &amp; Retail</h3><p class="ind-desc">A WooCommerce store for a local tyre and car-accessories business, and a Laravel multi-role eCommerce platform.</p></article>
+      <article class="ind-card fade-up"><span class="ind-emoji" aria-hidden="true">🎨</span><h3 class="ind-title">Art &amp; Auctions</h3><p class="ind-desc">BLK Art Auction: real-time bidding, anti-sniping protection and artist onboarding.</p></article>
+      <article class="ind-card fade-up"><span class="ind-emoji" aria-hidden="true">📈</span><h3 class="ind-title">FinTech &amp; Trading</h3><p class="ind-desc">D-TradeX multi-broker trading suite and an LSTM stock price forecaster.</p></article>
+      <article class="ind-card fade-up"><span class="ind-emoji" aria-hidden="true">💼</span><h3 class="ind-title">HR &amp; Career Tech</h3><p class="ind-desc">Polite Resume: an ATS-friendly resume and cover letter builder with a membership flow.</p></article>
+      <article class="ind-card fade-up"><span class="ind-emoji" aria-hidden="true">🤖</span><h3 class="ind-title">AI &amp; SaaS</h3><p class="ind-desc">A multi-tenant RAG document Q&amp;A product and a GPT-4 content generation microservice.</p></article>
+      <article class="ind-card fade-up"><span class="ind-emoji" aria-hidden="true">📣</span><h3 class="ind-title">Marketing &amp; Digital Agencies</h3><p class="ind-desc">Websites and campaign landing pages for small and mid-sized clients at Canvas Craft Media.</p></article>
+      <article class="ind-card fade-up"><span class="ind-emoji" aria-hidden="true">📅</span><h3 class="ind-title">Booking &amp; Scheduling</h3><p class="ind-desc">A booking platform with Zoom integration, calendar sync and Stripe payments.</p></article>
+      <article class="ind-card fade-up"><span class="ind-emoji" aria-hidden="true">💬</span><h3 class="ind-title">Real-time Messaging</h3><p class="ind-desc">A multi-user chat app with direct and group conversations and self-hosted WebSockets.</p></article>
+    </div>
   </div>
 </section>
 
@@ -1724,6 +1763,10 @@
         <summary>Is Raahul Dhiman or Rahul Singh Dhiman the same person as Rahul Dhiman?</summary>
         <p>Yes. Rahul Dhiman is also written Raahul Dhiman, Rahuldhiman, Raahuldhiman, Rahul Singh Dhiman or Rahul S. Dhiman. They all refer to the same Full-Stack and AI Engineer from Mohali, India, whose profiles are LinkedIn (raahuldhimanofficial) and GitHub (raahuldhiman-dev).</p>
       </details>
+      <details class="faq-item">
+        <summary>What industries has Rahul Dhiman worked in?</summary>
+        <p>Rahul Dhiman has built software for healthcare and medical imaging (Medviso), eCommerce and retail, online art auctions, fintech and algorithmic trading, HR and career technology, AI SaaS, marketing agencies, booking and scheduling, and real-time messaging. At Kwan Network Solutions he also built client web applications across several industry verticals.</p>
+      </details>
     </div>
   </div>
 </section>
@@ -1846,7 +1889,7 @@
   <div class="footer-inner">
     <a href="#home" class="footer-logo">Rahul Dhiman</a>
     <div class="footer-links">
-      <a href="#about">About</a><a href="#skills">Skills</a><a href="#projects">Projects</a><a href="#experience">Experience</a><a href="#faq">FAQ</a><a href="#contact">Contact</a>
+      <a href="#about">About</a><a href="#skills">Skills</a><a href="#projects">Projects</a><a href="#industries">Industries</a><a href="#experience">Experience</a><a href="#faq">FAQ</a><a href="#contact">Contact</a>
     </div>
     <div class="footer-copy">© 2026 · Built with ☕ in Mohali<br><span style="opacity:.7">Rahul Dhiman, also written Raahul Dhiman, Rahul Singh Dhiman</span></div>
   </div>
@@ -2220,6 +2263,15 @@
       B('Personal AI Assistant') + ': voice + GPT-4 (in progress)',
       B('AI Content Generator, Booking System, eCommerce Platform, DTradeX') + ': client/private work, code on request'
     ]) + P('See the <a href="#projects">Projects section</a> or <a href="' + GITHUB + '" target="_blank" rel="noopener">GitHub</a> for more.'),
+    industries: P(B('Industries served')) + UL([
+      B('Healthcare &amp; medical imaging') + ': maintaining transfer.medviso.com (Python, Matplotlib)',
+      B('eCommerce &amp; retail') + ': WooCommerce and Laravel stores',
+      B('Art &amp; auctions') + ': BLK Art Auction, real-time bidding',
+      B('FinTech &amp; trading') + ': D-TradeX and an LSTM forecaster',
+      B('HR &amp; career tech') + ': Polite Resume',
+      B('AI &amp; SaaS') + ': RAG chatbot, GPT-4 content tools',
+      B('Marketing agencies, booking &amp; scheduling, real-time messaging')
+    ]) + P('See the <a href="#industries">Industries section</a> for details.'),
     education: P(B('Education')) + UL([
       B('MCA, AI & Machine Learning') + '<br>Amity University Online · Mar 2024 - Apr 2026',
       B('BCA') + '<br>Himachal Pradesh University · 2018 - 2021'
@@ -2267,6 +2319,7 @@
     [/\b(contact|email|mail|reach|linkedin|phone|number|call|connect)\b/, 'contact'],
     [/\b(locat\w*|based|mohali|punjab|india|where|remote)\b/, 'location'],
     [/\b(hire|hiring|job|jobs|available|availability|opportunit\w*|open to|role|roles)\b/, 'hire'],
+    [/\b(industr\w*|sector\w*|domain\w*|vertical\w*|healthcare|medical|medviso|ecommerce|retail|auction\w*)\b/, 'industries'],
     [/\b(project\w*|portfolio|built|build|shipped|dtradex|trading)\b/, 'projects'],
     [/\b(skill\w*|tech|stack|technolog\w*|laravel|react|php|python|javascript|mysql|know)\b/, 'skills'],
     [/\b(ai|ml|gpt\w*|llm|langchain|machine learning|nlp|openai)\b/, 'ai'],
@@ -2295,6 +2348,7 @@
     cloud: 'Does he know AWS, GCP or Oracle Cloud?',
     ai: 'What AI/ML work has he done?',
     projects: 'Show me his projects',
+    industries: 'Which industries has he worked in?',
     education: 'What is his education?',
     certs: 'Any certifications?',
     hire: 'Is he open to work?',
@@ -2307,7 +2361,7 @@
     experience: ['softweaver', 'skills', 'ai'], softweaver: ['kwan', 'ai', 'skills'], kwan: ['canvas', 'softweaver', 'skills'],
     canvas: ['worksdelight', 'kwan', 'skills'], worksdelight: ['canvas', 'experience', 'skills'],
     skills: ['cloud', 'projects', 'ai'], cloud: ['projects', 'skills', 'softweaver'], ai: ['projects', 'skills', 'softweaver'],
-    projects: ['skills', 'hire', 'resume'], education: ['certs', 'ai', 'skills'], certs: ['education', 'skills'],
+    projects: ['industries', 'skills', 'hire'], industries: ['projects', 'hire', 'resume'], education: ['certs', 'ai', 'skills'], certs: ['education', 'skills'],
     hire: ['resume', 'contact', 'skills'], contact: ['resume', 'hire', 'projects'], resume: ['contact', 'hire', 'projects'],
     location: ['hire', 'contact'], languages: ['education', 'hire'], years: ['softweaver', 'skills'], thanks: [], hello: [], fallback: []
   };

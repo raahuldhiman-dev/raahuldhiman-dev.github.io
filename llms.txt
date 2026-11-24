@@ -19,6 +19,9 @@ Target roles: AI Engineer, ML Engineer, Full Stack Developer, Backend Developer.
 - [Full Stack Developer](https://raahuldhiman-dev.github.io/resume/Rahul-Dhiman-Resume-Full-Stack-Developer.pdf)
 - [Backend Developer](https://raahuldhiman-dev.github.io/resume/Rahul-Dhiman-Resume-Backend-Developer.pdf)
 
+## Industries served
+Healthcare and medical imaging (Medviso), eCommerce and retail, art auctions, fintech and trading, HR and career tech, AI SaaS, marketing agencies, booking and scheduling, real-time messaging.
+
 ## Profiles
 - [LinkedIn](https://www.linkedin.com/in/raahuldhimanofficial)
 - [GitHub](https://github.com/raahuldhiman-dev)
