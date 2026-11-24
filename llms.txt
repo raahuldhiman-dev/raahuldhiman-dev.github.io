@@ -13,6 +13,17 @@ Target roles: AI Engineer, ML Engineer, Full Stack Developer, Backend Developer.
 - [FAQ](https://raahuldhiman-dev.github.io/#faq): short answers about experience, skills, availability and contact
 - [Contact](https://raahuldhiman-dev.github.io/#contact): job offers and project enquiries
 
+## Case studies
+- [AWS Face Recognition System](https://raahuldhiman-dev.github.io/case-studies/aws-face-recognition.html)
+- [BLK Art Auction](https://raahuldhiman-dev.github.io/case-studies/blk-art-auction.html)
+- [D-TradeX](https://raahuldhiman-dev.github.io/case-studies/dtradex.html)
+- [Google Docs Mirror](https://raahuldhiman-dev.github.io/case-studies/google-docs-mirror.html)
+- [Laravel Chat App](https://raahuldhiman-dev.github.io/case-studies/laravel-chat-app.html)
+- [Polite Resume](https://raahuldhiman-dev.github.io/case-studies/polite-resume.html)
+- [RAG Chatbot](https://raahuldhiman-dev.github.io/case-studies/rag-chatbot.html)
+- [Sentiment Analysis (Gemini)](https://raahuldhiman-dev.github.io/case-studies/sentiment-analysis.html)
+- [Stock Price Predictor (LSTM)](https://raahuldhiman-dev.github.io/case-studies/stock-price-predictor.html)
+
 ## Resumes (ATS-friendly PDF)
 - [AI Engineer](https://raahuldhiman-dev.github.io/resume/Rahul-Dhiman-Resume-AI-Engineer.pdf)
 - [Machine Learning Engineer](https://raahuldhiman-dev.github.io/resume/Rahul-Dhiman-Resume-ML-Engineer.pdf)
