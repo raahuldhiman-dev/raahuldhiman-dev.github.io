@@ -624,14 +624,48 @@
     }
     .project-card:hover { transform: translateY(-8px); border-color: var(--border2); box-shadow: 0 32px 80px rgba(0,0,0,0.4); }
     .project-thumb {
-      height: 160px; display: flex; align-items: center; justify-content: center;
+      height: 200px; display: flex; align-items: center; justify-content: center;
       font-size: 48px; position: relative; overflow: hidden;
       background: linear-gradient(135deg, var(--bg3), transparent);
     }
     .project-thumb::after {
       content: ''; position: absolute; inset: 0;
-      background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.4));
+      background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.5));
+      pointer-events: none; z-index: 1;
     }
+    .project-thumb img {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover; object-position: top center;
+      transition: transform 0.5s ease, opacity 0.3s;
+      opacity: 0;
+    }
+    .project-thumb img.loaded { opacity: 1; }
+    .project-card:hover .project-thumb img { transform: scale(1.04); }
+    .project-thumb-emoji {
+      position: relative; z-index: 2; font-size: 44px;
+      transition: opacity 0.3s;
+    }
+    .project-thumb img.loaded ~ .project-thumb-emoji { opacity: 0; pointer-events: none; }
+    .project-thumb-overlay {
+      position: absolute; inset: 0; z-index: 3;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(0,0,0,0.55); opacity: 0;
+      transition: opacity 0.25s; backdrop-filter: blur(2px);
+    }
+    .project-card:hover .project-thumb-overlay { opacity: 1; }
+    .project-thumb-overlay a {
+      font-size: 12px; font-weight: 700; font-family: var(--font-mono);
+      color: #fff; text-decoration: none; letter-spacing: 0.08em;
+      border: 1.5px solid rgba(255,255,255,0.7); padding: 7px 18px;
+      border-radius: 999px; background: rgba(255,255,255,0.1);
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .project-thumb-overlay a:hover { background: rgba(255,255,255,0.2); border-color: #fff; }
+    .pt-gradient-1 { background: linear-gradient(135deg, #1a0a2e, #2d1b69, #12b886); }
+    .pt-gradient-2 { background: linear-gradient(135deg, #0a1628, #1e3a5f, #e67700); }
+    .pt-gradient-3 { background: linear-gradient(135deg, #1a0a0a, #4a1a1a, #c92a2a); }
+    .pt-gradient-4 { background: linear-gradient(135deg, #0a1a0a, #1a3a2a, #2f9e44); }
+    .pt-gradient-5 { background: linear-gradient(135deg, #0a0a1a, #1a1a3a, #5c7cfa); }
     .project-body { padding: 20px; flex: 1; display: flex; flex-direction: column; }
     .project-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
     .project-category { font-size: 10px; font-family: var(--font-mono); color: var(--muted2); text-transform: uppercase; letter-spacing: 0.05em; }
@@ -1288,8 +1322,14 @@
       <button class="filter-btn" onclick="filterProjects(this,'wordpress')">WordPress</button>
     </div>
     <div class="projects-grid fade-up d2" id="projectsGrid">
+
+      <!-- RAG Chatbot -->
       <div class="project-card" data-category="ai backend">
-        <div class="project-thumb">🧠</div>
+        <div class="project-thumb pt-gradient-1">
+          <img data-src="https://opengraph.githubassets.com/1/raahuldhiman-dev/rag-chatbot" alt="RAG Chatbot preview" loading="lazy">
+          <span class="project-thumb-emoji">🧠</span>
+          <div class="project-thumb-overlay"><a href="https://github.com/raahuldhiman-dev/rag-chatbot" target="_blank" rel="noopener">View on GitHub ↗</a></div>
+        </div>
         <div class="project-body">
           <div class="project-meta"><span class="project-category">AI · Backend</span><span class="project-status ps-live">Open Source</span></div>
           <h3 class="project-title">RAG Chatbot</h3>
@@ -1298,8 +1338,14 @@
           <div class="project-links"><a href="https://github.com/raahuldhiman-dev/rag-chatbot" target="_blank" rel="noopener" class="project-link">GitHub →</a><a href="case-studies/rag-chatbot.html" target="_blank" rel="noopener" class="project-link alt">Case Study →</a></div>
         </div>
       </div>
+
+      <!-- AWS Face Recognition -->
       <div class="project-card" data-category="ai cloud">
-        <div class="project-thumb">☁️</div>
+        <div class="project-thumb pt-gradient-2">
+          <img data-src="https://opengraph.githubassets.com/1/raahuldhiman-dev/aws-face-detection-with-aws-s3" alt="AWS Face Recognition preview" loading="lazy">
+          <span class="project-thumb-emoji">☁️</span>
+          <div class="project-thumb-overlay"><a href="https://github.com/raahuldhiman-dev/aws-face-detection-with-aws-s3" target="_blank" rel="noopener">View on GitHub ↗</a></div>
+        </div>
         <div class="project-body">
           <div class="project-meta"><span class="project-category">AI · Cloud</span><span class="project-status ps-live">Open Source</span></div>
           <h3 class="project-title">AWS Face Recognition System</h3>
@@ -1308,8 +1354,12 @@
           <div class="project-links"><a href="https://github.com/raahuldhiman-dev/aws-face-detection-with-aws-s3" target="_blank" rel="noopener" class="project-link">GitHub →</a></div>
         </div>
       </div>
+
+      <!-- AI Content Generator -->
       <div class="project-card" data-category="ai fullstack backend">
-        <div class="project-thumb">🤖</div>
+        <div class="project-thumb pt-gradient-1" style="background:linear-gradient(135deg,#0d1a0d,#1a3a1a,#2f9e44);">
+          <span class="project-thumb-emoji">🤖</span>
+        </div>
         <div class="project-body">
           <div class="project-meta"><span class="project-category">AI · Full-Stack</span><span class="project-status ps-live">Shipped</span></div>
           <h3 class="project-title">AI Content Generator</h3>
@@ -1318,8 +1368,14 @@
           <div class="project-links"><a href="#contact" class="project-link">Code on request →</a></div>
         </div>
       </div>
+
+      <!-- Stock Price Predictor -->
       <div class="project-card" data-category="ai fintech">
-        <div class="project-thumb">📉</div>
+        <div class="project-thumb pt-gradient-3">
+          <img data-src="https://opengraph.githubassets.com/1/raahuldhiman-dev/stock-price-predictor" alt="Stock Price Predictor preview" loading="lazy">
+          <span class="project-thumb-emoji">📉</span>
+          <div class="project-thumb-overlay"><a href="https://github.com/raahuldhiman-dev/stock-price-predictor" target="_blank" rel="noopener">View on GitHub ↗</a></div>
+        </div>
         <div class="project-body">
           <div class="project-meta"><span class="project-category">ML · FinTech</span><span class="project-status ps-live">Open Source</span></div>
           <h3 class="project-title">Stock Price Predictor (LSTM)</h3>
@@ -1328,8 +1384,12 @@
           <div class="project-links"><a href="https://github.com/raahuldhiman-dev/stock-price-predictor" target="_blank" rel="noopener" class="project-link">GitHub →</a></div>
         </div>
       </div>
+
+      <!-- DTradeX -->
       <div class="project-card" data-category="fintech backend">
-        <div class="project-thumb">📈</div>
+        <div class="project-thumb" style="background:linear-gradient(135deg,#0a1a0a,#0a2a1a,#0ca678);">
+          <span class="project-thumb-emoji">📈</span>
+        </div>
         <div class="project-body">
           <div class="project-meta"><span class="project-category">FinTech · Backend</span><span class="project-status ps-wip">In Progress</span></div>
           <h3 class="project-title">DTradeX · Algo Trading</h3>
@@ -1338,8 +1398,14 @@
           <div class="project-links"><a href="#contact" class="project-link">Code on request →</a></div>
         </div>
       </div>
+
+      <!-- Personal AI Assistant -->
       <div class="project-card" data-category="ai">
-        <div class="project-thumb">🎙️</div>
+        <div class="project-thumb pt-gradient-5">
+          <img data-src="https://opengraph.githubassets.com/1/raahuldhiman-dev/voice-ai-assistant" alt="Voice AI Assistant preview" loading="lazy">
+          <span class="project-thumb-emoji">🎙️</span>
+          <div class="project-thumb-overlay"><a href="https://github.com/raahuldhiman-dev/voice-ai-assistant" target="_blank" rel="noopener">View on GitHub ↗</a></div>
+        </div>
         <div class="project-body">
           <div class="project-meta"><span class="project-category">AI · Automation</span><span class="project-status ps-wip">In Progress</span></div>
           <h3 class="project-title">Personal AI Assistant</h3>
@@ -1348,8 +1414,12 @@
           <div class="project-links"><a href="https://github.com/raahuldhiman-dev/voice-ai-assistant" target="_blank" rel="noopener" class="project-link">GitHub →</a></div>
         </div>
       </div>
+
+      <!-- Booking System -->
       <div class="project-card" data-category="fullstack backend">
-        <div class="project-thumb">📅</div>
+        <div class="project-thumb" style="background:linear-gradient(135deg,#0a0a1a,#1a1a3a,#4c6ef5);">
+          <span class="project-thumb-emoji">📅</span>
+        </div>
         <div class="project-body">
           <div class="project-meta"><span class="project-category">Full-Stack</span><span class="project-status ps-live">Shipped</span></div>
           <h3 class="project-title">Booking System</h3>
@@ -1358,8 +1428,12 @@
           <div class="project-links"><a href="#contact" class="project-link">Code on request →</a></div>
         </div>
       </div>
+
+      <!-- eCommerce Platform -->
       <div class="project-card" data-category="fullstack backend">
-        <div class="project-thumb">🛒</div>
+        <div class="project-thumb" style="background:linear-gradient(135deg,#1a0a0a,#3a1a0a,#f76707);">
+          <span class="project-thumb-emoji">🛒</span>
+        </div>
         <div class="project-body">
           <div class="project-meta"><span class="project-category">eCommerce</span><span class="project-status ps-live">Shipped</span></div>
           <h3 class="project-title">eCommerce Platform</h3>
@@ -1368,8 +1442,14 @@
           <div class="project-links"><a href="#contact" class="project-link">Code on request →</a></div>
         </div>
       </div>
+
+      <!-- Laravel Chat App -->
       <div class="project-card" data-category="fullstack backend">
-        <div class="project-thumb">💬</div>
+        <div class="project-thumb pt-gradient-4">
+          <img data-src="https://opengraph.githubassets.com/1/raahuldhiman-dev/Laravel-Chat-App" alt="Laravel Chat App preview" loading="lazy">
+          <span class="project-thumb-emoji">💬</span>
+          <div class="project-thumb-overlay"><a href="https://github.com/raahuldhiman-dev/Laravel-Chat-App" target="_blank" rel="noopener">View on GitHub ↗</a></div>
+        </div>
         <div class="project-body">
           <div class="project-meta"><span class="project-category">Full-Stack · Real-time</span><span class="project-status ps-live">Open Source</span></div>
           <h3 class="project-title">Laravel Chat App</h3>
@@ -1378,8 +1458,14 @@
           <div class="project-links"><a href="https://github.com/raahuldhiman-dev/Laravel-Chat-App" target="_blank" rel="noopener" class="project-link">GitHub →</a></div>
         </div>
       </div>
+
+      <!-- Desi Market -->
       <div class="project-card" data-category="wordpress fullstack">
-        <div class="project-thumb">🛞</div>
+        <div class="project-thumb" style="background:linear-gradient(135deg,#0a1a0a,#1a2a0a,#5c940d);">
+          <img data-src="https://image.thum.io/get/width/720/crop/450/noanimate/https://desi-market.in" alt="Desi Market preview" loading="lazy">
+          <span class="project-thumb-emoji">🛞</span>
+          <div class="project-thumb-overlay"><a href="https://desi-market.in" target="_blank" rel="noopener">Visit Live Site ↗</a></div>
+        </div>
         <div class="project-body">
           <div class="project-meta"><span class="project-category">WordPress · eCommerce</span><span class="project-status ps-live">Shipped</span></div>
           <h3 class="project-title">Desi Market</h3>
@@ -1388,8 +1474,14 @@
           <div class="project-links"><a href="https://desi-market.in" target="_blank" rel="noopener" class="project-link">Live Site →</a></div>
         </div>
       </div>
+
+      <!-- Polite Resume -->
       <div class="project-card" data-category="wordpress fullstack">
-        <div class="project-thumb">📄</div>
+        <div class="project-thumb" style="background:linear-gradient(135deg,#0a0a1a,#1a0a2e,#862e9c);">
+          <img data-src="https://image.thum.io/get/width/720/crop/450/noanimate/https://politeresume.com" alt="Polite Resume preview" loading="lazy">
+          <span class="project-thumb-emoji">📄</span>
+          <div class="project-thumb-overlay"><a href="https://politeresume.com" target="_blank" rel="noopener">Visit Live Site ↗</a></div>
+        </div>
         <div class="project-body">
           <div class="project-meta"><span class="project-category">WordPress · SaaS</span><span class="project-status ps-live">Shipped</span></div>
           <h3 class="project-title">Polite Resume</h3>
@@ -1398,6 +1490,7 @@
           <div class="project-links"><a href="https://politeresume.com" target="_blank" rel="noopener" class="project-link">Live Site →</a></div>
         </div>
       </div>
+
     </div>
     <div style="text-align:center;margin-top:40px;"><a href="https://github.com/raahuldhiman-dev" target="_blank" rel="noopener noreferrer" class="btn-secondary">View All on GitHub →</a></div>
   </div>
@@ -1793,6 +1886,36 @@
   if (barSkills) barObserver.observe(barSkills);
 
   // Filter projects
+  // Lazy-load project preview images
+  function loadProjectImages() {
+    document.querySelectorAll('.project-thumb img[data-src]').forEach(img => {
+      const src = img.dataset.src;
+      img.src = src;
+      img.onload = () => img.classList.add('loaded');
+      img.onerror = () => { img.style.display = 'none'; };
+      delete img.dataset.src;
+    });
+  }
+  if ('IntersectionObserver' in window) {
+    const imgObserver = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          const imgs = e.target.querySelectorAll('img[data-src]');
+          imgs.forEach(img => {
+            img.src = img.dataset.src;
+            img.onload = () => img.classList.add('loaded');
+            img.onerror = () => { img.style.display = 'none'; };
+            delete img.dataset.src;
+          });
+          imgObserver.unobserve(e.target);
+        }
+      });
+    }, { rootMargin: '200px' });
+    document.querySelectorAll('.project-card').forEach(c => imgObserver.observe(c));
+  } else {
+    loadProjectImages();
+  }
+
   function filterProjects(btn, cat) {
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
