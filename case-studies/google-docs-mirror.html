@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Google Docs Mirror: Case Study | Rahul Dhiman</title>
+<meta name="description" content="A Google Docs-style collaborative editor (Ajaia Docs) built with Next.js, Tiptap and libSQL: rich text, autosave, file import, role-based sharing and tests. Built by Rahul Dhiman.">
+<link rel="canonical" href="https://raahuldhiman-dev.github.io/case-studies/google-docs-mirror.html">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Google Docs Mirror: Case Study | Rahul Dhiman">
+<meta property="og:description" content="A Google Docs-style collaborative editor (Ajaia Docs) built with Next.js, Tiptap and libSQL: rich text, autosave, file import, role-based sharing and tests. Built by Rahul Dhiman.">
+<meta property="og:image" content="https://raahuldhiman-dev.github.io/assets/og-image.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:   #050508;
+    --bg2:  #08080F;
+    --bg3:  #0C0C18;
+    --card: rgba(255,255,255,0.02);
+    --card-hover: rgba(255,255,255,0.05);
+    --border:  rgba(255,255,255,0.06);
+    --border2: rgba(255,255,255,0.12);
+    --text:  #EDF2FF;
+    --muted: #7B8AA8;
+    --muted2:#3D4560;
+    --acc1:  #FF5C3A;
+    --acc2:  #845EF7;
+    --acc3:  #00D9C0;
+    --acc4:  #FFB800;
+    --acc5:  #FF3D9A;
+    --g1: linear-gradient(135deg,#FF5C3A,#FF3D9A);
+    --g2: linear-gradient(135deg,#845EF7,#00D9C0);
+    --g3: linear-gradient(135deg,#FFB800,#FF5C3A);
+    --g4: linear-gradient(135deg,#FF5C3A,#845EF7,#00D9C0);
+    --gtext: linear-gradient(135deg,#FF5C3A,#845EF7,#00D9C0,#FFB800);
+    --font-display: 'Space Grotesk', sans-serif;
+    --font-body:    'Inter', sans-serif;
+    --font-mono:    'JetBrains Mono', monospace;
+    --shadow: 0 8px 32px rgba(0,0,0,0.4);
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--font-body);
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+
+  /* Grid lines like portfolio */
+  .grid-lines{
+    position:fixed;inset:0;z-index:0;pointer-events:none;
+    background-image:
+      linear-gradient(rgba(132,94,247,0.04) 1px, transparent 1px),
+      linear-gradient(90deg,rgba(132,94,247,0.04) 1px, transparent 1px);
+    background-size:80px 80px;
+  }
+
+  /* Ambient glow blobs */
+  .blob{
+    position:fixed;border-radius:50%;pointer-events:none;z-index:0;filter:blur(80px);
+  }
+  .blob-1{
+    width:500px;height:500px;top:-100px;left:-150px;
+    background:radial-gradient(circle,rgba(132,94,247,0.07) 0%,transparent 70%);
+  }
+  .blob-2{
+    width:400px;height:400px;bottom:10%;right:-80px;
+    background:radial-gradient(circle,rgba(0,217,192,0.05) 0%,transparent 70%);
+  }
+
+  ::-webkit-scrollbar{width:3px;}
+  ::-webkit-scrollbar-track{background:var(--bg);}
+  ::-webkit-scrollbar-thumb{background:var(--g1);border-radius:3px;}
+  ::selection{background:rgba(132,94,247,0.3);color:#fff;}
+
+  /* ---- NAV ---- */
+  nav{
+    position:sticky;top:0;z-index:100;
+    padding:16px 24px;
+    background:rgba(5,5,8,0.7);
+    backdrop-filter:blur(20px);
+    border-bottom:1px solid var(--border);
+  }
+  .nav-inner{
+    max-width:960px;margin:0 auto;
+    display:flex;align-items:center;justify-content:space-between;
+  }
+  .nav-logo{
+    font-family:var(--font-display);font-weight:700;font-size:17px;
+    text-decoration:none;color:var(--text);
+    display:flex;align-items:center;gap:10px;
+  }
+  .nav-logo-badge{
+    width:30px;height:30px;border-radius:8px;
+    background:var(--g1);
+    display:flex;align-items:center;justify-content:center;
+    font-size:13px;font-weight:800;color:#fff;
+  }
+  .nav-links{display:flex;gap:4px;align-items:center;}
+  .nav-links a{
+    color:var(--muted);font-size:13px;font-weight:500;
+    text-decoration:none;padding:8px 16px;border-radius:8px;transition:all 0.2s;
+  }
+  .nav-links a:hover{color:var(--text);background:var(--card);}
+  .btn-nav{
+    display:inline-flex;align-items:center;gap:6px;
+    background:var(--g1);color:#fff;font-weight:600;font-size:13px;
+    padding:9px 20px;border-radius:10px;text-decoration:none;border:none;
+    transition:transform 0.2s,box-shadow 0.2s;
+  }
+  .btn-nav:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(255,92,58,0.3);}
+
+  /* ---- HERO ---- */
+  .hero{
+    position:relative;z-index:1;
+    padding:80px 24px 60px;
+    max-width:960px;margin:0 auto;
+  }
+  .hero-tag{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:var(--font-mono);font-size:11px;color:var(--acc3);
+    background:rgba(0,217,192,0.08);border:1px solid rgba(0,217,192,0.2);
+    padding:5px 14px;border-radius:999px;margin-bottom:24px;
+  }
+  .hero-tag::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--acc3);animation:pulse 1.5s infinite;}
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.4;}}
+
+  .hero h1{
+    font-family:var(--font-display);font-weight:800;
+    font-size:clamp(2.2rem,5vw,3.6rem);line-height:1.05;
+    margin-bottom:20px;
+  }
+  .grad-text{
+    background:var(--gtext);
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+    background-clip:text;
+  }
+  .hero-sub{
+    color:var(--muted);font-size:16px;line-height:1.75;
+    max-width:620px;margin-bottom:36px;
+  }
+  .hero-sub strong{color:var(--text);}
+
+  .hero-meta{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:48px;}
+  .meta-chip{
+    display:inline-flex;align-items:center;gap:7px;
+    font-family:var(--font-mono);font-size:11px;
+    padding:6px 14px;border-radius:999px;border:1px solid var(--border2);
+    background:var(--card);color:var(--muted);
+  }
+  .meta-chip .dot{width:6px;height:6px;border-radius:50%;}
+
+  .hero-stats{display:flex;flex-wrap:wrap;gap:24px;}
+  .stat-box{
+    display:flex;flex-direction:column;gap:4px;
+    padding:16px 20px;border-radius:14px;
+    background:var(--card);border:1px solid var(--border);
+    min-width:120px;
+  }
+  .stat-num{font-family:var(--font-display);font-weight:700;font-size:1.6rem;line-height:1;}
+  .stat-label{font-size:11px;color:var(--muted);font-family:var(--font-mono);}
+
+  /* ---- SECTION FRAMEWORK ---- */
+  .section{
+    position:relative;z-index:1;
+    padding:70px 24px;
+    max-width:960px;margin:0 auto;
+  }
+  .section-divider{
+    max-width:960px;margin:0 auto;
+    height:1px;background:var(--border);
+  }
+  .section-label{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:var(--font-mono);font-size:11px;color:var(--acc2);
+    background:rgba(132,94,247,0.08);border:1px solid rgba(132,94,247,0.2);
+    padding:5px 14px;border-radius:999px;margin-bottom:16px;
+  }
+  .section h2{
+    font-family:var(--font-display);font-weight:700;
+    font-size:clamp(1.5rem,3vw,2.1rem);line-height:1.15;
+    margin-bottom:12px;
+  }
+  .section-desc{
+    color:var(--muted);font-size:15px;max-width:580px;line-height:1.75;
+    margin-bottom:36px;
+  }
+
+  /* ---- CARDS ---- */
+  .card{
+    background:var(--card);border:1px solid var(--border);
+    border-radius:16px;padding:24px;
+    transition:border-color 0.25s,background 0.25s,transform 0.25s;
+  }
+  .card:hover{
+    border-color:var(--border2);
+    background:var(--card-hover);
+    transform:translateY(-3px);
+  }
+  .card-icon{
+    width:44px;height:44px;border-radius:12px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:20px;margin-bottom:14px;
+    background:var(--card);border:1px solid var(--border2);
+  }
+  .card h3{
+    font-family:var(--font-display);font-weight:600;font-size:15px;
+    margin-bottom:8px;
+  }
+  .card p{color:var(--muted);font-size:13px;line-height:1.75;}
+
+  .grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
+  .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+  .grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+  @media(max-width:720px){
+    .grid-2,.grid-3,.grid-4{grid-template-columns:1fr;}
+    .hero-stats{flex-direction:column;}
+    nav .nav-links{display:none;}
+  }
+  @media(min-width:480px) and (max-width:720px){
+    .grid-2{grid-template-columns:repeat(2,1fr);}
+    .grid-4{grid-template-columns:repeat(2,1fr);}
+  }
+
+  /* ---- ARCHITECTURE DIAGRAM ---- */
+  .arch-diagram{
+    background:var(--bg2);border:1px solid var(--border);
+    border-radius:20px;padding:36px;
+    display:flex;flex-direction:column;gap:0;
+    position:relative;overflow:hidden;
+  }
+  .arch-diagram::before{
+    content:'';position:absolute;inset:0;
+    background:radial-gradient(ellipse at 50% 0%,rgba(132,94,247,0.06),transparent 60%);
+    pointer-events:none;
+  }
+  .arch-layer{
+    display:flex;align-items:center;gap:12px;
+    padding:14px 20px;border-radius:12px;
+    border:1px solid var(--border);background:var(--card);
+    position:relative;z-index:1;
+  }
+  .arch-layer-label{
+    font-family:var(--font-mono);font-size:10px;color:var(--muted2);
+    min-width:80px;text-transform:uppercase;letter-spacing:0.08em;
+  }
+  .arch-layer-nodes{display:flex;flex-wrap:wrap;gap:8px;flex:1;}
+  .arch-node{
+    font-family:var(--font-mono);font-size:11px;
+    padding:5px 12px;border-radius:8px;
+    border:1px solid var(--border2);
+    white-space:nowrap;
+  }
+  .node-orange{background:rgba(255,92,58,0.1);color:#FF8A70;border-color:rgba(255,92,58,0.25);}
+  .node-purple{background:rgba(132,94,247,0.1);color:#A98BF7;border-color:rgba(132,94,247,0.25);}
+  .node-teal{background:rgba(0,217,192,0.1);color:#33E5D0;border-color:rgba(0,217,192,0.25);}
+  .node-amber{background:rgba(255,184,0,0.1);color:#FFD055;border-color:rgba(255,184,0,0.25);}
+  .node-pink{background:rgba(255,61,154,0.1);color:#FF72C0;border-color:rgba(255,61,154,0.25);}
+  .node-gray{background:rgba(255,255,255,0.04);color:var(--muted);border-color:var(--border2);}
+
+  .arch-arrow{
+    display:flex;align-items:center;justify-content:center;
+    padding:6px 0;color:var(--muted2);font-size:16px;position:relative;z-index:1;
+  }
+
+  /* ---- TECH TABLE ---- */
+  .tech-table{
+    width:100%;border-collapse:collapse;
+    font-size:13px;
+  }
+  .tech-table th{
+    font-family:var(--font-mono);font-size:10px;text-transform:uppercase;
+    letter-spacing:0.08em;color:var(--muted2);
+    padding:12px 16px;text-align:left;
+    border-bottom:1px solid var(--border);
+  }
+  .tech-table td{
+    padding:14px 16px;border-bottom:1px solid var(--border);
+    color:var(--muted);vertical-align:top;
+  }
+  .tech-table td:first-child{
+    color:var(--text);font-weight:500;
+    font-family:var(--font-display);font-size:14px;
+    white-space:nowrap;
+  }
+  .tech-table tr:hover td{background:var(--card);}
+  .tech-table tr:last-child td{border-bottom:none;}
+  .tech-wrap{
+    background:var(--bg2);border:1px solid var(--border);
+    border-radius:16px;overflow:hidden;
+  }
+
+  /* ---- CODE BLOCK ---- */
+  .code-wrap{
+    background:var(--bg2);border:1px solid var(--border);
+    border-radius:16px;overflow:hidden;
+  }
+  .code-header{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:14px 20px;border-bottom:1px solid var(--border);
+  }
+  .code-dots{display:flex;gap:7px;}
+  .code-dot{width:10px;height:10px;border-radius:50%;}
+  .code-title{
+    font-family:var(--font-mono);font-size:11px;color:var(--muted2);
+  }
+  .code-lang{
+    font-family:var(--font-mono);font-size:10px;
+    padding:3px 10px;border-radius:6px;
+    background:rgba(132,94,247,0.1);border:1px solid rgba(132,94,247,0.2);
+    color:var(--acc2);
+  }
+  pre{
+    padding:24px;overflow-x:auto;
+    font-family:var(--font-mono);font-size:13px;line-height:1.75;
+  }
+  .kw{color:#845EF7;}
+  .fn{color:#00D9C0;}
+  .str{color:#FFB800;}
+  .cm{color:#3D4560;font-style:italic;}
+  .num{color:#FF5C3A;}
+  .var{color:#EDF2FF;}
+
+  /* ---- DECISION CARDS ---- */
+  .decision{
+    display:flex;gap:16px;
+    padding:20px;border-radius:14px;
+    background:var(--card);border:1px solid var(--border);
+    transition:border-color 0.2s;
+  }
+  .decision:hover{border-color:var(--border2);}
+  .decision-num{
+    font-family:var(--font-display);font-weight:700;font-size:2rem;
+    line-height:1;min-width:36px;
+    background:var(--gtext);-webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;background-clip:text;
+  }
+  .decision-body h3{
+    font-family:var(--font-display);font-weight:600;font-size:15px;
+    margin-bottom:6px;
+  }
+  .decision-body p{color:var(--muted);font-size:13px;line-height:1.75;}
+
+  /* ---- OUTCOME METRICS ---- */
+  .metric{
+    display:flex;flex-direction:column;gap:6px;
+    padding:22px;border-radius:14px;
+    background:var(--card);border:1px solid var(--border);
+    transition:all 0.25s;
+  }
+  .metric:hover{border-color:var(--border2);transform:translateY(-2px);}
+  .metric-val{
+    font-family:var(--font-display);font-weight:700;font-size:1.8rem;line-height:1;
+  }
+  .metric-label{color:var(--muted);font-size:12px;font-family:var(--font-mono);}
+  .metric-desc{color:var(--muted);font-size:12px;line-height:1.6;}
+
+  /* ---- CHALLENGE BLOCKS ---- */
+  .challenge{
+    padding:22px;border-radius:14px;
+    border-left:3px solid;
+    background:var(--card);
+  }
+  .challenge h3{
+    font-family:var(--font-display);font-weight:600;font-size:14px;
+    margin-bottom:8px;
+  }
+  .challenge p{color:var(--muted);font-size:13px;line-height:1.75;}
+  .challenge .fix{
+    display:inline-flex;align-items:center;gap:5px;
+    font-family:var(--font-mono);font-size:11px;
+    padding:3px 10px;border-radius:6px;
+    margin-top:10px;
+  }
+
+  /* ---- BADGE CHIPS ---- */
+  .chip{
+    display:inline-flex;align-items:center;
+    font-family:var(--font-mono);font-size:11px;
+    padding:4px 11px;border-radius:999px;
+    background:var(--card);border:1px solid var(--border2);
+    color:var(--muted);
+  }
+
+  /* ---- CTA FOOTER ---- */
+  .cta-block{
+    position:relative;z-index:1;
+    max-width:960px;margin:0 auto;
+    padding:60px 24px 80px;
+    text-align:center;
+  }
+  .cta-inner{
+    padding:60px 40px;border-radius:24px;
+    background:var(--bg2);border:1px solid var(--border);
+    position:relative;overflow:hidden;
+  }
+  .cta-inner::before{
+    content:'';position:absolute;inset:0;
+    background:radial-gradient(ellipse at 50% 0%,rgba(132,94,247,0.1),transparent 60%);
+    pointer-events:none;
+  }
+  .cta-inner h2{
+    font-family:var(--font-display);font-weight:800;
+    font-size:clamp(1.6rem,4vw,2.4rem);margin-bottom:12px;
+    position:relative;z-index:1;
+  }
+  .cta-inner p{
+    color:var(--muted);font-size:15px;max-width:480px;
+    margin:0 auto 32px;line-height:1.75;position:relative;z-index:1;
+  }
+  .cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;position:relative;z-index:1;}
+  .btn-primary{
+    display:inline-flex;align-items:center;gap:8px;
+    background:var(--g1);color:#fff;font-weight:600;font-size:14px;
+    padding:14px 28px;border-radius:12px;text-decoration:none;
+    border:none;transition:transform 0.2s,box-shadow 0.2s;
+  }
+  .btn-primary:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(255,92,58,0.35);}
+  .btn-secondary{
+    display:inline-flex;align-items:center;gap:8px;
+    background:var(--card);color:var(--text);font-weight:600;font-size:14px;
+    padding:13px 28px;border-radius:12px;text-decoration:none;
+    border:1px solid var(--border2);transition:all 0.2s;
+  }
+  .btn-secondary:hover{border-color:rgba(132,94,247,0.5);background:rgba(132,94,247,0.07);transform:translateY(-3px);}
+
+  /* ---- FOOTER ---- */
+  footer{
+    position:relative;z-index:1;
+    border-top:1px solid var(--border);
+    padding:28px 24px;
+    text-align:center;
+    font-family:var(--font-mono);font-size:11px;color:var(--muted2);
+  }
+  footer a{color:var(--acc1);text-decoration:none;}
+  footer a:hover{color:var(--acc2);}
+
+  /* ---- BACK LINK ---- */
+  .back-link{
+    display:inline-flex;align-items:center;gap:6px;
+    color:var(--muted);font-size:13px;text-decoration:none;
+    font-family:var(--font-mono);
+    padding:8px 14px;border-radius:8px;border:1px solid var(--border);
+    background:var(--card);transition:all 0.2s;
+  }
+  .back-link:hover{color:var(--acc1);border-color:rgba(255,92,58,0.3);}
+</style>
+</head>
+<body>
+
+<div class="grid-lines"></div>
+<div class="blob blob-1"></div>
+<div class="blob blob-2"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="https://raahuldhiman-dev.github.io" class="nav-logo">
+      <div class="nav-logo-badge">R</div>
+      Rahul Dhiman
+    </a>
+    <div class="nav-links">
+      <a href="https://raahuldhiman-dev.github.io/#projects">Projects</a>
+      <a href="https://google-docs-mirror.vercel.app" target="_blank" rel="noopener">Live Demo</a>
+      <a href="https://github.com/raahuldhiman-dev/google-docs-mirror" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://raahuldhiman-dev.github.io/#contact" class="btn-nav">Hire Me &rarr;</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <a href="https://raahuldhiman-dev.github.io/#projects" class="back-link" style="margin-bottom:28px;display:inline-flex;">
+    &larr; Back to Portfolio
+  </a>
+
+  <div style="margin-top:16px;">
+    <div class="hero-tag">Case Study &mdash; Collaborative Document Editor</div>
+  </div>
+
+  <h1>Google Docs Mirror<br><span class="grad-text">A Collaborative Editor</span></h1>
+
+  <p class="hero-sub">A small full-stack app inspired by Google Docs, deployed as "Ajaia Docs": rich-text editing with autosave, import of .txt, .md and .docx files, and sharing with owner, editor and viewer roles. Built in a fixed timebox, with the effort put where bugs cost the most: access control and saving.</p>
+
+  <div class="hero-meta">
+    <span class="meta-chip"><span class="dot" style="background:#FF5C3A;"></span>Next.js 14 / TypeScript</span>
+    <span class="meta-chip"><span class="dot" style="background:#845EF7;"></span>Tiptap (ProseMirror)</span>
+    <span class="meta-chip"><span class="dot" style="background:#00D9C0;"></span>libSQL / Turso</span>
+    <span class="meta-chip"><span class="dot" style="background:#FFB800;"></span>Vercel</span>
+    <span class="meta-chip"><span class="dot" style="background:#FF3D9A;"></span>Vitest</span>
+    <span class="meta-chip" style="color:var(--acc3);">&#9654; Personal Project · 2026</span>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat-box">
+      <span class="stat-num" style="background:var(--g1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">16</span>
+      <span class="stat-label">Automated Tests</span>
+    </div>
+    <div class="stat-box">
+      <span class="stat-num" style="background:var(--g2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">3</span>
+      <span class="stat-label">Roles: Owner / Editor / Viewer</span>
+    </div>
+    <div class="stat-box">
+      <span class="stat-num" style="background:var(--g3);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">3</span>
+      <span class="stat-label">Import Formats</span>
+    </div>
+    <div class="stat-box">
+      <span class="stat-num" style="background:var(--g4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">5s</span>
+      <span class="stat-label">Edit-Detection Poll</span>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<div class="section">
+  <div class="section-label">01 &mdash; The Goal</div>
+  <h2>What Needed to Be Right</h2>
+  <p class="section-desc">A document editor has a long feature list. Within a timebox, the question was which parts could not afford to be wrong.</p>
+
+  <div class="grid-3" style="margin-top:8px;">
+    <div class="card">
+      <div class="card-icon" style="background:rgba(255,92,58,0.1);border-color:rgba(255,92,58,0.2);">&#128274;</div>
+      <h3>Access control</h3>
+      <p>Sharing is the part most likely to be subtly wrong, so every permission decision lives in one place and is covered by tests.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:rgba(132,94,247,0.1);border-color:rgba(132,94,247,0.2);">&#128190;</div>
+      <h3>A trustworthy editing loop</h3>
+      <p>Autosave with a visible state, retry on failure, and no lost edits matter more than a long toolbar.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:rgba(0,217,192,0.1);border-color:rgba(0,217,192,0.2);">&#128640;</div>
+      <h3>Easy to run and review</h3>
+      <p>A free, zero-config stack: runs locally with no setup and deploys to Vercel with a hosted database.</p>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<div class="section">
+  <div class="section-label">02 &mdash; Architecture</div>
+  <h2>How It Fits Together</h2>
+  <p class="section-desc">Route handlers stay thin. Every rule lives in a small library layer that takes a database client, so it can be tested without HTTP.</p>
+
+  <div class="arch-diagram">
+    <div class="arch-layer">
+      <span class="arch-layer-label">Client</span>
+      <div class="arch-layer-nodes">
+        <span class="arch-node node-orange">Login</span>
+        <span class="arch-node node-orange">Dashboard</span>
+        <span class="arch-node node-orange">Editor (Tiptap)</span>
+        <span class="arch-node node-orange">Share dialog</span>
+      </div>
+    </div>
+    <div class="arch-arrow">&#8595; fetch to /api</div>
+    <div class="arch-layer">
+      <span class="arch-layer-label">API</span>
+      <div class="arch-layer-nodes">
+        <span class="arch-node node-amber">app/api/** route handlers</span>
+        <span class="arch-node node-amber">zod validation</span>
+        <span class="arch-node node-gray">Signed-cookie session</span>
+      </div>
+    </div>
+    <div class="arch-arrow">&#8595; calls the domain layer</div>
+    <div class="arch-layer">
+      <span class="arch-layer-label">Domain</span>
+      <div class="arch-layer-nodes">
+        <span class="arch-node node-purple">lib/access.ts (roles)</span>
+        <span class="arch-node node-purple">lib/documents.ts</span>
+        <span class="arch-node node-purple">lib/importer.ts</span>
+        <span class="arch-node node-purple">lib/export.ts</span>
+      </div>
+    </div>
+    <div class="arch-arrow">&#8595; SQL via one shared client</div>
+    <div class="arch-layer">
+      <span class="arch-layer-label">Data</span>
+      <div class="arch-layer-nodes">
+        <span class="arch-node node-teal">libSQL: SQLite locally, Turso in production</span>
+        <span class="arch-node node-teal">users · documents · shares</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<div class="section">
+  <div class="section-label">03 &mdash; Features</div>
+  <h2>What It Does</h2>
+  <p class="section-desc">The parts I built and tested end to end.</p>
+
+  <div class="grid-3" style="margin-top:8px;">
+    <div class="card">
+      <div class="card-icon" style="background:rgba(255,92,58,0.1);border-color:rgba(255,92,58,0.2);">&#9998;&#65039;</div>
+      <h3>Rich text</h3>
+      <p>Bold, italic, underline, H1 to H3, bulleted and numbered lists, undo and redo, plus working File, Edit and Format menus.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:rgba(132,94,247,0.1);border-color:rgba(132,94,247,0.2);">&#128260;</div>
+      <h3>Autosave</h3>
+      <p>Debounced saves with an "All changes saved" state and a Retry button if a save fails.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:rgba(0,217,192,0.1);border-color:rgba(0,217,192,0.2);">&#128229;</div>
+      <h3>File import</h3>
+      <p>.txt, .md and .docx files up to 2 MB become new editable documents. Limits are stated in the UI.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:rgba(255,184,0,0.1);border-color:rgba(255,184,0,0.2);">&#128279;</div>
+      <h3>Sharing</h3>
+      <p>Share by email as Can edit or View only. Change or revoke access. "My documents" and "Shared with me" with role badges.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:rgba(255,61,154,0.1);border-color:rgba(255,61,154,0.2);">&#128228;</div>
+      <h3>Export</h3>
+      <p>Download as Markdown or plain text. Save as PDF through the browser print dialog.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:rgba(255,92,58,0.1);border-color:rgba(255,92,58,0.2);">&#128065;&#65039;</div>
+      <h3>Edit detection</h3>
+      <p>If someone else saves while you have a document open, a banner appears within about 5 seconds with a Reload button.</p>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<div class="section">
+  <div class="section-label">04 &mdash; Technology</div>
+  <h2>Technology Choices</h2>
+  <p class="section-desc">Each choice has a reason tied to the timebox or to deployment.</p>
+
+  <div class="tech-wrap">
+    <table class="tech-table">
+      <thead>
+        <tr><th>Layer</th><th>Technology</th><th>Why</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>App framework</td>
+          <td><span class="chip">Next.js 14 + TypeScript</span></td>
+          <td>One repo and one deploy for UI and API; route handlers keep the backend small.</td>
+        </tr>
+        <tr>
+          <td>Editor</td>
+          <td><span class="chip">Tiptap (ProseMirror)</span></td>
+          <td>A real rich-text engine out of the box. Building on contenteditable would have used the whole timebox.</td>
+        </tr>
+        <tr>
+          <td>Database</td>
+          <td><span class="chip">libSQL (@libsql/client)</span></td>
+          <td>The same code runs on a local SQLite file for development and on hosted Turso in production.</td>
+        </tr>
+        <tr>
+          <td>Validation</td>
+          <td><span class="chip">zod</span></td>
+          <td>Request validation in one declarative place.</td>
+        </tr>
+        <tr>
+          <td>Tests</td>
+          <td><span class="chip">Vitest</span></td>
+          <td>Fast tests against an in-memory libSQL database, with no mocking of the database.</td>
+        </tr>
+        <tr>
+          <td>Hosting</td>
+          <td><span class="chip">Vercel + Turso</span></td>
+          <td>Serverless has no persistent disk, so a hosted database is required.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<div class="section">
+  <div class="section-label">05 &mdash; Decisions</div>
+  <h2>Calls That Mattered</h2>
+  <p class="section-desc">The trade-offs that shaped the final design.</p>
+
+  <div style="display:flex;flex-direction:column;gap:14px;">
+    <div class="decision">
+      <div class="decision-num">01</div>
+      <div class="decision-body">
+        <h3>Access rules in one tested place</h3>
+        <p>Roles are owner, editor, viewer or none. Read needs any role, edit needs owner or editor, delete and sharing need owner. A user with no access gets 404, not 403, so document ids cannot be probed. Enforcement is on the server for every route; hiding buttons in the UI is only a convenience.</p>
+      </div>
+    </div>
+    <div class="decision">
+      <div class="decision-num">02</div>
+      <div class="decision-body">
+        <h3>Store editor JSON, not HTML</h3>
+        <p>Content is saved as Tiptap/ProseMirror JSON. That keeps structure exact, and imported files use the same schema, so imported and hand-written documents are identical.</p>
+      </div>
+    </div>
+    <div class="decision">
+      <div class="decision-num">03</div>
+      <div class="decision-body">
+        <h3>libSQL and Turso instead of plain SQLite</h3>
+        <p>Plain SQLite on Vercel would lose data on an ephemeral disk. libSQL keeps the same code for local and hosted use.</p>
+      </div>
+    </div>
+    <div class="decision">
+      <div class="decision-num">04</div>
+      <div class="decision-body">
+        <h3>Polling instead of websockets</h3>
+        <p>Serverless hosting cannot hold long-lived connections, so open editors poll a tiny meta endpoint every 5 seconds. It signals conflicts but does not resolve them, and that limit is stated openly.</p>
+      </div>
+    </div>
+    <div class="decision">
+      <div class="decision-num">05</div>
+      <div class="decision-body">
+        <h3>Mocked auth, on purpose</h3>
+        <p>Seeded users and a signed cookie let a reviewer test sharing in seconds. It is clearly labelled as mocked, with real authentication listed as the next step.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<div class="section">
+  <div class="section-label">06 &mdash; Hard Parts</div>
+  <h2>What Needed Care</h2>
+  <p class="section-desc">Problems where a naive version loses data or trust.</p>
+
+  <div class="grid-2">
+    <div class="challenge" style="border-color:#FF5C3A;">
+      <h3>&#128190; Autosave without losing edits</h3>
+      <p>Edits made while a save is in flight must not be dropped. Pending changes are kept in refs so the debounced saver always sends the latest state, and an edit during a save triggers another save.</p>
+      <span class="fix" style="background:rgba(255,92,58,0.1);color:#FF8A70;border:1px solid rgba(255,92,58,0.2);">
+        &#10003; Retry button and best-effort save on page close
+      </span>
+    </div>
+    <div class="challenge" style="border-color:#845EF7;">
+      <h3>&#128193; Import without corrupting documents</h3>
+      <p>Imported files go through the same editor schema, so anything that cannot be represented is dropped rather than breaking the document. Guards cover the extension allow-list, the 2 MB cap, empty files, and corrupt files return a friendly 422.</p>
+      <span class="fix" style="background:rgba(132,94,247,0.1);color:#A98BF7;border:1px solid rgba(132,94,247,0.2);">
+        &#10003; Same schema for import and editing
+      </span>
+    </div>
+    <div class="challenge" style="border-color:#00D9C0;">
+      <h3>&#9729;&#65039; Serverless persistence</h3>
+      <p>The app needed a database that survives on a platform with no disk. The test suite includes a concurrent cold-start race and an in-place schema migration for existing databases.</p>
+      <span class="fix" style="background:rgba(0,217,192,0.1);color:#33E5D0;border:1px solid rgba(0,217,192,0.2);">
+        &#10003; Hosted Turso, tested start-up path
+      </span>
+    </div>
+    <div class="challenge" style="border-color:#FFB800;">
+      <h3>&#128273; Permissions that are easy to get wrong</h3>
+      <p>The owner, editor, viewer and no-access matrix is tested directly, including the 404 versus 403 behaviour and cascade on delete.</p>
+      <span class="fix" style="background:rgba(255,184,0,0.1);color:#FFD055;border:1px solid rgba(255,184,0,0.2);">
+        &#10003; Pure role rules plus matrix tests
+      </span>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<div class="section">
+  <div class="section-label">07 &mdash; Outcomes</div>
+  <h2>What This Demonstrates</h2>
+  <p class="section-desc">What a reviewer can verify in the repo and the live demo.</p>
+
+  <div class="grid-3">
+    <div class="metric">
+      <span class="metric-val" style="background:var(--g1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">16</span>
+      <span class="metric-label">Tests</span>
+      <span class="metric-desc">Access rules, sharing, validation, import, export, last-edited tracking, migration and a cold-start race.</span>
+    </div>
+    <div class="metric">
+      <span class="metric-val" style="background:var(--g2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">404/403</span>
+      <span class="metric-label">Deliberate errors</span>
+      <span class="metric-desc">No access returns 404; insufficient permission returns 403 with a clear message.</span>
+    </div>
+    <div class="metric">
+      <span class="metric-val" style="background:var(--g3);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">0</span>
+      <span class="metric-label">Setup to run</span>
+      <span class="metric-desc">With no env vars the app creates its SQLite file, schema and seed users on first request.</span>
+    </div>
+    <div class="metric">
+      <span class="metric-val" style="background:var(--g4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">18</span>
+      <span class="metric-label">Screenshots</span>
+      <span class="metric-desc">The repo documents login, editing, menus, sharing, import errors, shared views and mobile.</span>
+    </div>
+    <div class="metric">
+      <span class="metric-val" style="background:var(--g1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">2</span>
+      <span class="metric-label">Docs</span>
+      <span class="metric-desc">An architecture note and an AI-workflow note explain the trade-offs and how AI was used.</span>
+    </div>
+    <div class="metric">
+      <span class="metric-val" style="background:var(--g2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Live</span>
+      <span class="metric-label">Deployed</span>
+      <span class="metric-desc">Running on Vercel with a health endpoint that reports configuration and database status.</span>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<div class="section">
+  <div class="section-label">08 &mdash; Limits</div>
+  <h2>Known Limits and What Is Next</h2>
+  <p class="section-desc">Stated plainly in the repo, and repeated here.</p>
+
+  <div class="grid-3" style="margin-top:8px;">
+    <div class="card">
+      <div class="card-icon" style="background:rgba(255,92,58,0.1);border-color:rgba(255,92,58,0.2);">&#9888;&#65039;</div>
+      <h3>No real-time merging</h3>
+      <p>Saves are last-write-wins. The editor detects other people's saves but you must reload to see them. Real merging needs a CRDT such as Yjs and a websocket host.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:rgba(132,94,247,0.1);border-color:rgba(132,94,247,0.2);">&#128273;</div>
+      <h3>Authentication is mocked</h3>
+      <p>Anyone can pick any seeded user. That is deliberate for a review exercise.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:rgba(0,217,192,0.1);border-color:rgba(0,217,192,0.2);">&#128208;</div>
+      <h3>What I would build next</h3>
+      <p>Real-time collaboration with Yjs, version history, server-generated PDF export, real authentication, and Playwright end-to-end tests.</p>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- CTA -->
+<div class="cta-block">
+  <div class="cta-inner">
+    <div class="hero-tag" style="display:inline-flex;margin-bottom:20px;">Available for work</div>
+    <h2>Want to build something<br><span class="grad-text">like this together?</span></h2>
+    <p>I'm open to full-time roles and project work in AI engineering, full-stack development, and backend systems.</p>
+    <div class="cta-btns">
+      <a href="https://raahuldhiman-dev.github.io/#contact" class="btn-primary">Get in touch &rarr;</a>
+      <a href="https://google-docs-mirror.vercel.app" target="_blank" rel="noopener" class="btn-secondary">&#9654; Live Demo</a>
+      <a href="https://youtu.be/fB2DWJOzZsI" target="_blank" rel="noopener" class="btn-secondary">&#127909; Walkthrough</a>
+      <a href="https://github.com/raahuldhiman-dev/google-docs-mirror" target="_blank" rel="noopener" class="btn-secondary">&#128196; View Source</a>
+      <a href="https://raahuldhiman-dev.github.io" class="btn-secondary">&#128081; Portfolio</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div style="max-width:960px;margin:0 auto;">
+    Built by <a href="https://raahuldhiman-dev.github.io">Rahul Dhiman</a> &mdash;
+    <a href="https://github.com/raahuldhiman-dev/google-docs-mirror" target="_blank" rel="noopener">github.com/raahuldhiman-dev/google-docs-mirror</a>
+    &nbsp;&middot;&nbsp; <a href="https://raahuldhiman-dev.github.io/#projects">All Projects</a>
+  </div>
+</footer>
+
+</body>
+</html>

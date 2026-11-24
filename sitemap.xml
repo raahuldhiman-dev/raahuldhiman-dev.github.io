@@ -26,4 +26,49 @@
     <lastmod>2026-11-13</lastmod>
     <priority>0.6</priority>
   </url>
+  <url>
+    <loc>https://raahuldhiman-dev.github.io/case-studies/aws-face-recognition.html</loc>
+    <lastmod>2026-11-24</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://raahuldhiman-dev.github.io/case-studies/blk-art-auction.html</loc>
+    <lastmod>2026-11-24</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://raahuldhiman-dev.github.io/case-studies/dtradex.html</loc>
+    <lastmod>2026-11-24</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://raahuldhiman-dev.github.io/case-studies/google-docs-mirror.html</loc>
+    <lastmod>2026-11-24</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://raahuldhiman-dev.github.io/case-studies/laravel-chat-app.html</loc>
+    <lastmod>2026-11-24</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://raahuldhiman-dev.github.io/case-studies/polite-resume.html</loc>
+    <lastmod>2026-11-24</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://raahuldhiman-dev.github.io/case-studies/rag-chatbot.html</loc>
+    <lastmod>2026-11-24</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://raahuldhiman-dev.github.io/case-studies/sentiment-analysis.html</loc>
+    <lastmod>2026-11-24</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://raahuldhiman-dev.github.io/case-studies/stock-price-predictor.html</loc>
+    <lastmod>2026-11-24</lastmod>
+    <priority>0.7</priority>
+  </url>
 </urlset>
