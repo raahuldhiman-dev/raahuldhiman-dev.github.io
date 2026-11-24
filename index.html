@@ -771,7 +771,7 @@
       background: rgba(255,255,255,0.03); padding: 3px 9px; border-radius: 5px;
       border: 1px solid var(--border);
     }
-    .project-links { display: flex; gap: 12px; }
+    .project-links { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 18px; padding-top: 14px; border-top: 1px solid var(--border); min-height: 54px; }
     .project-link {
       font-size: 12px; font-weight: 600; text-decoration: none;
       color: var(--acc1); display: flex; align-items: center; gap: 4px;
@@ -1601,7 +1601,7 @@
           <h3 class="project-title">AI Content Generator</h3>
           <p class="project-desc">Laravel microservice powered by GPT-4 for SEO & marketing content. Queue-based processing, REST API, multi-language support, React dashboard.</p>
           <div class="project-tags"><span class="project-tag">Laravel</span><span class="project-tag">GPT-4</span><span class="project-tag">React</span><span class="project-tag">MySQL</span><span class="project-tag">Redis</span></div>
-          <div class="project-links"><a href="#contact" class="project-link">Code on request →</a></div>
+          <div class="project-links"><a href="#contact" class="project-link">Source on request &rarr;</a></div>
         </div>
       </div>
 
@@ -1618,7 +1618,7 @@
           <h3 class="project-title">AWS Face Recognition System</h3>
           <p class="project-desc">Real-time face detection and person registration on Amazon Rekognition, DynamoDB and S3 with a Flask UI, plus a used-car price analysis pipeline.</p>
           <div class="project-tags"><span class="project-tag">Python</span><span class="project-tag">Flask</span><span class="project-tag">AWS Rekognition</span><span class="project-tag">S3</span><span class="project-tag">DynamoDB</span></div>
-          <div class="project-links"><a href="https://github.com/raahuldhiman-dev/aws-face-detection-with-aws-s3" target="_blank" rel="noopener" class="project-link">GitHub →</a><a href="case-studies/aws-face-recognition.html" target="_blank" rel="noopener" class="project-link alt">Case Study →</a></div>
+          <div class="project-links"><a href="case-studies/aws-face-recognition.html" target="_blank" rel="noopener" class="project-link">Case Study &rarr;</a><a href="https://github.com/raahuldhiman-dev/aws-face-detection-with-aws-s3" target="_blank" rel="noopener" class="project-link">Source Code &rarr;</a></div>
         </div>
       </div>
 
@@ -1635,7 +1635,7 @@
           <h3 class="project-title">BLK Art Auction</h3>
           <p class="project-desc">Online auction platform for original artwork — paintings, sculptures, prints, and photography. Features real-time bidding, anti-sniping protection, artist onboarding, authentication workflows, and a timed-lot system with insured delivery.</p>
           <div class="project-tags"><span class="project-tag">Next.js</span><span class="project-tag">Real-time Bidding</span><span class="project-tag">Stripe</span><span class="project-tag">Node.js</span><span class="project-tag">PostgreSQL</span></div>
-          <div class="project-links"><a href="https://blkartauction.com" target="_blank" rel="noopener" class="project-link">Live Site →</a><a href="case-studies/blk-art-auction.html" target="_blank" rel="noopener" class="project-link alt">Case Study →</a></div>
+          <div class="project-links"><a href="https://blkartauction.com" target="_blank" rel="noopener" class="project-link">Live Site &rarr;</a><a href="case-studies/blk-art-auction.html" target="_blank" rel="noopener" class="project-link">Case Study &rarr;</a></div>
         </div>
       </div>
 
@@ -1651,7 +1651,7 @@
           <h3 class="project-title">Booking System</h3>
           <p class="project-desc">Booking platform with Zoom integration, role-based access, real-time notifications, calendar sync, and Stripe payments.</p>
           <div class="project-tags"><span class="project-tag">Laravel</span><span class="project-tag">Zoom API</span><span class="project-tag">Vue.js</span><span class="project-tag">MySQL</span><span class="project-tag">Stripe</span></div>
-          <div class="project-links"><a href="#contact" class="project-link">Code on request →</a></div>
+          <div class="project-links"><a href="#contact" class="project-link">Source on request &rarr;</a></div>
         </div>
       </div>
 
@@ -1668,7 +1668,7 @@
           <h3 class="project-title">D-TradeX</h3>
           <p class="project-desc">Automated trading suite with multi-broker connectivity (Zerodha, Upstox, Angel One, Nuvama, Dhan), real-time options analytics, a canonical Greeks engine (Black-76/BSM), ML-driven signal classification, and sub-200ms tick delivery via Redis Streams.</p>
           <div class="project-tags"><span class="project-tag">Next.js</span><span class="project-tag">FastAPI</span><span class="project-tag">Python</span><span class="project-tag">Redis Streams</span><span class="project-tag">LightGBM</span><span class="project-tag">PostgreSQL</span></div>
-          <div class="project-links"><a href="https://finance.dhimansoft.com" target="_blank" rel="noopener" class="project-link">Live Site →</a><a href="case-studies/dtradex.html" target="_blank" rel="noopener" class="project-link alt">Case Study →</a></div>
+          <div class="project-links"><a href="https://finance.dhimansoft.com" target="_blank" rel="noopener" class="project-link">Live Site &rarr;</a><a href="case-studies/dtradex.html" target="_blank" rel="noopener" class="project-link">Case Study &rarr;</a></div>
         </div>
       </div>
 
@@ -1685,7 +1685,7 @@
           <h3 class="project-title">Desi Market</h3>
           <p class="project-desc">WooCommerce store for a local tyre and car-accessories business in Sonipat, Haryana. 297-product catalogue covering tyres, alloy wheels, car electronics, and accessories — with Google Maps integration, Cloudflare CDN, and Google Site Kit for analytics and SEO.</p>
           <div class="project-tags"><span class="project-tag">WordPress</span><span class="project-tag">WooCommerce</span><span class="project-tag">Cloudflare</span><span class="project-tag">Google Site Kit</span><span class="project-tag">SEO</span></div>
-          <div class="project-links"><a href="https://desi-market.in" target="_blank" rel="noopener" class="project-link">Live Site →</a></div>
+          <div class="project-links"><a href="https://desi-market.in" target="_blank" rel="noopener" class="project-link">Live Site &rarr;</a></div>
         </div>
       </div>
 
@@ -1702,7 +1702,7 @@
           <h3 class="project-title">eCommerce Platform</h3>
           <p class="project-desc">Laravel 11 multi-role eCommerce with Admin, Merchant & Customer portals. Spatie role-based permissions, product management, order tracking.</p>
           <div class="project-tags"><span class="project-tag">Laravel 11</span><span class="project-tag">Spatie</span><span class="project-tag">React</span><span class="project-tag">MySQL</span></div>
-          <div class="project-links"><a href="#contact" class="project-link">Code on request →</a></div>
+          <div class="project-links"><a href="#contact" class="project-link">Source on request &rarr;</a></div>
         </div>
       </div>
 
@@ -1719,7 +1719,7 @@
           <h3 class="project-title">Google Docs Mirror</h3>
           <p class="project-desc">Google Docs-style collaborative editor: rich text with autosave, .txt, .md and .docx import, export, and sharing with owner, editor and viewer roles. 16 automated tests, deployed on Vercel with Turso.</p>
           <div class="project-tags"><span class="project-tag">Next.js</span><span class="project-tag">TypeScript</span><span class="project-tag">Tiptap</span><span class="project-tag">Turso</span><span class="project-tag">Vercel</span></div>
-          <div class="project-links"><a href="https://google-docs-mirror.vercel.app" target="_blank" rel="noopener" class="project-link">Live Demo →</a><a href="https://github.com/raahuldhiman-dev/google-docs-mirror" target="_blank" rel="noopener" class="project-link">GitHub →</a><a href="case-studies/google-docs-mirror.html" target="_blank" rel="noopener" class="project-link alt">Case Study →</a></div>
+          <div class="project-links"><a href="https://google-docs-mirror.vercel.app" target="_blank" rel="noopener" class="project-link">Live Site &rarr;</a><a href="case-studies/google-docs-mirror.html" target="_blank" rel="noopener" class="project-link">Case Study &rarr;</a><a href="https://github.com/raahuldhiman-dev/google-docs-mirror" target="_blank" rel="noopener" class="project-link">Source Code &rarr;</a></div>
         </div>
       </div>
 
@@ -1735,7 +1735,7 @@
           <h3 class="project-title">Laravel Chat App</h3>
           <p class="project-desc">Multi-user real-time chat: Sanctum auth, direct and group conversations, attachments, unread tracking, typing indicators and self-hosted WebSockets.</p>
           <div class="project-tags"><span class="project-tag">Laravel</span><span class="project-tag">Vue 3</span><span class="project-tag">Pinia</span><span class="project-tag">Sanctum</span><span class="project-tag">WebSockets</span></div>
-          <div class="project-links"><a href="https://github.com/raahuldhiman-dev/Laravel-Chat-App" target="_blank" rel="noopener" class="project-link">GitHub →</a><a href="case-studies/laravel-chat-app.html" target="_blank" rel="noopener" class="project-link alt">Case Study →</a></div>
+          <div class="project-links"><a href="case-studies/laravel-chat-app.html" target="_blank" rel="noopener" class="project-link">Case Study &rarr;</a><a href="https://github.com/raahuldhiman-dev/Laravel-Chat-App" target="_blank" rel="noopener" class="project-link">Source Code &rarr;</a></div>
         </div>
       </div>
 
@@ -1752,7 +1752,7 @@
           <h3 class="project-title">Medviso · Transfer Solution</h3>
           <p class="project-desc">I maintain transfer.medviso.com, the Medviso Transfer Solution, for Medviso, a Swedish company behind cardiac image analysis and medical 3D printing software. My work is in Python: using Matplotlib to render data into images, plus keeping the service running.</p>
           <div class="project-tags"><span class="project-tag">Python</span><span class="project-tag">Matplotlib</span><span class="project-tag">Image rendering</span><span class="project-tag">Maintenance</span></div>
-          <div class="project-links"><a href="https://medviso.com" target="_blank" rel="noopener" class="project-link">medviso.com →</a></div>
+          <div class="project-links"><a href="https://medviso.com" target="_blank" rel="noopener" class="project-link">Live Site &rarr;</a></div>
         </div>
       </div>
 
@@ -1769,7 +1769,7 @@
           <h3 class="project-title">NextGen Foundry</h3>
           <p class="project-desc">AI-powered business plan creator for UK Innovator Founder visa applications. It drafts each section of the plan from a proven template built around the endorsement criteria, with pricing plans and a user login.</p>
           <div class="project-tags"><span class="project-tag">AI</span><span class="project-tag">Business Plans</span><span class="project-tag">Web App</span></div>
-          <div class="project-links"><a href="https://next-gen-foundary.dhimansoft.com" target="_blank" rel="noopener" class="project-link">Live Site →</a></div>
+          <div class="project-links"><a href="https://next-gen-foundary.dhimansoft.com" target="_blank" rel="noopener" class="project-link">Live Site &rarr;</a></div>
         </div>
       </div>
 
@@ -1785,7 +1785,7 @@
           <h3 class="project-title">Personal AI Assistant</h3>
           <p class="project-desc">Voice-enabled Python assistant combining speech recognition, GPT-4 responses and text-to-speech, with task automation and conversational memory.</p>
           <div class="project-tags"><span class="project-tag">Python</span><span class="project-tag">GPT-4</span><span class="project-tag">SpeechRecognition</span><span class="project-tag">FastAPI</span></div>
-          <div class="project-links"><a href="https://github.com/raahuldhiman-dev/voice-ai-assistant" target="_blank" rel="noopener" class="project-link">GitHub →</a></div>
+          <div class="project-links"><a href="https://github.com/raahuldhiman-dev/voice-ai-assistant" target="_blank" rel="noopener" class="project-link">Source Code &rarr;</a></div>
         </div>
       </div>
 
@@ -1802,7 +1802,7 @@
           <h3 class="project-title">Polite Resume</h3>
           <p class="project-desc">ATS-friendly resume and cover letter builder with 40+ templates, prewritten recruiter-approved content, and an ATS score checker. Built on WordPress with Elementor and a custom membership/paywall flow for premium template access.</p>
           <div class="project-tags"><span class="project-tag">WordPress</span><span class="project-tag">Elementor</span><span class="project-tag">WooCommerce</span><span class="project-tag">ATS Optimization</span><span class="project-tag">SEO</span></div>
-          <div class="project-links"><a href="https://politeresume.com" target="_blank" rel="noopener" class="project-link">Live Site →</a><a href="case-studies/polite-resume.html" target="_blank" rel="noopener" class="project-link alt">Case Study →</a></div>
+          <div class="project-links"><a href="https://politeresume.com" target="_blank" rel="noopener" class="project-link">Live Site &rarr;</a><a href="case-studies/polite-resume.html" target="_blank" rel="noopener" class="project-link">Case Study &rarr;</a></div>
         </div>
       </div>
 
@@ -1819,7 +1819,7 @@
           <h3 class="project-title">RAG Chatbot</h3>
           <p class="project-desc">Multi-tenant document Q&A with retrieval-augmented generation. Token-aware chunking, per-user ChromaDB search, cited answers, multi-provider LLM failover, OAuth login, and encrypted API keys.</p>
           <div class="project-tags"><span class="project-tag">Python</span><span class="project-tag">FastAPI</span><span class="project-tag">ChromaDB</span><span class="project-tag">OpenAI / Gemini / Claude</span><span class="project-tag">Docker</span></div>
-          <div class="project-links"><a href="https://rag-chat.dhimansoft.com" target="_blank" rel="noopener" class="project-link" title="Sign in with GitHub or Google">Live App →</a><a href="https://github.com/raahuldhiman-dev/rag-chatbot" target="_blank" rel="noopener" class="project-link">GitHub →</a><a href="case-studies/rag-chatbot.html" target="_blank" rel="noopener" class="project-link alt">Case Study →</a></div>
+          <div class="project-links"><a href="https://rag-chat.dhimansoft.com" target="_blank" rel="noopener" class="project-link" title="Sign in with GitHub or Google">Live Site &rarr;</a><a href="case-studies/rag-chatbot.html" target="_blank" rel="noopener" class="project-link">Case Study &rarr;</a><a href="https://github.com/raahuldhiman-dev/rag-chatbot" target="_blank" rel="noopener" class="project-link">Source Code &rarr;</a></div>
         </div>
       </div>
 
@@ -1836,7 +1836,7 @@
           <h3 class="project-title">Sentiment Analysis (Gemini)</h3>
           <p class="project-desc">Analyzes text, chat transcripts and chat screenshots with Google Gemini: sentiment scores, six-emotion breakdowns, keywords and per-participant summaries. History stays in the browser.</p>
           <div class="project-tags"><span class="project-tag">React</span><span class="project-tag">Vite</span><span class="project-tag">Google Gemini</span><span class="project-tag">IndexedDB</span><span class="project-tag">Recharts</span></div>
-          <div class="project-links"><a href="https://sentiment-detection.vercel.app" target="_blank" rel="noopener" class="project-link">Live Demo →</a><a href="case-studies/sentiment-analysis.html" target="_blank" rel="noopener" class="project-link alt">Case Study →</a></div>
+          <div class="project-links"><a href="https://sentiment-detection.vercel.app" target="_blank" rel="noopener" class="project-link">Live Site &rarr;</a><a href="case-studies/sentiment-analysis.html" target="_blank" rel="noopener" class="project-link">Case Study &rarr;</a></div>
         </div>
       </div>
 
@@ -1852,7 +1852,7 @@
           <h3 class="project-title">Stock Price Predictor (LSTM)</h3>
           <p class="project-desc">Deep learning time-series forecasting with an LSTM model: Yahoo Finance data, training, next-day prediction and actual-vs-predicted charts, in a Streamlit app.</p>
           <div class="project-tags"><span class="project-tag">Python</span><span class="project-tag">TensorFlow / Keras</span><span class="project-tag">pandas</span><span class="project-tag">Streamlit</span></div>
-          <div class="project-links"><a href="https://github.com/raahuldhiman-dev/stock-price-predictor" target="_blank" rel="noopener" class="project-link">GitHub →</a><a href="https://predictor.dhimansoft.com/" target="_blank" rel="noopener" class="project-link">Live Demo →</a><a href="case-studies/stock-price-predictor.html" target="_blank" rel="noopener" class="project-link alt">Case Study →</a></div>
+          <div class="project-links"><a href="https://predictor.dhimansoft.com/" target="_blank" rel="noopener" class="project-link">Live Site &rarr;</a><a href="case-studies/stock-price-predictor.html" target="_blank" rel="noopener" class="project-link">Case Study &rarr;</a><a href="https://github.com/raahuldhiman-dev/stock-price-predictor" target="_blank" rel="noopener" class="project-link">Source Code &rarr;</a></div>
         </div>
       </div>
 
